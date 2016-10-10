@@ -1,4 +1,4 @@
-package session;
+package user;
 
 public abstract class User {
     protected int id;

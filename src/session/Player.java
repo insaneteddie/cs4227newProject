@@ -8,6 +8,8 @@
 **/
 package session;
 
+import user.User;
+
 import java.util.ArrayList;
 
 public class Player extends User implements SessionSubject {
