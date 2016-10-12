@@ -15,11 +15,13 @@ public interface Collection<E> {
 
     /**
      * @param id
+     * @return
      * */
     E get(int id);
 
     /**
      * interface for getting list of generic types
+     *  @return
      * */
     List<E> getAll();
 
