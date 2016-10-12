@@ -52,6 +52,7 @@ public class SessionInformation {
     /**
      * @param username
      * @param password
+     * @return
      * */
     public boolean canUserLogin(String username, String password) {
         boolean canLogin = false;
@@ -72,6 +73,7 @@ public class SessionInformation {
 
     /**
      *  @param username
+     *  @return
      * */
     public boolean doesPlayerExist(String username) {
         boolean exists = false;
@@ -90,6 +92,7 @@ public class SessionInformation {
     /**
      * @param username
      * @param email
+     * @return
      * */
     public int checkUsernameEmail(String username, String email) {
         int existsType = -1;
@@ -173,6 +176,7 @@ public class SessionInformation {
 
     /**
      * @param id
+     * @return
      * */
     public boolean isMemberOfParty(int id) {
         return party.isMember(id);
@@ -180,6 +184,7 @@ public class SessionInformation {
 
     /**
      * @param id
+     * @return
      * */
     public boolean isFriend(int id) {
         return player.isFriend(id);
@@ -295,6 +300,7 @@ public class SessionInformation {
 
     /**
      *  @param playerID
+     *  @return
      * */
     public int getPartyIDFromSenderInvite(int playerID)
     {
