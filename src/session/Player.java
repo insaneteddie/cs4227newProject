@@ -11,6 +11,7 @@ package session;
 import user.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends User implements SessionSubject {
 
@@ -102,7 +103,7 @@ public class Player extends User implements SessionSubject {
         inviteCollection.remove(senderID, partyID);
     }
 
-    public ArrayList<Invite> getInvites() {
+    public List<Invite> getInvites() {
         return inviteCollection.getAll();
     }
     @Override

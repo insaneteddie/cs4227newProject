@@ -10,6 +10,7 @@ package session;
 
 import database.DatabaseInterface;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SessionInformation {
 
@@ -218,7 +219,7 @@ public class SessionInformation {
 
     public ArrayList<String> getInviteMessages() {
         ArrayList<String> invMsg = new ArrayList<String>();
-        ArrayList<Invite> invites = player.getInvites();
+        List<Invite> invites = player.getInvites();
         for (int i = 0; i < invites.size(); i++) {
             invMsg.add(invites.get(i).getMessage());
         }
@@ -239,7 +240,7 @@ public class SessionInformation {
 
     public int getPartyIDFromSenderInvite(int playerID)
     {
-        ArrayList<Invite> myInvites = player.getInvites();
+        List<Invite> myInvites = player.getInvites();
         int partyID = 0;
         for (int i = 0; i < myInvites.size(); i++) {
             if (playerID == myInvites.get(i).getSenderID()) {

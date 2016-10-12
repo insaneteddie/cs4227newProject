@@ -1,14 +1,31 @@
 package session;
 
-import java.util.ArrayList;
+import java.util.List;
 
+/**
+ *  Template interface for a generic container
+ *  @param <E>
+ * */
 public interface Collection<E> {
 
-    public abstract void add(E item);
+    /**
+     * @param item
+     * */
+    void add(E item);
 
-    public abstract E get(int id);
+    /**
+     * @param id
+     * */
+    E get(int id);
 
-    public abstract ArrayList<E> getAll();
+    /**
+     * interface for getting list of generic types
+     * */
+    List<E> getAll();
 
-    public abstract void remove(int id, int pid);
+    /**
+     * @param id
+     * @param pid
+     * */
+    void remove(int id, int pid);
 }
