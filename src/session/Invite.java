@@ -24,4 +24,12 @@ public abstract class Invite
      * */
     @Override
     public abstract boolean equals(Object otherInvite);
+
+    /**
+     * @return
+     * */
+    @Override
+    public int hashCode(){
+        return super.hashCode();
+    }
 }

@@ -37,4 +37,12 @@ public class PartyInvite extends Invite
     public int getPartyID() {
         return partyID;
     }
+
+    /**
+     * @return 
+     * */
+    @Override
+    public int hashCode(){
+        return super.hashCode();
+    }
 }
