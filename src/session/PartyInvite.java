@@ -39,7 +39,7 @@ public class PartyInvite extends Invite
     }
 
     /**
-     * @return 
+     * @return
      * */
     @Override
     public int hashCode(){

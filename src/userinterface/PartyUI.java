@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -194,7 +195,7 @@ public class PartyUI extends Menu {
         memberList.setText("");
         memberList.append("Members:\n");
         if (sessionInfo != null) {
-            ArrayList<Integer> members = sessionInfo.getPartyMembers();
+            List<Integer> members = sessionInfo.getPartyMembers();
 
             memberList.append("" + members.get(0) + " (host)\n");
             for (int i = 1; i < members.size(); i++) {

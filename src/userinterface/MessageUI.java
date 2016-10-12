@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -172,7 +173,7 @@ public class MessageUI extends Menu {
         inviteList.setText("");
         inviteList.append("Party Invitations:\n");
         if (sessionInfo != null) {
-            ArrayList<String> invitations = sessionInfo.getInviteMessages(); // get invite messages
+            List<String> invitations = sessionInfo.getInviteMessages(); // get invite messages
             if (invitations.size() > 0) {
                 inviteList.append(invitations.get(0) + "\n");
                 for (int i = 1; i < invitations.size(); i++) {
