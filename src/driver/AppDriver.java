@@ -2,7 +2,9 @@ package driver;
 
 import userinterface.StartUpUI;
 
-
+/**
+ *  Class containing main method
+ * */
 public class AppDriver {
 
     /**
@@ -12,6 +14,7 @@ public class AppDriver {
 
     /**
      *  Launches program
+     *  @params args
      * */
     public static void main(String[] args)
     {
