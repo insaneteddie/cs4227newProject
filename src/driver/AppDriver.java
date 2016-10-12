@@ -14,7 +14,7 @@ public class AppDriver {
 
     /**
      *  Launches program
-     *  @params args
+     *  @param args
      * */
     public static void main(String[] args)
     {
