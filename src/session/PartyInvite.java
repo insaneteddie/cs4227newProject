@@ -24,8 +24,13 @@ public class PartyInvite extends Invite
     }
 
     @Override
-    public boolean equals(Invite otherInvite) {
-        return (senderID == otherInvite.getSenderID() && partyID == otherInvite.partyID);
+    public boolean equals(Object otherInvite) {
+        if(otherInvite instanceof Object) {
+            PartyInvite p = (PartyInvite) otherInvite;
+            return (senderID == p.getSenderID() && partyID == p.partyID);
+        }
+        else
+            return false;
     }
 
     @Override

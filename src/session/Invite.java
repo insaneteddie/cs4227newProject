@@ -1,5 +1,9 @@
 package session;
 
+/**
+ *  Abstract Invite class; Concrete subclasses instantiated
+ *  by concrete InviteFactory subclasses
+ * */
 public abstract class Invite
 {
     protected int senderID;
@@ -14,6 +18,10 @@ public abstract class Invite
     public abstract int getPartyID();
     
     public abstract String getMessage();
-    
-    public abstract boolean equals(Invite otherInvite);
+
+    /**
+     *  @param otherInvite
+     * */
+    @Override
+    public abstract boolean equals(Object otherInvite);
 }
