@@ -9,6 +9,9 @@
 package core.session;
 
 import core.user.User;
+import message.Collection;
+import message.Invite;
+import message.InviteCollection;
 
 import java.util.ArrayList;
 import java.util.List;

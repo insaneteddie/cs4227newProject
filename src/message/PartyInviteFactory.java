@@ -1,4 +1,4 @@
-package core.session;
+package message;
 
 public class PartyInviteFactory extends InviteFactory {
 

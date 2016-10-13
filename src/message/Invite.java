@@ -1,4 +1,4 @@
-package core.session;
+package message;
 
 /**
  *  Abstract Invite class; Concrete subclasses instantiated

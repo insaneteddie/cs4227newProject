@@ -9,6 +9,10 @@
 package core.session;
 
 import database.DatabaseInterface;
+import message.Invite;
+import message.InviteFactory;
+import message.PartyInviteFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
