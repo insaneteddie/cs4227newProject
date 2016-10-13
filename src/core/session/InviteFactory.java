@@ -1,4 +1,4 @@
-package Core.session;
+package core.session;
 
 public abstract class InviteFactory
 {

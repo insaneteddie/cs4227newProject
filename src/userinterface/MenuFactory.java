@@ -8,7 +8,7 @@
 **/
 package userinterface;
 
-import Core.session.SessionInformation;
+import core.session.SessionInformation;
 
 public class MenuFactory {
 
