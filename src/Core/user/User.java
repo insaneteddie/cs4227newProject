@@ -1,4 +1,4 @@
-package user;
+package Core.user;
 
 public abstract class User {
     protected int id;

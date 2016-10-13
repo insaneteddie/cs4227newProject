@@ -6,9 +6,9 @@
 *   Adapted file: Serenity_Gaming/Player.java
 *   Approximate use: 20%
 **/
-package session;
+package Core.session;
 
-import user.User;
+import Core.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

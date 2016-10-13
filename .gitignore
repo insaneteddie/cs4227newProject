@@ -1,3 +1,10 @@
+.idea/
+.sonar/
+cs4227newProject.iml
+out/
+sonar-project.properties
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db

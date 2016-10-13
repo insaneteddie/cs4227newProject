@@ -6,14 +6,14 @@
 *   Adapted file: Serenity_Gaming/ProcessInput.java
 *   Approximate use: 40%
 **/
-package session;
+package Core.session;
 
 import database.DatabaseInterface;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  Contains variables and methods dealing with an active session
+ *  Contains variables and methods dealing with an active Core.session
  * */
 public class SessionInformation {
 
