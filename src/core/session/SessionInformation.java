@@ -8,6 +8,7 @@
 **/
 package core.session;
 
+import core.user.Player;
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;

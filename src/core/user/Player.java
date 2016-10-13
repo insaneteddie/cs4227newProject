@@ -6,9 +6,9 @@
 *   Adapted file: Serenity_Gaming/Player.java
 *   Approximate use: 20%
 **/
-package core.session;
+package core.user;
 
-import core.user.User;
+import core.session.SessionObserver;
 import message.Collection;
 import message.Invite;
 import message.InviteCollection;
@@ -127,7 +127,7 @@ public class Player extends User implements SessionSubject {
         partyInformation.clear();
     }
 
-    boolean isFriend(int id) {
+    public boolean isFriend(int id) {
         return friends.contains(id);
     }
 }

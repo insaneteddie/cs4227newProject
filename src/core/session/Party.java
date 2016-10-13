@@ -1,5 +1,7 @@
 package core.session;
 
+import core.user.SessionSubject;
+
 import java.util.ArrayList;
 
 public class Party implements SessionObserver {
