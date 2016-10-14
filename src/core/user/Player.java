@@ -26,9 +26,9 @@ public class Player extends User implements SessionSubject {
     private String email;
 
     private Player() {
-        observers = new ArrayList<SessionObserver>();
-        friends = new ArrayList<Integer>();
-        partyInformation = new ArrayList<Integer>();
+        observers = new ArrayList<>();
+        friends = new ArrayList<>();
+        partyInformation = new ArrayList<>();
         inviteCollection = new InviteCollection();
     }
 

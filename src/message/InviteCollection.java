@@ -8,7 +8,7 @@ public class InviteCollection implements Collection<Invite> {
     private ArrayList<Invite> invites;
 
     public InviteCollection() {
-        invites = new ArrayList<Invite>();
+        invites = new ArrayList<>();
     }
 
     @Override

@@ -142,7 +142,7 @@ public class SessionInformation {
     public void getPlayerFriendList() {
         try {
             ArrayList<Integer> friends = database.getPlayerFriendList(player.getId());
-            if (friends.size() > 0) {
+            if (!friends.isEmpty()) {
                 for (int i = 0; i < friends.size(); i++) {
                     player.addFriend(friends.get(i));
                 }
@@ -154,7 +154,7 @@ public class SessionInformation {
     public void getPlayerInvites() {
         try {
             ArrayList<Integer[]> invites = database.getPlayerInvites(player.getId());
-            if (invites.size() > 0) {
+            if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
                     Invite newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
                     player.addInvite(newInvite);
