@@ -44,14 +44,9 @@ public class PartyUI extends Menu {
         JLabel spacer = new JLabel("          ");
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+        logoutButton.addActionListener(e -> {
                 sessionInfo.logPlayerOut();
                 menuMgr.getMenuFromFactory(1);
-
-            }
         });
         topBarPanel.add(logoutButton);
         mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
@@ -76,13 +71,10 @@ public class PartyUI extends Menu {
         populateMembersList(memberList);
 
         JButton leavePartyButton = new JButton("Leave Party");
-        leavePartyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        leavePartyButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(null, "You have left the party");
                 sessionInfo.leaveParty();
                 menuMgr.getMenuFromFactory(2);
-            }
         });
         topCenterMenuPanel.add(leavePartyButton);
         centerMenuPanel.add(topCenterMenuPanel, centerMenuLayout.NORTH);
@@ -91,9 +83,7 @@ public class PartyUI extends Menu {
         GridLayout centerMenuButtonsLayout = new GridLayout(4, 1);
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton refreshButton = new JButton("Refresh Members List");
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        refreshButton.addActionListener(e -> {
                 sessionInfo.getPartyDetails();
                 if (sessionInfo.isPlayerInParty()) {
                     populateMembersList(memberList);
@@ -103,13 +93,10 @@ public class PartyUI extends Menu {
                     JOptionPane.showMessageDialog(null, "You have been removed from the party.\nReturning to main menu", null, JOptionPane.WARNING_MESSAGE);
                     menuMgr.getMenuFromFactory(2);
                 }
-            }
         });
         centerMenuButtonsPanel.add(refreshButton);
         JButton inviteButton = new JButton("Invite Friend");
-        inviteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        inviteButton.addActionListener(e -> {
 
                 try {
                     int friendToInvite = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend you would"
@@ -122,13 +109,11 @@ public class PartyUI extends Menu {
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
                 }
-            }
+
         });
         centerMenuButtonsPanel.add(inviteButton);
         JButton removeMemberButton = new JButton("Remove Member");
-        removeMemberButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        removeMemberButton.addActionListener(e -> {
                 if (sessionInfo.isPartyLeader()) {
                     if (sessionInfo.getPartySize() > 1) {
                         // select member to remove
@@ -158,15 +143,11 @@ public class PartyUI extends Menu {
                 } else {
                     JOptionPane.showMessageDialog(null, "You must be Party Leader to remove members", null, JOptionPane.WARNING_MESSAGE);
                 }
-            }
         });
         centerMenuButtonsPanel.add(removeMemberButton);
         JButton gameButton = new JButton("Games");
-        gameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        gameButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(null, "Component not integrated");
-            }
         });
         centerMenuButtonsPanel.add(gameButton);
         centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);
@@ -178,12 +159,8 @@ public class PartyUI extends Menu {
         bottomBarLayout.setAlignment(FlowLayout.LEFT);
         bottomBarPanel.setLayout(bottomBarLayout);
         JButton returnButton = new JButton("<-Return");
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        returnButton.addActionListener(e -> {
                 menuMgr.getMenuFromFactory(2);
-
-            }
         });
         bottomBarPanel.add(returnButton);
         mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);

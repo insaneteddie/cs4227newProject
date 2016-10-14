@@ -79,10 +79,7 @@ public class StartScreenUI extends Menu {
         loginPanel.add(registerButton);
         loginScreen.add(loginPanel, cons);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+        loginButton.addActionListener( e ->  {
                 String username = getUsername.getText().toLowerCase();
                 String password = getPassword.getText();
                 if (!username.equals("") && !password.equals("")) {
@@ -99,17 +96,12 @@ public class StartScreenUI extends Menu {
                 } else {
                     JOptionPane.showMessageDialog(null, "Fields Blank");
                 }
-            }
         });
 
-        registerButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+        registerButton.addActionListener(e ->  {
                 loginScreen.setVisible(false);
                 showRegisterScreen();
                 menuMgr.notifyObserver();
-            }
         });
 
         panel = loginScreen;
@@ -166,13 +158,11 @@ public class StartScreenUI extends Menu {
         final JPasswordField getConfirmPassword = new JPasswordField();
         registerUserPanel.add(getConfirmPassword);
         JButton createButton = new JButton("Create");
-        createButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        createButton.addActionListener(e ->  {
                 /* Regex to ensure email given is correct format */
                 String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-                String passwordPattern = "";
+                String pPattern = "";
                 String username = getUsername.getText().toLowerCase();
                 String email = getEmail.getText().toLowerCase();
                 String password = getPassword.getText();
@@ -208,18 +198,14 @@ public class StartScreenUI extends Menu {
                 } /* Fields left blank */ else {
                     errorLabel.setText("Field(s) blank");
                 }
-            }
         });
         registerUserPanel.add(createButton);
         /* User cancels registration, redirected back to login screen */
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        cancelButton.addActionListener(e ->  {
                 registerPanel.setVisible(false);
                 showLoginScreen();
                 menuMgr.notifyObserver();
-            }
         });
         registerUserPanel.add(cancelButton);
 
