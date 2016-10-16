@@ -10,7 +10,7 @@ public interface SessionSubject
     
     void detach(SessionObserver o);
     
-    void nofity();
+    void update();
     
     ArrayList<Integer> getState();
 }
