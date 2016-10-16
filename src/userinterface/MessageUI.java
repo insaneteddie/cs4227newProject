@@ -43,14 +43,11 @@ public class MessageUI extends Menu {
         JLabel spacer = new JLabel("          ");
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        logoutButton.addActionListener(e -> {
 
-                sessionInfo.logPlayerOut();
-                menuMgr.getMenuFromFactory(1);
+            sessionInfo.logPlayerOut();
+            menuMgr.getMenuFromFactory(1);
 
-            }
         });
         topBarPanel.add(logoutButton);
         mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
@@ -79,43 +76,19 @@ public class MessageUI extends Menu {
         GridLayout inviteOptionLayout = new GridLayout(3, 0);
         inviteOptionPanel.setLayout(inviteOptionLayout);
         JButton acceptInviteButton = new JButton("Accept Invite");
-        acceptInviteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (sessionInfo.isPlayerInParty()) {
-                    JOptionPane.showMessageDialog(null, "To join a new party please leave the party you\nare currently in.", null, JOptionPane.WARNING_MESSAGE);
-                } else {
-                    try {//first check if already in a party
-                        int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
-                                + "\ninvite you would like to accept."));
-                        if (sessionInfo.isFriend(userid)) {
-                            sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
-                            sessionInfo.removeInvite(userid);
-                            sessionInfo.getPlayerInvites();
-                            menuMgr.getMenuFromFactory(4);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
-                        }
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            }
-        });
-        inviteOptionPanel.add(acceptInviteButton);
-        JButton declineInviteButton = new JButton("Decline Invite");
-        declineInviteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
+        acceptInviteButton.addActionListener(e -> {
+            if (sessionInfo.isPlayerInParty()) {
+                JOptionPane.showMessageDialog(null, "To join a new party please leave the party you\nare currently in.", null, JOptionPane.WARNING_MESSAGE);
+            } else {
+                try {//first check if already in a party
                     int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
-                            + "\ninvite you would like to decline."));
+                            + "\ninvite you would like to accept."));
                     if (sessionInfo.isFriend(userid)) {
+                        sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
                         sessionInfo.removeInvite(userid);
                         sessionInfo.getPlayerInvites();
                         menuMgr.getMenuFromFactory(4);
-                    }
-                    else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (Exception ex) {
@@ -123,14 +96,29 @@ public class MessageUI extends Menu {
                 }
             }
         });
+        inviteOptionPanel.add(acceptInviteButton);
+        JButton declineInviteButton = new JButton("Decline Invite");
+        declineInviteButton.addActionListener(e -> {
+            try {
+                int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
+                        + "\ninvite you would like to decline."));
+                if (sessionInfo.isFriend(userid)) {
+                    sessionInfo.removeInvite(userid);
+                    sessionInfo.getPlayerInvites();
+                    menuMgr.getMenuFromFactory(4);
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+            }
+        });
         inviteOptionPanel.add(declineInviteButton);
          JButton refreshInviteButton = new JButton("Refresh Invites");
-        refreshInviteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sessionInfo.getPlayerInvites();
-                populateInviteList(inviteList);
-            }
+        refreshInviteButton.addActionListener(e -> {
+            sessionInfo.getPlayerInvites();
+            populateInviteList(inviteList);
         });
         
         inviteOptionPanel.add(refreshInviteButton);
@@ -144,14 +132,11 @@ public class MessageUI extends Menu {
         bottomBarLayout.setAlignment(FlowLayout.LEFT);
         bottomBarPanel.setLayout(bottomBarLayout);
         JButton returnButton = new JButton("<-Return");
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        returnButton.addActionListener(e -> {
 
-                //sessionInfo.logPlayerOut();
-                menuMgr.getMenuFromFactory(2);
+            //sessionInfo.logPlayerOut();
+            menuMgr.getMenuFromFactory(2);
 
-            }
         });
         bottomBarPanel.add(returnButton);
         mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);

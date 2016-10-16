@@ -13,36 +13,36 @@ import java.util.ArrayList;
 
 public interface DatabaseInterface {
 
-    public abstract boolean canLogin(String username, String password) throws Exception;
+    boolean canLogin(String username, String password) throws Exception;
 
     /* References the local Player class */
-    public abstract String getPlayerDetails(String username) throws Exception;
+    String getPlayerDetails(String username) throws Exception;
 
-    public abstract ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception;
+    ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception;
 
-    public abstract ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception;
+    ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception;
 
-    public abstract void createPlayer(String username, String password, String email) throws Exception;
+    void createPlayer(String username, String password, String email) throws Exception;
 
-    public abstract int createParty(int partyLeaderID) throws Exception;
+    int createParty(int partyLeaderID) throws Exception;
 
-    public abstract ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception;
+    ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception;
 
-    public abstract boolean isPartyFull(int partyID) throws Exception;
+    boolean isPartyFull(int partyID) throws Exception;
 
-    public abstract void addPlayerToParty(int playerID, int partyID) throws Exception;
+    void addPlayerToParty(int playerID, int partyID) throws Exception;
 
-    public abstract void removePlayerFromParty(int partyID, int playerID) throws Exception;
+    void removePlayerFromParty(int partyID, int playerID) throws Exception;
 
-    public abstract int checkUserNameAndEmail(String username, String email) throws Exception;
+    int checkUserNameAndEmail(String username, String email) throws Exception;
 
-    public abstract boolean doesPartyExist(int partyID) throws Exception;
+    boolean doesPartyExist(int partyID) throws Exception;
 
-    public abstract int doesPlayerExist(String username) throws Exception;
+    int doesPlayerExist(String username) throws Exception;
 
-    public abstract boolean isPlayerInParty(int playerID) throws Exception;
+    boolean isPlayerInParty(int playerID) throws Exception;
 
-    public abstract void addInvite(int senderID, int receiverID, int partyID) throws Exception;
+    void addInvite(int senderID, int receiverID, int partyID) throws Exception;
 
-    public abstract void removeInvite(int senderID, int receiverID, int partyID) throws Exception;
+    void removeInvite(int senderID, int receiverID, int partyID) throws Exception;
 }

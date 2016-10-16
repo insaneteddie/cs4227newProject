@@ -70,7 +70,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override
     public ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception {
         String pidStr = playerID + "";
-        ArrayList<Integer> friendIDs = new ArrayList<Integer>();
+        ArrayList<Integer> friendIDs = new ArrayList<>();
         file = new File(FRIEND_DETAILS_FILE);
         fileReader = new Scanner(file);
         while (fileReader.hasNextLine()) {
@@ -89,7 +89,7 @@ public class DatabaseAccess implements DatabaseInterface {
 
     @Override
     public ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception {
-        ArrayList<Integer[]> idList = new ArrayList<Integer[]>();
+        ArrayList<Integer[]> idList = new ArrayList<>();
         Integer [] ids = new Integer [2];
         file = new File(INVITE_DETAILS_FILE);
         fileReader = new Scanner(file);
@@ -158,7 +158,7 @@ public class DatabaseAccess implements DatabaseInterface {
     public ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
         fileReader = new Scanner(file);
-        ArrayList<Integer> partyDetails = new ArrayList<Integer>();
+        ArrayList<Integer> partyDetails = new ArrayList<>();
         while (fileReader.hasNextLine()) {
             String lineFromFile[] = fileReader.nextLine().split(",");
             if (partyID == Integer.parseInt(lineFromFile[0])) {
@@ -347,7 +347,7 @@ public class DatabaseAccess implements DatabaseInterface {
     }
     
     private ArrayList<String> fileToList() {
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         try {
             fileReader = new Scanner(file);
             while (fileReader.hasNextLine()) {
@@ -364,7 +364,8 @@ public class DatabaseAccess implements DatabaseInterface {
             fWriter = new FileWriter(file, amended);
             pWriter = new PrintWriter(fWriter);
             for (int i = 0; i < list.size(); i++) {
-                pWriter.println(list.get(i));
+                String aList = list.get(i);
+                pWriter.println(aList);
             }
 
             pWriter.close();

@@ -20,9 +20,9 @@ public class Player extends User implements SessionSubject {
     private String email;
 
     private Player() {
-        observers = new ArrayList<SessionObserver>();
-        friends = new ArrayList<Integer>();
-        partyInformation = new ArrayList<Integer>();
+        observers = new ArrayList<>();
+        friends = new ArrayList<>();
+        partyInformation = new ArrayList<>();
         inviteCollection = new InviteCollection();
     }
 
@@ -46,7 +46,7 @@ public class Player extends User implements SessionSubject {
     }
 
     @Override
-    public void nofity() {
+    public void update() {
         if (!observers.isEmpty()) {
             for (SessionObserver observer : observers) {
                 observer.update(this);

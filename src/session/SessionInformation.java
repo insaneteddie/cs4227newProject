@@ -79,7 +79,7 @@ public class SessionInformation {
         try {
             existsType = database.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
-            System.out.println("Error validaing username/email: " + e.toString());
+            System.out.println("Error validating username/email: " + e.toString());
         }
 
         return existsType;
@@ -136,7 +136,7 @@ public class SessionInformation {
             
             player.clearPartyInformation();
             player.updatePartyInformation(partyDetails);
-            player.nofity();
+            player.update();
         } catch (Exception e) {
         }
     }
@@ -158,7 +158,7 @@ public class SessionInformation {
             int partyID = database.createParty(player.getId());
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
-            player.nofity();
+            player.update();
         } catch (Exception e) {
 
         }
@@ -171,7 +171,7 @@ public class SessionInformation {
             System.out.println(player.getId());
             database.removePlayerFromParty(partyID, player.getId());
             player.clearPartyInformation();
-            player.nofity();
+            player.update();
         } catch (Exception e) {
         }
     }
@@ -201,7 +201,7 @@ public class SessionInformation {
             player.clearPartyInformation();
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
-            player.nofity();
+            player.update();
             database.addPlayerToParty(player.getId(), partyID);
 
             getPartyDetails();
@@ -217,7 +217,7 @@ public class SessionInformation {
     }
 
     public ArrayList<String> getInviteMessages() {
-        ArrayList<String> invMsg = new ArrayList<String>();
+        ArrayList<String> invMsg = new ArrayList<>();
         ArrayList<Invite> invites = player.getInvites();
         for (int i = 0; i < invites.size(); i++) {
             invMsg.add(invites.get(i).getMessage());

@@ -9,7 +9,7 @@ public class Party implements SessionObserver {
     private ArrayList<Integer> partyMembers;
 
     public Party() {
-        partyMembers = new ArrayList<Integer>();
+        partyMembers = new ArrayList<>();
     }
 
     @Override
