@@ -1,6 +1,7 @@
-package session;
+package message;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InviteCollection implements Collection<Invite> {
 
@@ -48,7 +49,7 @@ public class InviteCollection implements Collection<Invite> {
     }
 
     @Override
-    public ArrayList<Invite> getAll()
+    public List<Invite> getAll()
     {
         return invites;
     }

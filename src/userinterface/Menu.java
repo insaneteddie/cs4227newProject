@@ -9,7 +9,7 @@
 package userinterface;
 
 import javax.swing.JPanel;
-import session.SessionInformation;
+import core.session.SessionInformation;
 
 
 public abstract class Menu {

@@ -13,8 +13,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-//import java.awt.event.ActionEvent;
-//import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -79,31 +79,29 @@ public class StartScreenUI extends Menu {
         loginPanel.add(registerButton);
         loginScreen.add(loginPanel, cons);
 
-        loginButton.addActionListener(e -> {
+        loginButton.addActionListener( e ->  {
+                String username = getUsername.getText().toLowerCase();
+                String password = getPassword.getText();
+                if (!username.equals("") && !password.equals("")) {
+                    boolean login = sessionInfo.canUserLogin(username, password);
 
-            String username = getUsername.getText().toLowerCase();
-            String password = getPassword.getText();
-            if (!username.equals("") && !password.equals("")) {
-                boolean login = sessionInfo.canUserLogin(username, password);
-
-                if (login) {
-                    menuMgr.getMenuFromFactory(2);
-                    System.out.println("logged in");
+                    if (login) {
+                        menuMgr.getMenuFromFactory(2);
+                        System.out.println("logged in");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid login details");
+                        getUsername.setText("");
+                        getPassword.setText("");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Invalid login details");
-                    getUsername.setText("");
-                    getPassword.setText("");
+                    JOptionPane.showMessageDialog(null, "Fields Blank");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Fields Blank");
-            }
         });
 
-        registerButton.addActionListener(e -> {
-
-            loginScreen.setVisible(false);
-            showRegisterScreen();
-            menuMgr.notifyObserver();
+        registerButton.addActionListener(e ->  {
+                loginScreen.setVisible(false);
+                showRegisterScreen();
+                menuMgr.notifyObserver();
         });
 
         panel = loginScreen;
@@ -160,54 +158,54 @@ public class StartScreenUI extends Menu {
         final JPasswordField getConfirmPassword = new JPasswordField();
         registerUserPanel.add(getConfirmPassword);
         JButton createButton = new JButton("Create");
-        createButton.addActionListener(e -> {
-            /* Regex to ensure email given is correct format */
-            String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-            String passwordPattern = "";
-            String username = getUsername.getText().toLowerCase();
-            String email = getEmail.getText().toLowerCase();
-            String password = getPassword.getText();
-            String confirmPassword = getConfirmPassword.getText();
+        createButton.addActionListener(e ->  {
+                /* Regex to ensure email given is correct format */
+                String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                String pPattern = "";
+                String username = getUsername.getText().toLowerCase();
+                String email = getEmail.getText().toLowerCase();
+                String password = getPassword.getText();
+                String confirmPassword = getConfirmPassword.getText();
 
-            if (!username.equals("") && !email.equals("")
-                    && !password.equals("") && !confirmPassword.equals("")) {
-                if (password.equals(confirmPassword)) {
-                    if (email.matches(emailPattern)) {
-                        /* Checks if username and email are free to use */
-                        int checkUsernameEmail = sessionInfo.checkUsernameEmail(username, email);
-                        /* Username and email are free */
-                        if (checkUsernameEmail == 2) {
-                            sessionInfo.createPlayer(username, password, email);
-                            JOptionPane.showMessageDialog(null, "User created!");
-                            registerPanel.setVisible(false);
-                            showLoginScreen();
-                            menuMgr.notifyObserver();
-                        } else {
-                            /* Username already registered */
-                            if (checkUsernameEmail == 0) {
-                                errorLabel.setText("Username already in use");
-                            } /* Email already registered */ else {
-                                errorLabel.setText("Email already in use");
+                if (!username.equals("") && !email.equals("")
+                        && !password.equals("") && !confirmPassword.equals("")) {
+                    if (password.equals(confirmPassword)) {
+                        if (email.matches(emailPattern)) {
+                            /* Checks if username and email are free to use */
+                            int checkUsernameEmail = sessionInfo.checkUsernameEmail(username, email);
+                            /* Username and email are free */
+                            if (checkUsernameEmail == 2) {
+                                sessionInfo.createPlayer(username, password, email);
+                                JOptionPane.showMessageDialog(null, "User created!");
+                                registerPanel.setVisible(false);
+                                showLoginScreen();
+                                menuMgr.notifyObserver();
+                            } else {
+                                /* Username already registered */
+                                if (checkUsernameEmail == 0) {
+                                    errorLabel.setText("Username already in use");
+                                } /* Email already registered */ else {
+                                    errorLabel.setText("Email already in use");
+                                }
                             }
+                        } /* Email does not match pattern */ else {
+                            errorLabel.setText("Not a valid email address");
                         }
-                    } /* Email does not match pattern */ else {
-                        errorLabel.setText("Not a valid email address");
+                    } /* Passwords do not match */ else {
+                        errorLabel.setText("Incorrect Passwords");
                     }
-                } /* Passwords do not match */ else {
-                    errorLabel.setText("Incorrect Passwords");
+                } /* Fields left blank */ else {
+                    errorLabel.setText("Field(s) blank");
                 }
-            } /* Fields left blank */ else {
-                errorLabel.setText("Field(s) blank");
-            }
         });
         registerUserPanel.add(createButton);
         /* User cancels registration, redirected back to login screen */
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(e -> {
-            registerPanel.setVisible(false);
-            showLoginScreen();
-            menuMgr.notifyObserver();
+        cancelButton.addActionListener(e ->  {
+                registerPanel.setVisible(false);
+                showLoginScreen();
+                menuMgr.notifyObserver();
         });
         registerUserPanel.add(cancelButton);
 

@@ -6,9 +6,15 @@
 *   Adapted file: Serenity_Gaming/Player.java
 *   Approximate use: 20%
 **/
-package session;
+package core.user;
+
+import core.session.SessionObserver;
+import message.Collection;
+import message.Invite;
+import message.InviteCollection;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player extends User implements SessionSubject {
 
@@ -100,7 +106,7 @@ public class Player extends User implements SessionSubject {
         inviteCollection.remove(senderID, partyID);
     }
 
-    public ArrayList<Invite> getInvites() {
+    public List<Invite> getInvites() {
         return inviteCollection.getAll();
     }
     @Override
@@ -121,7 +127,7 @@ public class Player extends User implements SessionSubject {
         partyInformation.clear();
     }
 
-    boolean isFriend(int id) {
+    public boolean isFriend(int id) {
         return friends.contains(id);
     }
 }

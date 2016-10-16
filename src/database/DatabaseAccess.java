@@ -114,7 +114,7 @@ public class DatabaseAccess implements DatabaseInterface {
         ArrayList<String> userDetails = fileToList();
         String playerDetails = "";
 
-        if (userDetails.size() > 0) {
+        if (!userDetails.isEmpty()) {
             String[] lastEntry = (userDetails.get(userDetails.size() - 1)).split(",");
             int newPlayerID = Integer.parseInt(lastEntry[0]) + 1;
             playerDetails = newPlayerID + "," + username + "," + password + "," + email;
@@ -135,7 +135,7 @@ public class DatabaseAccess implements DatabaseInterface {
         ArrayList<String> parties = fileToList();
         String newParty = "";
         int newPartyID = 1;
-        if(parties.size() > 0){
+        if(!parties.isEmpty()){
 		String [] lastEntry = (parties.get(parties.size() - 1)).split(",");
 		newPartyID = Integer.parseInt(lastEntry[0]) + 1;
 		newParty += newPartyID + "," + partyLeaderID;
@@ -183,11 +183,9 @@ public class DatabaseAccess implements DatabaseInterface {
         fileReader = new Scanner(file);
         while (fileReader.hasNextLine()) {
             String lineFromFile[] = fileReader.nextLine().split(",");
-            if (partyID == Integer.parseInt(lineFromFile[0])) {
-                if (lineFromFile.length < 6) {
-                    partyFull = false;
-                    break;
-                }
+            if (partyID == Integer.parseInt(lineFromFile[0]) && lineFromFile.length < 6) {
+                partyFull = false;
+                break;
             }
         }
         fileReader.close();
@@ -269,7 +267,7 @@ public class DatabaseAccess implements DatabaseInterface {
         boolean partyExists = false;
         while (fileReader.hasNextLine()) {
             String[] lineFromFile = fileReader.nextLine().split(",");
-            if (partyID == Integer.parseInt(lineFromFile[0]));
+            if (partyID == Integer.parseInt(lineFromFile[0]))
             {
                 partyExists = true;
             }

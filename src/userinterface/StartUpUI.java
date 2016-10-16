@@ -10,7 +10,7 @@ package userinterface;
 
 import database.DatabaseAccess;
 import database.DatabaseInterface;
-import session.SessionInformation;
+import core.session.SessionInformation;
 
 public class StartUpUI {
 

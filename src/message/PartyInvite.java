@@ -1,4 +1,4 @@
-package session;
+package message;
 
 public class PartyInvite extends Invite
 {
@@ -24,12 +24,25 @@ public class PartyInvite extends Invite
     }
 
     @Override
-    public boolean equals(Invite otherInvite) {
-        return (senderID == otherInvite.getSenderID() && partyID == otherInvite.partyID);
+    public boolean equals(Object otherInvite) {
+        if(otherInvite != null) {
+            PartyInvite p = (PartyInvite) otherInvite;
+            return senderID == p.getSenderID() && partyID == p.partyID;
+        }
+        else
+            return false;
     }
 
     @Override
     public int getPartyID() {
         return partyID;
+    }
+
+    /**
+     * @return
+     * */
+    @Override
+    public int hashCode(){
+        return super.hashCode();
     }
 }

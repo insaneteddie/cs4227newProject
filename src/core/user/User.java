@@ -1,5 +1,5 @@
-package session;
-
+package core.user;
+//Making commit to show commit messaging.
 public abstract class User {
     protected int id;
     protected String name;

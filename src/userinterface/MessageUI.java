@@ -16,6 +16,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -44,10 +45,8 @@ public class MessageUI extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-
-            sessionInfo.logPlayerOut();
-            menuMgr.getMenuFromFactory(1);
-
+                sessionInfo.logPlayerOut();
+                menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
         mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
@@ -77,48 +76,48 @@ public class MessageUI extends Menu {
         inviteOptionPanel.setLayout(inviteOptionLayout);
         JButton acceptInviteButton = new JButton("Accept Invite");
         acceptInviteButton.addActionListener(e -> {
-            if (sessionInfo.isPlayerInParty()) {
-                JOptionPane.showMessageDialog(null, "To join a new party please leave the party you\nare currently in.", null, JOptionPane.WARNING_MESSAGE);
-            } else {
-                try {//first check if already in a party
+                if (sessionInfo.isPlayerInParty()) {
+                    JOptionPane.showMessageDialog(null, "To join a new party please leave the party you\nare currently in.", null, JOptionPane.WARNING_MESSAGE);
+                } else {
+                    try {//first check if already in a party
+                        int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
+                                + "\ninvite you would like to accept."));
+                        if (sessionInfo.isFriend(userid)) {
+                            sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
+                            sessionInfo.removeInvite(userid);
+                            sessionInfo.getPlayerInvites();
+                            menuMgr.getMenuFromFactory(4);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+        });
+        inviteOptionPanel.add(acceptInviteButton);
+        JButton declineInviteButton = new JButton("Decline Invite");
+        declineInviteButton.addActionListener(e ->{
+                try {
                     int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
-                            + "\ninvite you would like to accept."));
+                            + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
-                        sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
                         sessionInfo.removeInvite(userid);
                         sessionInfo.getPlayerInvites();
                         menuMgr.getMenuFromFactory(4);
-                    } else {
+                    }
+                    else{
                         JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
                 }
-            }
-        });
-        inviteOptionPanel.add(acceptInviteButton);
-        JButton declineInviteButton = new JButton("Decline Invite");
-        declineInviteButton.addActionListener(e -> {
-            try {
-                int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
-                        + "\ninvite you would like to decline."));
-                if (sessionInfo.isFriend(userid)) {
-                    sessionInfo.removeInvite(userid);
-                    sessionInfo.getPlayerInvites();
-                    menuMgr.getMenuFromFactory(4);
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-            }
         });
         inviteOptionPanel.add(declineInviteButton);
          JButton refreshInviteButton = new JButton("Refresh Invites");
         refreshInviteButton.addActionListener(e -> {
-            sessionInfo.getPlayerInvites();
-            populateInviteList(inviteList);
+                sessionInfo.getPlayerInvites();
+                populateInviteList(inviteList);
         });
         
         inviteOptionPanel.add(refreshInviteButton);
@@ -133,10 +132,8 @@ public class MessageUI extends Menu {
         bottomBarPanel.setLayout(bottomBarLayout);
         JButton returnButton = new JButton("<-Return");
         returnButton.addActionListener(e -> {
-
-            //sessionInfo.logPlayerOut();
-            menuMgr.getMenuFromFactory(2);
-
+                //sessionInfo.logPlayerOut();
+                menuMgr.getMenuFromFactory(2);
         });
         bottomBarPanel.add(returnButton);
         mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);
@@ -157,7 +154,7 @@ public class MessageUI extends Menu {
         inviteList.setText("");
         inviteList.append("Party Invitations:\n");
         if (sessionInfo != null) {
-            ArrayList<String> invitations = sessionInfo.getInviteMessages(); // get invite messages
+            List<String> invitations = sessionInfo.getInviteMessages(); // get invite messages
             if (invitations.size() > 0) {
                 inviteList.append(invitations.get(0) + "\n");
                 for (int i = 1; i < invitations.size(); i++) {

@@ -1,4 +1,4 @@
-package session;
+package message;
 
 public abstract class InviteFactory
 {

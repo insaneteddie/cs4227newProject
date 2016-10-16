@@ -1,4 +1,6 @@
-package session;
+package core.session;
+
+import core.user.SessionSubject;
 
 import java.util.ArrayList;
 

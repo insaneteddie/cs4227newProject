@@ -6,11 +6,20 @@
 *   Adapted file: Serenity_Gaming/ProcessInput.java
 *   Approximate use: 40%
 **/
-package session;
+package core.session;
 
+import core.user.Player;
 import database.DatabaseInterface;
-import java.util.ArrayList;
+import message.Invite;
+import message.InviteFactory;
+import message.PartyInviteFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *  Contains variables and methods dealing with an active core.session
+ * */
 public class SessionInformation {
 
     private static SessionInformation sessionInfo = null;
@@ -34,6 +43,9 @@ public class SessionInformation {
         return sessionInfo;
     }
 
+    /**
+     *  stores the Player instance in player
+     * */
     public void setPlayer() {
         player = Player.getInstance();
     }
@@ -42,6 +54,11 @@ public class SessionInformation {
         this.database = database;
     }
 
+    /**
+     * @param username
+     * @param password
+     * @return
+     * */
     public boolean canUserLogin(String username, String password) {
         boolean canLogin = false;
 
@@ -59,6 +76,10 @@ public class SessionInformation {
         return canLogin;
     }
 
+    /**
+     *  @param username
+     *  @return
+     * */
     public boolean doesPlayerExist(String username) {
         boolean exists = false;
 
@@ -73,18 +94,28 @@ public class SessionInformation {
         return exists;
     }
 
+    /**
+     * @param username
+     * @param email
+     * @return
+     * */
     public int checkUsernameEmail(String username, String email) {
         int existsType = -1;
 
         try {
             existsType = database.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
-            System.out.println("Error validating username/email: " + e.toString());
+            System.out.println("Error validaing username/email: " + e.toString());
         }
 
         return existsType;
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param email
+     * */
     public void createPlayer(String username, String password, String email) {
         try {
             database.createPlayer(username, password, email);
@@ -93,6 +124,9 @@ public class SessionInformation {
         }
     }
 
+    /**
+     * @param username
+     * */
     public void getPlayerDetails(String username) {
         try {
             String[] details = database.getPlayerDetails(username).split(",");
@@ -108,7 +142,7 @@ public class SessionInformation {
     public void getPlayerFriendList() {
         try {
             ArrayList<Integer> friends = database.getPlayerFriendList(player.getId());
-            if (friends.size() > 0) {
+            if (!friends.isEmpty()) {
                 for (int i = 0; i < friends.size(); i++) {
                     player.addFriend(friends.get(i));
                 }
@@ -120,7 +154,7 @@ public class SessionInformation {
     public void getPlayerInvites() {
         try {
             ArrayList<Integer[]> invites = database.getPlayerInvites(player.getId());
-            if (invites.size() > 0) {
+            if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
                     Invite newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
                     player.addInvite(newInvite);
@@ -136,7 +170,7 @@ public class SessionInformation {
             
             player.clearPartyInformation();
             player.updatePartyInformation(partyDetails);
-            player.update();
+            player.nofity();
         } catch (Exception e) {
         }
     }
@@ -145,25 +179,39 @@ public class SessionInformation {
         return party.doesPartyExist();
     }
 
+    /**
+     * @param id
+     * @return
+     * */
     public boolean isMemberOfParty(int id) {
         return party.isMember(id);
     }
 
+    /**
+     * @param id
+     * @return
+     * */
     public boolean isFriend(int id) {
         return player.isFriend(id);
     }
 
+    /**
+     *  Creates a party
+     * */
     public void createParty() {
         try {
             int partyID = database.createParty(player.getId());
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
-            player.update();
+            player.nofity();
         } catch (Exception e) {
 
         }
     }
 
+    /**
+     *  Leaves current party
+     * */
     public void leaveParty() {
         try {
             int partyID = party.getId();
@@ -171,7 +219,7 @@ public class SessionInformation {
             System.out.println(player.getId());
             database.removePlayerFromParty(partyID, player.getId());
             player.clearPartyInformation();
-            player.update();
+            player.nofity();
         } catch (Exception e) {
         }
     }
@@ -180,6 +228,9 @@ public class SessionInformation {
         return player.getName();
     }
 
+    /**
+     *  log off the player
+     * */
     public void logPlayerOut() {
         if (party.doesPartyExist()) {
             leaveParty();
@@ -196,12 +247,15 @@ public class SessionInformation {
         return party.getPartySize();
     }
 
+    /**
+     *  @param partyID
+     * */
     public void addPlayerToParty(int partyID) {
         try {
             player.clearPartyInformation();
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
-            player.update();
+            player.nofity();
             database.addPlayerToParty(player.getId(), partyID);
 
             getPartyDetails();
@@ -209,6 +263,9 @@ public class SessionInformation {
         }
     }
 
+    /**
+     *  @param playerID
+     * */
     public void removePlayerFromParty(int playerID) {
         try {
             database.removePlayerFromParty(party.getId(), playerID);
@@ -216,9 +273,12 @@ public class SessionInformation {
         }
     }
 
-    public ArrayList<String> getInviteMessages() {
-        ArrayList<String> invMsg = new ArrayList<>();
-        ArrayList<Invite> invites = player.getInvites();
+    /**
+     *  @return
+     * */
+    public List<String> getInviteMessages() {
+        List<String> invMsg = new ArrayList<String>();
+        List<Invite> invites = player.getInvites();
         for (int i = 0; i < invites.size(); i++) {
             invMsg.add(invites.get(i).getMessage());
         }
@@ -226,10 +286,16 @@ public class SessionInformation {
         return invMsg;
     }
 
-    public ArrayList<Integer> getPartyMembers() {
+    /**
+     *  @return
+     * */
+    public List<Integer> getPartyMembers() {
         return party.getPartyMembers();
     }
 
+    /**
+     *  @param friendToInvite
+     * */
     public void sendInvite(int friendToInvite) {
         try {
             database.addInvite(player.getId(), friendToInvite, party.getId());
@@ -237,9 +303,13 @@ public class SessionInformation {
         }
     }
 
+    /**
+     *  @param playerID
+     *  @return
+     * */
     public int getPartyIDFromSenderInvite(int playerID)
     {
-        ArrayList<Invite> myInvites = player.getInvites();
+        List<Invite> myInvites = player.getInvites();
         int partyID = 0;
         for (int i = 0; i < myInvites.size(); i++) {
             if (playerID == myInvites.get(i).getSenderID()) {
@@ -250,6 +320,9 @@ public class SessionInformation {
         System.out.println(partyID);
         return partyID;
     }
+    /**
+     *  @param playerID
+     * */
     public void removeInvite(int playerID) {
         int partyID = getPartyIDFromSenderInvite(playerID);
         player.removeInvite(playerID, partyID);
@@ -259,6 +332,10 @@ public class SessionInformation {
             System.out.println("check 4");
         }
     }
+
+    /**
+     *  @return
+     * */
     public int getPlayerId()
     {
         return player.getId();

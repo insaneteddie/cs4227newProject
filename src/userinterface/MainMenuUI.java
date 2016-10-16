@@ -40,10 +40,8 @@ public class MainMenuUI extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-
-            sessionInfo.logPlayerOut();
-            menuMgr.getMenuFromFactory(1);
-
+                sessionInfo.logPlayerOut();
+                menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
         mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
@@ -57,38 +55,46 @@ public class MainMenuUI extends Menu {
         GridLayout centerMenuButtonsLayout = new GridLayout(3, 3);
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton gameButton = new JButton("Games");
-        gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        gameButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Component not integrated");
+        });
         centerMenuButtonsPanel.add(gameButton);
         JButton profileButton = new JButton("Profile");
-        profileButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        profileButton.addActionListener(e -> {
+                JOptionPane.showMessageDialog(null, "Component not integrated");
+        });
         centerMenuButtonsPanel.add(profileButton);
         JButton friendsButton = new JButton("Friends List");
-        friendsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        friendsButton.addActionListener(e -> {
+                JOptionPane.showMessageDialog(null, "Component not integrated");
+        });
         centerMenuButtonsPanel.add(friendsButton);
         JButton communityButton = new JButton("Communities");
-        communityButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        communityButton.addActionListener(e -> {
+            JOptionPane.showMessageDialog(null, "Component not integrated");
+        });
         centerMenuButtonsPanel.add(communityButton);
         JButton partyButton = new JButton("Party");
         partyButton.addActionListener(e -> {
-            if (sessionInfo.isPlayerInParty()) {
-                System.out.println("getting partyDetails");
-                sessionInfo.getPartyDetails();
-
-                menuMgr.getMenuFromFactory(3);
-            } else {
-                int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
-                    System.out.println("clicked yes");
-                    sessionInfo.createParty();
+                if (sessionInfo.isPlayerInParty()) {
+                    System.out.println("getting partyDetails");
+                    sessionInfo.getPartyDetails();
+                    
+                    menuMgr.getMenuFromFactory(3);
+                } else {
+                    int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
+                    if (choice == JOptionPane.YES_OPTION) {
+                        System.out.println("clicked yes");
+                        sessionInfo.createParty();
+                    }
                 }
-            }
         });
         centerMenuButtonsPanel.add(partyButton);
         centerMenuButtonsPanel.add(communityButton);
         JButton messageButton = new JButton("Messages");
-        messageButton.addActionListener(e -> {
-            sessionInfo.getPlayerInvites();
-            menuMgr.getMenuFromFactory(4);
+        messageButton.addActionListener(e ->{
+                sessionInfo.getPlayerInvites();
+                menuMgr.getMenuFromFactory(4);
         });
         centerMenuButtonsPanel.add(messageButton);
         centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);

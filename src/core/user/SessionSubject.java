@@ -1,4 +1,6 @@
-package session;
+package core.user;
+
+import core.session.SessionObserver;
 
 import java.util.ArrayList;
 
@@ -8,7 +10,7 @@ public interface SessionSubject
     
     void detach(SessionObserver o);
     
-    void update();
+    void nofity();
     
     ArrayList<Integer> getState();
 }
