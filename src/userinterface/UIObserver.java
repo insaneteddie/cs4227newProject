@@ -10,5 +10,5 @@ package userinterface;
 
 public interface UIObserver
 {
-    public abstract void update(UISubject s);
+    void update(UISubject s);
 }

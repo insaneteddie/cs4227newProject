@@ -10,11 +10,11 @@ package userinterface;
 
 public interface UISubject {
 
-    public abstract void registerObserver(Screen scr);
+    void registerObserver(Screen scr);
 
-    public abstract void removeObserver();
+    void removeObserver();
 
-    public abstract void notifyObserver();
+    void notifyObserver();
 
-    public abstract Menu getUpdatedMenu();
+    Menu getUpdatedMenu();
 }

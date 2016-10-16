@@ -8,8 +8,7 @@
 **/
 package userinterface;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class Screen extends JFrame implements UIObserver {
 
@@ -20,7 +19,7 @@ public class Screen extends JFrame implements UIObserver {
         setSize(500, 500);
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     @Override

@@ -42,8 +42,11 @@ public class MenuFactory {
                 menu.setMenuManager(menuMgr);
                 break;
         }
-        menu.setSessionInformation(sessionInfo);
-        menu.setMenuManager(menuMgr);
-        return menu;
+        if(menu != null){
+            menu.setSessionInformation(sessionInfo);
+            menu.setMenuManager(menuMgr);
+            return menu;
+        }
+        return null;
     }
 }
