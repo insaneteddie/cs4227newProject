@@ -55,24 +55,16 @@ public class MainMenuUI extends Menu {
         GridLayout centerMenuButtonsLayout = new GridLayout(3, 3);
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton gameButton = new JButton("Games");
-        gameButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Component not integrated");
-        });
+        gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(gameButton);
         JButton profileButton = new JButton("Profile");
-        profileButton.addActionListener(e -> {
-                JOptionPane.showMessageDialog(null, "Component not integrated");
-        });
+        profileButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(profileButton);
         JButton friendsButton = new JButton("Friends List");
-        friendsButton.addActionListener(e -> {
-                JOptionPane.showMessageDialog(null, "Component not integrated");
-        });
+        friendsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(friendsButton);
         JButton communityButton = new JButton("Communities");
-        communityButton.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Component not integrated");
-        });
+        communityButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(communityButton);
         JButton partyButton = new JButton("Party");
         partyButton.addActionListener(e -> {
