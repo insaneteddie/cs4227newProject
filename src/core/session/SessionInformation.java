@@ -9,6 +9,7 @@
 package core.session;
 
 import core.user.Player;
+import core.utils.Log;
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;
@@ -70,7 +71,7 @@ public class SessionInformation {
                 getPlayerInvites();
             }
         } catch (Exception e) {
-            System.out.println("Error logging in: " + e.toString());
+            Log.logException(getClass().getName(),"Error logging in: ", e);
         }
 
         return canLogin;
@@ -88,7 +89,7 @@ public class SessionInformation {
                 exists = true;
             }
         } catch (Exception e) {
-            System.out.println("doesPlayerExist Error: " + e.toString());
+            Log.logException(getClass().getName(),"doesPlayerExist Error: ", e);
         }
 
         return exists;
@@ -105,7 +106,7 @@ public class SessionInformation {
         try {
             existsType = database.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
-            System.out.println("Error validaing username/email: " + e.toString());
+            Log.logException(getClass().getName(),"Error validating username/email: ", e);
         }
 
         return existsType;
@@ -120,7 +121,7 @@ public class SessionInformation {
         try {
             database.createPlayer(username, password, email);
         } catch (Exception e) {
-            System.out.println("Error creating player: " + e.toString());
+            Log.logException(getClass().getName(),"Error creating player: ", e);
         }
     }
 
@@ -135,7 +136,7 @@ public class SessionInformation {
             this.player.setName(details[1]);
             this.player.setEmail(details[2]);
         } catch (Exception e) {
-            System.out.println("Error getting player details: " + e.toString());
+            Log.logException(getClass().getName(),"Error getting player details: ", e);
         }
     }
 
@@ -148,6 +149,7 @@ public class SessionInformation {
                 }
             }
         } catch (Exception e) {
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -161,6 +163,7 @@ public class SessionInformation {
                 }
             }
         } catch (Exception e) {
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -172,6 +175,7 @@ public class SessionInformation {
             player.updatePartyInformation(partyDetails);
             player.update();
         } catch (Exception e) {
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -205,7 +209,7 @@ public class SessionInformation {
             player.addToPartyInformation(player.getId());
             player.update();
         } catch (Exception e) {
-
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -215,12 +219,13 @@ public class SessionInformation {
     public void leaveParty() {
         try {
             int partyID = party.getId();
-            System.out.println(partyID);
-            System.out.println(player.getId());
+            Log.logException(getClass().getName(),"Party ID: " + partyID);
+            Log.logException(getClass().getName(),"Player ID: " + player.getId());
             database.removePlayerFromParty(partyID, player.getId());
             player.clearPartyInformation();
             player.update();
         } catch (Exception e) {
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -235,7 +240,7 @@ public class SessionInformation {
         if (party.doesPartyExist()) {
             leaveParty();
         }
-        System.out.println("logged out");
+        Log.logException(getClass().getName(),"Logged out");
         player.resetValues();
     }
 
@@ -260,6 +265,7 @@ public class SessionInformation {
 
             getPartyDetails();
         } catch (Exception e) {
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -270,6 +276,7 @@ public class SessionInformation {
         try {
             database.removePlayerFromParty(party.getId(), playerID);
         } catch (Exception e) {
+            Log.logException(getClass().getName(), e);
         }
     }
 
@@ -277,7 +284,7 @@ public class SessionInformation {
      *  @return
      * */
     public List<String> getInviteMessages() {
-        List<String> invMsg = new ArrayList<String>();
+        List<String> invMsg = new ArrayList<>();
         List<Invite> invites = player.getInvites();
         for (int i = 0; i < invites.size(); i++) {
             invMsg.add(invites.get(i).getMessage());
@@ -300,6 +307,7 @@ public class SessionInformation {
         try {
             database.addInvite(player.getId(), friendToInvite, party.getId());
         } catch (Exception ex) {
+            Log.logException(getClass().getName(), ex);
         }
     }
 
@@ -317,7 +325,7 @@ public class SessionInformation {
                 break;
             }
         }
-        System.out.println(partyID);
+        Log.logException(getClass().getName(),"Party ID: " + partyID);
         return partyID;
     }
     /**
@@ -329,7 +337,7 @@ public class SessionInformation {
         try {
             database.removeInvite(playerID, player.getId(), partyID);
         } catch (Exception e) {
-            System.out.println("check 4");
+            Log.logException(getClass().getName(), e);
         }
     }
 
