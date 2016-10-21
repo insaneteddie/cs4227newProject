@@ -10,13 +10,15 @@ import java.util.logging.Logger;
  */
 public class Log {
     public static final String FILEPATH = "./Resources/logFile.log";
-    private static Logger logger;
+    private Logger logger;
     private static FileHandler fh;
     public static final String CLASSNAME = Log.class.getName();
 
-    private Log(){}
+    public Log(String classname){
+        setUpLogger(classname);
+    }
 
-    private static void setUpLogger(String name){
+    private void setUpLogger(String name){
         logger =  Logger.getLogger(name);
         if(fh == null){
             try {
@@ -29,16 +31,13 @@ public class Log {
         logger.setUseParentHandlers(false);
     }
 
-    public static void logException(String name, Exception e){
-        setUpLogger(name);
+    public void logException(Exception e){
         logger.log(Level.WARNING, e.getMessage());
     }
-    public static void logException(String name, String msg, Exception e){
-        setUpLogger(name);
+    public void logException(String msg, Exception e){
         logger.log(Level.WARNING, msg + "\t" + e.getMessage());
     }
-    public static void logException(String name, String desc){
-        setUpLogger(name);
+    public void logException(String desc){
         logger.log(Level.INFO, desc);
     }
 }
