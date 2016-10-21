@@ -9,7 +9,7 @@ import java.util.logging.Logger;
  * Created by David on 21/10/2016.
  */
 public class Log {
-    public static final String filepath = "./Resources/logFile.log";
+    public static final String FILEPATH = "./Resources/logFile.log";
     private static Logger logger;
     private static FileHandler fh;
 
