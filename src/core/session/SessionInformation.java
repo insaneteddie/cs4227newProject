@@ -105,7 +105,7 @@ public class SessionInformation {
         try {
             existsType = database.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
-            System.out.println("Error validaing username/email: " + e.toString());
+            System.out.println("Error validating username/email: " + e.toString());
         }
 
         return existsType;
@@ -277,7 +277,7 @@ public class SessionInformation {
      *  @return
      * */
     public List<String> getInviteMessages() {
-        List<String> invMsg = new ArrayList<String>();
+        List<String> invMsg = new ArrayList<>();
         List<Invite> invites = player.getInvites();
         for (int i = 0; i < invites.size(); i++) {
             invMsg.add(invites.get(i).getMessage());
