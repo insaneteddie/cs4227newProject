@@ -12,23 +12,24 @@ public class Log {
     public static final String FILEPATH = "./Resources/logFile.log";
     private static Logger logger;
     private static FileHandler fh;
+    public static final String CLASSNAME = Log.class.getName();
 
     private Log(){}
 
-    private void setUpLogger(String name){
+    private static void setUpLogger(String name){
         logger =  Logger.getLogger(name);
         if(fh == null){
             try {
-                fh = new FileHandler(filepath);
+                fh = new FileHandler(FILEPATH);
             } catch (IOException e) {
-                logException(getClass().getName(), e);
+                logException(CLASSNAME, e);
             }
         }
         logger.addHandler(fh);
         logger.setUseParentHandlers(false);
     }
 
-    public void logException(String name, Exception e){
+    public static void logException(String name, Exception e){
         setUpLogger(name);
         logger.log(Level.WARNING, e.getMessage());
     }
