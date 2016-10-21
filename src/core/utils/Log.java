@@ -33,4 +33,8 @@ public class Log {
         setUpLogger(name);
         logger.log(Level.WARNING, e.getMessage());
     }
+    public static void logException(String name, String msg, Exception e){
+        setUpLogger(name);
+        logger.log(Level.WARNING, msg + "\t" + e.getMessage());
+    }
 }
