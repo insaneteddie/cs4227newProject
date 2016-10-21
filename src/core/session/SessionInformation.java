@@ -170,7 +170,7 @@ public class SessionInformation {
             
             player.clearPartyInformation();
             player.updatePartyInformation(partyDetails);
-            player.nofity();
+            player.update();
         } catch (Exception e) {
         }
     }
@@ -203,7 +203,7 @@ public class SessionInformation {
             int partyID = database.createParty(player.getId());
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
-            player.nofity();
+            player.update();
         } catch (Exception e) {
 
         }
@@ -219,7 +219,7 @@ public class SessionInformation {
             System.out.println(player.getId());
             database.removePlayerFromParty(partyID, player.getId());
             player.clearPartyInformation();
-            player.nofity();
+            player.update();
         } catch (Exception e) {
         }
     }
@@ -255,7 +255,7 @@ public class SessionInformation {
             player.clearPartyInformation();
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
-            player.nofity();
+            player.update();
             database.addPlayerToParty(player.getId(), partyID);
 
             getPartyDetails();
