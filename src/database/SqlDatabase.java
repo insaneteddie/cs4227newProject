@@ -142,7 +142,7 @@ public class SqlDatabase {
             statement = connection.createStatement();
             //stupid mfking sql stuff
            /* PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name=? AND user_Pass=? VALUES(?,?)");
-
+        ///commm
             prepStatement.setString(1,user_Name);
             prepStatement.setString(2,user_Pass);
             //prepStatement.setString(3,user_Pass);
