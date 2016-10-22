@@ -343,7 +343,12 @@ public class DatabaseAccess implements DatabaseInterface {
         writeToFile(invites, false);
         file = null;
     }
-    
+
+    @Override
+    public void add_Friend(int user_Id, int friend_Id) {
+
+    }
+
     private ArrayList<String> fileToList() {
         ArrayList<String> list = new ArrayList<>();
         try {

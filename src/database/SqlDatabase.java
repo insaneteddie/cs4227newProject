@@ -192,8 +192,6 @@ public class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Name FROM users WHERE user_Id = ?");
             prepStatement.setInt(1,user_Id);
 
-
-
             ResultSet res = prepStatement.executeQuery();
             player_Name = res.getString("user_Name");
         } catch (SQLException e) {
