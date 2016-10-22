@@ -26,8 +26,11 @@ public class SqlDatabase {
     public Connection connection;
     public Statement statement;
 
+    public SqlDatabase(){
+        connectToDb();
+    }
     //String user,String pass - don't think its needed
-    public void connectToDb(String dbName) {
+    private void connectToDb() {
         //initialise to null
         connection = null;
         statement = null;
@@ -133,6 +136,45 @@ public class SqlDatabase {
         return canLogin;
     }
 
-    
+    public String get_PlayerName(int user_Id){
+        String player_Name = "";
+        System.out.println("checking player details");
+        try {
+            statement = connection.createStatement();
+            String sqlStatement = "SELECT EXISTS ( SELECT user_Name FROM "+userDB+" WHERE user_Id = "+user_Id +")";
+            ResultSet res = statement.executeQuery(sqlStatement);
+            player_Name = res.getString("user_Name");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return player_Name;
+    }
+
+    public int get_UserId(String username) {
+        int userId = 0;
+        try {
+            statement = connection.createStatement();
+            String sqlStatement = "SELECT EXISTS ( SELECT user_Id FROM "+userDB+" WHERE user_Id = "+username +")";
+            ResultSet res = statement.executeQuery(sqlStatement);
+            userId = res.getInt("user_Id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return userId;
+    }
 
 }
