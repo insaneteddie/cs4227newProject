@@ -7,10 +7,10 @@ import java.util.Vector;
  */
 public class ClientRequestDispatcher implements ClientRequestInterceptor {
     private static ClientRequestDispatcher dispatcher;
-    Vector interceptors;
+    Vector _interceptors;
 
     private ClientRequestDispatcher(){
-        interceptors = new Vector();
+        _interceptors = new Vector();
     }
 
     public static ClientRequestDispatcher getInstance(){
@@ -22,19 +22,33 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
 
     @Override
     public void onPreMarshalRequest(UnmarshaledRequest contextObject) {
-
+        //default implementation
+        Vector interceptors;
+        synchronized(this){
+            interceptors = (Vector)_interceptors.clone();
+        }
+        for(Object i : interceptors){
+            ((ClientRequestInterceptor)i).onPreMarshalRequest(contextObject);
+        }
     }
 
     @Override
     public void onPostMarshalRequest(MarshaledRequest contextObject) {
-
+        //default implementation
+        Vector interceptors;
+        synchronized(this){
+            interceptors = (Vector)_interceptors.clone();
+        }
+        for(Object i : interceptors){
+            ((ClientRequestInterceptor)i).onPostMarshalRequest(contextObject);
+        }
     }
 
     synchronized public void registerClientRequestInterceptor(ClientRequestInterceptor i){
-        interceptors.addElement(i);
+        _interceptors.addElement(i);
     }
 
     synchronized public void removeClientRequestInterceptor(ClientRequestInterceptor i){
-        interceptors.remove(i);
+        _interceptors.remove(i);
     }
 }
