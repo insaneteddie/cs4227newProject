@@ -11,7 +11,7 @@ public class SqlDatabase {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     //set up to connect to an rds instance on my aws account
-    static final String DB_URL = "jdbc:mysql:cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com/awesome_gaming:3306";
+    static final String DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
     private int userCount = 100;
     //  Database credentials
     static final String USER = "admin";
@@ -77,15 +77,33 @@ public class SqlDatabase {
                 // user_parties
     //add a user to the user table should look at hash tables.
     public void add_User(String user_Name, String user_Pass, String email) {
+
+
+        System.out.println("Attempting to Connect");
+        //connection
+
         System.out.println("Inserting records into the table...");
         try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
             userCount++;
             statement = connection.createStatement();
-            String sqlStatement = "INSERT INTO " + userDB +
-                    " VALUES (" + userCount + ", '" + user_Name + "', '" + user_Pass + "', " + email + ")";
-            statement.executeUpdate(sqlStatement);
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users (user_Id, user_Name, user_Pass, user_Email) VALUES(?,?,?,?)");
+            //prepStatement.setString(1,userDB);
+            prepStatement.setInt(1,userCount);
+            prepStatement.setString(2,user_Name);
+            prepStatement.setString(3,user_Pass);
+            prepStatement.setString(4,email);
+            prepStatement.executeUpdate();
+            /*String preStatement = "INSERT INTO " + userDB +
+                    " VALUES (" + userCount + ", '" + user_Name + "', '" + user_Pass + "', " + email + ")";*/
+
+           // statement.executeUpdate(sqlStatement);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException ce) {
+            ce.printStackTrace();
+            ce.getException();
         } finally {
             try {
                 if (statement != null)

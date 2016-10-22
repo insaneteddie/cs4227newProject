@@ -18,7 +18,7 @@ public class DatabaseAdapter implements DatabaseInterface {
     public boolean canLogin(String username, String password) throws Exception {
         return sqlDB.can_Login(username,password);
     }
-
+    //this needs to be edited... seems a bit pointless to pass in the username to get the username
     @Override
     public String getPlayerDetails(String username) throws Exception {
         return sqlDB.get_PlayerName(sqlDB.get_UserId(username));

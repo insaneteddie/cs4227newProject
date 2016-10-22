@@ -10,6 +10,7 @@ package core.session;
 
 import core.user.Player;
 import core.utils.Log;
+import database.DatabaseAdapter;
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;
@@ -120,7 +121,10 @@ public class SessionInformation {
      * */
     public void createPlayer(String username, String password, String email) {
         try {
-            database.createPlayer(username, password, email);
+
+            DatabaseAdapter dbA = new DatabaseAdapter();
+            dbA.createPlayer(username,password,email);
+            //database.createPlayer(username, password, email);
         } catch (Exception e) {
             log.logException("Error creating player: ", e);
         }
