@@ -278,7 +278,7 @@ public class SqlDatabase {
         }
         return checker;
     }
-    //is partyfull method
+    //is party full method
     public boolean isPartyFull(int party_Id)
     {
         boolean checker = true;
