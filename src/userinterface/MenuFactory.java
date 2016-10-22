@@ -30,7 +30,7 @@ public class MenuFactory {
                 menu.setMenuManager(menuMgr);
                 break;
             case 2:
-                menu = new MainMenuUI();
+                menu = new MainMenu();
                 menu.setMenuManager(menuMgr);
                 break; 
             case 3:

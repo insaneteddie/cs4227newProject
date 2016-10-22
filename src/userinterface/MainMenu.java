@@ -19,9 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class MainMenuUI extends Menu {
+public class MainMenu extends Menu {
 
-    public MainMenuUI() {
+    public MainMenu() {
         showMainMenu();
     }
 
