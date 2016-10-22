@@ -26,19 +26,19 @@ public class MenuFactory {
 
         switch (menuID) {
             case 1:
-                menu = new StartScreenUI(500, 500);
+                menu = new StartScreenMenu(500, 500);
                 menu.setMenuManager(menuMgr);
                 break;
             case 2:
-                menu = new MainMenuUI();
+                menu = new MainMenu();
                 menu.setMenuManager(menuMgr);
                 break; 
             case 3:
-                menu = new PartyUI();
+                menu = new PartyMenu();
                 menu.setMenuManager(menuMgr);
                 break;
             case 4:
-                menu = new MessageUI();
+                menu = new MessageMenu();
                 menu.setMenuManager(menuMgr);
                 break;
         }

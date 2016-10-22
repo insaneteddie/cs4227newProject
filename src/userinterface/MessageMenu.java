@@ -24,9 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class MessageUI extends Menu {
+public class MessageMenu extends Menu {
 
-    public MessageUI() {
+    public MessageMenu() {
         showMessageMenu();
     }
 
