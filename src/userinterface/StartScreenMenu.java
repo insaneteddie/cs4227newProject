@@ -25,16 +25,16 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
-public class StartScreenUI extends Menu {
+public class StartScreenMenu extends Menu {
 
     private int SCREEN_WIDTH = 0;
     private int SCREEN_HEIGHT = 0;
 
-    public StartScreenUI() {
+    public StartScreenMenu() {
 
     }
 
-    public StartScreenUI(int SCREEN_WIDTH, int SCREEN_HEIGHT) {
+    public StartScreenMenu(int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         this.SCREEN_WIDTH = SCREEN_WIDTH;
         this.SCREEN_HEIGHT = SCREEN_HEIGHT;
         showLoginScreen();

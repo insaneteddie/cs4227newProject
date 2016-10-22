@@ -26,7 +26,7 @@ public class MenuFactory {
 
         switch (menuID) {
             case 1:
-                menu = new StartScreenUI(500, 500);
+                menu = new StartScreenMenu(500, 500);
                 menu.setMenuManager(menuMgr);
                 break;
             case 2:
