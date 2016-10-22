@@ -88,17 +88,15 @@ public class SqlDatabase {
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
             userCount++;
             statement = connection.createStatement();
+            //stupid mfking sql stuff
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users (user_Id, user_Name, user_Pass, user_Email) VALUES(?,?,?,?)");
-            //prepStatement.setString(1,userDB);
+
             prepStatement.setInt(1,userCount);
             prepStatement.setString(2,user_Name);
             prepStatement.setString(3,user_Pass);
             prepStatement.setString(4,email);
             prepStatement.executeUpdate();
-            /*String preStatement = "INSERT INTO " + userDB +
-                    " VALUES (" + userCount + ", '" + user_Name + "', '" + user_Pass + "', " + email + ")";*/
 
-           // statement.executeUpdate(sqlStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException ce) {
