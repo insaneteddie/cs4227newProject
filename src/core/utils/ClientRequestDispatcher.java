@@ -29,4 +29,12 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     public void onPostMarshalRequest(MarshaledRequest contextObject) {
 
     }
+
+    synchronized public void registerClientRequestInterceptor(ClientRequestInterceptor i){
+        interceptors.addElement(i);
+    }
+
+    synchronized public void removeClientRequestInterceptor(ClientRequestInterceptor i){
+        interceptors.remove(i);
+    }
 }
