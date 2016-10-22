@@ -278,4 +278,42 @@ public class SqlDatabase {
         }
         return checker;
     }
+    //is partyfull method
+    public boolean isPartyFull(int party_Id)
+    {
+        boolean checker = true;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
+            prepStatement.setInt(1,party_Id);
+            //prepStatement.setString(2,email);
+
+            ResultSet res = prepStatement.executeQuery();
+            if(!res.next())
+            {
+                checker = false;
+                return checker;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return checker;
+    }
 }

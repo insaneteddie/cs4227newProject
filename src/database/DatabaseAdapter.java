@@ -51,7 +51,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public boolean isPartyFull(int partyID) throws Exception {
-        return false;
+        return sqlDB.isPartyFull(partyID);
     }
 
     @Override
