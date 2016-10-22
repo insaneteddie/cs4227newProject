@@ -141,24 +141,14 @@ public class SqlDatabase {
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
-           /* PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name=? AND user_Pass=? VALUES(?,?)");
-        ///commm
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
+
             prepStatement.setString(1,user_Name);
             prepStatement.setString(2,user_Pass);
-            //prepStatement.setString(3,user_Pass);
-            //prepStatement.setString(4,email);
-            int testInt = prepStatement.executeUpdate();
-            if( testInt > 0)
-            {
-                canLogin = true;
-            }*/
-            //statement = connection.createStatement();
-            //String sqlStatement = "SELECT * FROM users WHERE user_Name = "+user_Name +"AND user_Pass ="+user_Pass;//canLogin = statement.execute(sqlStatement);
-            //ResultSet rs = statement.executeQuery(sqlStatement);
-            //if(user_Name.equals( rs.getString("user_name")) && user_Pass.equals(rs.getString("user_Pass")))
-            //{
-              //  canLogin=true;
-            //}
+            //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
+            canLogin = prepStatement.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
