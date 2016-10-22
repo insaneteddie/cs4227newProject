@@ -24,9 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class PartyUI extends Menu {
+public class PartyMenu extends Menu {
 
-    public PartyUI() {
+    public PartyMenu() {
         showPartyMenu();
     }
 

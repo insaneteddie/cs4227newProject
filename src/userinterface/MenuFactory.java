@@ -34,7 +34,7 @@ public class MenuFactory {
                 menu.setMenuManager(menuMgr);
                 break; 
             case 3:
-                menu = new PartyUI();
+                menu = new PartyMenu();
                 menu.setMenuManager(menuMgr);
                 break;
             case 4:
