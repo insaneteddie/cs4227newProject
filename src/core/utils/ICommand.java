@@ -5,4 +5,5 @@ package core.utils;
  */
 public interface ICommand {
     void execute();
+    String getCommandName();
 }
