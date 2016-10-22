@@ -64,9 +64,9 @@ public class SessionInformation {
      * */
     public boolean canUserLogin(String username, String password) {
         boolean canLogin = false;
-
+        //DatabaseAdapter dbA = new DatabaseAdapter();
         try {
-            canLogin = database.canLogin(username, password);
+            canLogin = database.canLogin(username, password);//dbA.canLogin(username,password);
             if (canLogin) {
                 getPlayerDetails(username);
                 getPlayerFriendList();

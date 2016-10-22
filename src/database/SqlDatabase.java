@@ -136,11 +136,34 @@ public class SqlDatabase {
         boolean canLogin = false;
         System.out.println("checking login details");
         try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
             statement = connection.createStatement();
-            String sqlStatement = "SELECT EXISTS ( SELECT * FROM "+userDB+" WHERE username = "+user_Name +"AND password ="+user_Pass+")";
-            canLogin = statement.execute(sqlStatement);
+            //stupid mfking sql stuff
+           /* PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name=? AND user_Pass=? VALUES(?,?)");
+
+            prepStatement.setString(1,user_Name);
+            prepStatement.setString(2,user_Pass);
+            //prepStatement.setString(3,user_Pass);
+            //prepStatement.setString(4,email);
+            int testInt = prepStatement.executeUpdate();
+            if( testInt > 0)
+            {
+                canLogin = true;
+            }*/
+            //statement = connection.createStatement();
+            //String sqlStatement = "SELECT * FROM users WHERE user_Name = "+user_Name +"AND user_Pass ="+user_Pass;//canLogin = statement.execute(sqlStatement);
+            //ResultSet rs = statement.executeQuery(sqlStatement);
+            //if(user_Name.equals( rs.getString("user_name")) && user_Pass.equals(rs.getString("user_Pass")))
+            //{
+              //  canLogin=true;
+            //}
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
         } finally {
             try {
                 if (statement != null)
