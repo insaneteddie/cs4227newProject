@@ -16,6 +16,13 @@ public class SqlDatabase {
     //  Database credentials
     static final String USER = "admin";
     static final String PASS = "teamawesome";
+
+    protected static final String userDB = "users";
+    protected static final String friendDB = "user_friends";
+    protected static final String gameDB = "user_games";
+    protected static final String inviteDB = "user_invites";
+    protected static final String messagesDB = "user_messages";
+
     public Connection connection;
     public Statement statement;
 
@@ -65,12 +72,13 @@ public class SqlDatabase {
                 // user_games,
                 // user_invites,
                 // user_parties
-
-    public void add_User(String sql_table, String user_Name, String user_Pass, String email) {
+    //add a user to the user table should look at hash tables.
+    public void add_User(String user_Name, String user_Pass, String email) {
         System.out.println("Inserting records into the table...");
         try {
+            userCount++;
             statement = connection.createStatement();
-            String sqlStatement = "INSERT INTO " + sql_table +
+            String sqlStatement = "INSERT INTO " + userDB +
                     " VALUES (" + userCount + ", '" + user_Name + "', '" + user_Pass + "', " + email + ")";
             statement.executeUpdate(sqlStatement);
         } catch (SQLException e) {
@@ -85,12 +93,12 @@ public class SqlDatabase {
         }
 
     }
-
-    public void add_friend(String sql_table, int user_Id, int friend_Id) {
+    //method to add a friend we need to add this to the interface
+    public void add_Friend(int user_Id, int friend_Id) {
         System.out.println("Inserting records into the table...");
         try {
             statement = connection.createStatement();
-            String sqlStatement = "INSERT INTO " + sql_table +
+            String sqlStatement = "INSERT INTO " + friendDB +
                     " VALUES ( , '" + user_Id + "', '" + friend_Id + "',)";
             statement.executeUpdate(sqlStatement);
         } catch (SQLException e) {
@@ -103,8 +111,28 @@ public class SqlDatabase {
                 se.printStackTrace();
             }
         }
-
+    }
+    //checks the username and password from the users database
+    public boolean can_Login(String user_Name,String user_Pass){
+        boolean canLogin = false;
+        System.out.println("checking login details");
+        try {
+            statement = connection.createStatement();
+            String sqlStatement = "SELECT EXISTS ( SELECT * FROM "+userDB+" WHERE username = "+user_Name +"AND password ="+user_Pass+")";
+            canLogin = statement.execute(sqlStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return canLogin;
     }
 
+    
 
 }

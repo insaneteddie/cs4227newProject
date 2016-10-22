@@ -7,14 +7,14 @@ import java.util.ArrayList;
  */
 public class DatabaseAdapter implements DatabaseInterface {
     public SqlDatabase sqlDB;
-
-    public DatabaseAdapter(String dbName){
+    // k im not sure about this....
+    public DatabaseAdapter(){
         sqlDB = new SqlDatabase();
-        sqlDB.connectToDb(dbName);
+        //sqlDB.connectToDb(dbName);
     }
     @Override
     public boolean canLogin(String username, String password) throws Exception {
-        return false;
+        return sqlDB.can_Login(username,password);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public void createPlayer(String username, String password, String email) throws Exception {
-            sqlDB.add_User("users",username,password,email);
+            sqlDB.add_User(username,password,email);
     }
 
     @Override
