@@ -38,7 +38,7 @@ public class MenuFactory {
                 menu.setMenuManager(menuMgr);
                 break;
             case 4:
-                menu = new MessageUI();
+                menu = new MessageMenu();
                 menu.setMenuManager(menuMgr);
                 break;
         }
