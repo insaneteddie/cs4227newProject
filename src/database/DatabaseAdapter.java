@@ -66,7 +66,8 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public int checkUserNameAndEmail(String username, String email) throws Exception {
-        return 0;
+        return sqlDB.check_Name_Email(username,email);
+        //return 0;
     }
 
     @Override

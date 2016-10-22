@@ -240,4 +240,42 @@ public class SqlDatabase {
         return userId;
     }
 
+    //check username,and email
+    public int check_Name_Email(String user_Name,String email)
+    {
+        int checker = 0;
+        System.out.println("checking player details");
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
+            prepStatement.setString(1,user_Name);
+            prepStatement.setString(2,email);
+
+            ResultSet res = prepStatement.executeQuery();
+            if(!res.next())
+            {
+                checker = 1;
+                return checker;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return checker;
+    }
 }
