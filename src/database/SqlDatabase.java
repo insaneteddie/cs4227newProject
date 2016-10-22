@@ -240,4 +240,80 @@ public class SqlDatabase {
         return userId;
     }
 
+    //check username,and email
+    public int check_Name_Email(String user_Name,String email)
+    {
+        int checker = 0;
+        System.out.println("checking player details");
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
+            prepStatement.setString(1,user_Name);
+            prepStatement.setString(2,email);
+
+            ResultSet res = prepStatement.executeQuery();
+            if(!res.next())
+            {
+                checker = 1;
+                return checker;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return checker;
+    }
+    //is party full method
+    public boolean isPartyFull(int party_Id)
+    {
+        boolean checker = true;
+
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
+            prepStatement.setInt(1,party_Id);
+            //prepStatement.setString(2,email);
+
+            ResultSet res = prepStatement.executeQuery();
+            if(!res.next())
+            {
+                checker = false;
+                return checker;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return checker;
+    }
 }
