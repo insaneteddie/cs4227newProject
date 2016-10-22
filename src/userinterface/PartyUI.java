@@ -146,9 +146,7 @@ public class PartyUI extends Menu {
         });
         centerMenuButtonsPanel.add(removeMemberButton);
         JButton gameButton = new JButton("Games");
-        gameButton.addActionListener(e -> {
-                JOptionPane.showMessageDialog(null, "Component not integrated");
-        });
+        gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(gameButton);
         centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);
 
@@ -159,9 +157,7 @@ public class PartyUI extends Menu {
         bottomBarLayout.setAlignment(FlowLayout.LEFT);
         bottomBarPanel.setLayout(bottomBarLayout);
         JButton returnButton = new JButton("<-Return");
-        returnButton.addActionListener(e -> {
-                menuMgr.getMenuFromFactory(2);
-        });
+        returnButton.addActionListener(e -> menuMgr.getMenuFromFactory(2));
         bottomBarPanel.add(returnButton);
         mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);
         panel = mainMenuPanel;

@@ -160,7 +160,7 @@ public class StartScreenUI extends Menu {
         JButton createButton = new JButton("Create");
         createButton.addActionListener(e ->  {
                 /* Regex to ensure email given is correct format */
-                String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                String emailPattern = "^[_A-Za-z0-9-+]+(\\.[_A-Za-z0-9-]+)*@"
                         + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
                 String pPattern = "";
                 String username = getUsername.getText().toLowerCase();
