@@ -11,35 +11,31 @@ public class SqlDatabase {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     //set up to connect to an rds instance on my aws account
-    static final String DB_URL = "jdbc:cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306";
-
+    static final String DB_URL = "jdbc:mysql:cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com/awesome_gaming:3306";
+    private int userCount = 100;
     //  Database credentials
     static final String USER = "admin";
     static final String PASS = "teamawesome";
+    public Connection connection;
+    public Statement statement;
 
-    public void connectToDb(String user,String pass){
+    //String user,String pass - don't think its needed
+    public void connectToDb(String dbName) {
+        //initialise to null
+        connection = null;
+        statement = null;
 
-
-        Connection connection = null;
-        Statement statement = null;
-
-        try{
+        try {
             //Register JDBC driver
             Class.forName(JDBC_DRIVER);
 
             System.out.println("Attempting to Connect");
             //connection
-            if(user==null || pass==null) {
-                connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            }else
-            {
-                connection = DriverManager.getConnection(DB_URL,user,pass);
-            }
-            //creating db to test
-            statement = connection.createStatement();
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            String sqlString = "CREATE DATABASE AWESOME_PLAYERS";
-            statement.execute(sqlString);
+
+            // String sqlString = "CREATE DATABASE "+ dbName;
+            // statement.execute(sqlString);
 
 
         } catch (ClassNotFoundException e) {
@@ -48,19 +44,67 @@ public class SqlDatabase {
             se.printStackTrace();
         } finally {
             try {
-                if (statement != null)
+                /*if (statement != null)
                     statement.close();
             } catch (SQLException se2) {
                 se2.printStackTrace();//nothing else to be done
-            }try {
-                if(connection!=null)
+            }try {*/
+                if (connection != null)
                     connection.close();
             } catch (SQLException se) {
                 se.printStackTrace();
             }
         }//end finally
 
-
     }//end of connection method
+
+                //table name,columns *string is varchar, int is int
+                // users, String table name,String user_Name, String user_Pass, String email
+                // user_friends,int user_Id (from users table),int friend_Id from users
+                // user_messages,
+                // user_games,
+                // user_invites,
+                // user_parties
+
+    public void add_User(String sql_table, String user_Name, String user_Pass, String email) {
+        System.out.println("Inserting records into the table...");
+        try {
+            statement = connection.createStatement();
+            String sqlStatement = "INSERT INTO " + sql_table +
+                    " VALUES (" + userCount + ", '" + user_Name + "', '" + user_Pass + "', " + email + ")";
+            statement.executeUpdate(sqlStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+
+    }
+
+    public void add_friend(String sql_table, int user_Id, int friend_Id) {
+        System.out.println("Inserting records into the table...");
+        try {
+            statement = connection.createStatement();
+            String sqlStatement = "INSERT INTO " + sql_table +
+                    " VALUES ( , '" + user_Id + "', '" + friend_Id + "',)";
+            statement.executeUpdate(sqlStatement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+
+    }
+
 
 }

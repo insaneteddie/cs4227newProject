@@ -6,10 +6,11 @@ import java.util.ArrayList;
  * Created by s_harte CS4227 Awesome Gaming  on 10/20/2016.
  */
 public class DatabaseAdapter implements DatabaseInterface {
+    public SqlDatabase sqlDB;
 
-    public DatabaseAdapter(){
-        SqlDatabase sqlDB = new SqlDatabase();
-        sqlDB.connectToDb(null,null);
+    public DatabaseAdapter(String dbName){
+        sqlDB = new SqlDatabase();
+        sqlDB.connectToDb(dbName);
     }
     @Override
     public boolean canLogin(String username, String password) throws Exception {
@@ -33,7 +34,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public void createPlayer(String username, String password, String email) throws Exception {
-
+            sqlDB.add_User("users",username,password,email);
     }
 
     @Override
