@@ -93,4 +93,9 @@ public class DatabaseAdapter implements DatabaseInterface {
     public void removeInvite(int senderID, int receiverID, int partyID) throws Exception {
 
     }
+
+    @Override
+    public void add_Friend(int user_Id, int friend_Id) {
+        sqlDB.add_Friend(user_Id,friend_Id);
+    }
 }

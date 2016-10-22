@@ -13,6 +13,7 @@ public class SqlDatabase {
     //set up to connect to an rds instance on my aws account
     static final String DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
     private int userCount = 100;
+    private int friendDB_Id = 100;
     //  Database credentials
     static final String USER = "admin";
     static final String PASS = "teamawesome";
@@ -116,12 +117,25 @@ public class SqlDatabase {
     public void add_Friend(int user_Id, int friend_Id) {
         System.out.println("Inserting records into the table...");
         try {
+            friendDB_Id++;
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
             statement = connection.createStatement();
-            String sqlStatement = "INSERT INTO " + friendDB +
-                    " VALUES ( , '" + user_Id + "', '" + friend_Id + "',)";
-            statement.executeUpdate(sqlStatement);
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?, ?)");
+
+            prepStatement.setInt(1,friendDB_Id);
+            prepStatement.setInt(2,user_Id);
+            prepStatement.setInt(3,friend_Id);
+
+            prepStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
         } finally {
             try {
                 if (statement != null)
@@ -141,24 +155,14 @@ public class SqlDatabase {
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
-           /* PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name=? AND user_Pass=? VALUES(?,?)");
-        ///commm
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
+
             prepStatement.setString(1,user_Name);
             prepStatement.setString(2,user_Pass);
-            //prepStatement.setString(3,user_Pass);
-            //prepStatement.setString(4,email);
-            int testInt = prepStatement.executeUpdate();
-            if( testInt > 0)
-            {
-                canLogin = true;
-            }*/
-            //statement = connection.createStatement();
-            //String sqlStatement = "SELECT * FROM users WHERE user_Name = "+user_Name +"AND user_Pass ="+user_Pass;//canLogin = statement.execute(sqlStatement);
-            //ResultSet rs = statement.executeQuery(sqlStatement);
-            //if(user_Name.equals( rs.getString("user_name")) && user_Pass.equals(rs.getString("user_Pass")))
-            //{
-              //  canLogin=true;
-            //}
+            //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
+            canLogin = prepStatement.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -174,17 +178,27 @@ public class SqlDatabase {
         }
         return canLogin;
     }
-
+    //needs testing too...
     public String get_PlayerName(int user_Id){
         String player_Name = "";
         System.out.println("checking player details");
         try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
             statement = connection.createStatement();
-            String sqlStatement = "SELECT EXISTS ( SELECT user_Name FROM "+userDB+" WHERE user_Id = "+user_Id +")";
-            ResultSet res = statement.executeQuery(sqlStatement);
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Name FROM users WHERE user_Id = ?");
+            prepStatement.setInt(1,user_Id);
+
+            ResultSet res = prepStatement.executeQuery();
             player_Name = res.getString("user_Name");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
         } finally {
             try {
                 if (statement != null)
@@ -195,16 +209,26 @@ public class SqlDatabase {
         }
         return player_Name;
     }
-
-    public int get_UserId(String username) {
+    //haven't tested yet...
+    public int get_UserId(String user_Name) {
         int userId = 0;
         try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
             statement = connection.createStatement();
-            String sqlStatement = "SELECT EXISTS ( SELECT user_Id FROM "+userDB+" WHERE user_Id = "+username +")";
-            ResultSet res = statement.executeQuery(sqlStatement);
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id FROM users WHERE user_Name = ?");
+            prepStatement.setString(1,user_Name);
+
+            ResultSet res = prepStatement.executeQuery();
             userId = res.getInt("user_Id");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
         } finally {
             try {
                 if (statement != null)

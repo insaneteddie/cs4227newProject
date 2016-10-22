@@ -45,4 +45,6 @@ public interface DatabaseInterface {
     void addInvite(int senderID, int receiverID, int partyID) throws Exception;
 
     void removeInvite(int senderID, int receiverID, int partyID) throws Exception;
+
+    void add_Friend(int user_Id, int friend_Id);
 }
