@@ -1,11 +1,4 @@
-
 package core.utils;
-
-import org.junit.Before;
-
-import static junit.framework.Assert.*;
-
-
 /**
  * Created by David on 21/10/2016.
  */

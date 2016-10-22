@@ -23,12 +23,12 @@ public class Log {
         if(fh == null){
             try {
                 fh = new FileHandler(FILEPATH);
+                logger.addHandler(fh);
+                logger.setUseParentHandlers(false);
             } catch (IOException e) {
                 logException(CLASSNAME, e);
             }
         }
-        logger.addHandler(fh);
-        logger.setUseParentHandlers(false);
     }
 
     public void logException(Exception e){
