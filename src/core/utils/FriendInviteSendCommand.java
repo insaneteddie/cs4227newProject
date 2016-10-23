@@ -3,7 +3,7 @@ package core.utils;
 /**
  * Created by David on 23/10/2016.
  */
-public class InviteSendCommand implements ICommand {
+public class FriendInviteSendCommand implements ICommand {
     @Override
     public void execute() {
 
