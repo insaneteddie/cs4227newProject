@@ -399,7 +399,7 @@ public class SqlDatabase {
         }
         return invitesList;
     }
-    //takes in party creator user_Id and sets it as leader_Id in the table
+    //takes in party creator user_Id and sets it as leader_Id in the table :)
     public int create_Party(int leader_Id)
     {
         int party_Id;
