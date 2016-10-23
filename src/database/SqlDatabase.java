@@ -14,6 +14,7 @@ public class SqlDatabase {
     static final String DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
     private int userCount = 100;
     private int friendDB_Id = 100;
+    private int partyDB_Id = 100;
     //  Database credentials
     static final String USER = "admin";
     static final String PASS = "teamawesome";
@@ -398,5 +399,44 @@ public class SqlDatabase {
         }
         return invitesList;
     }
+    //takes in party creator user_Id and sets it as leader_Id in the table
+    public int create_Party(int leader_Id)
+    {
+        int party_Id;
+        System.out.println("Inserting records into the table...");
+        try {
 
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (party_Id, leader_Id) VALUES( ?, ?)");
+
+            prepStatement.setInt(1,partyDB_Id);
+            prepStatement.setInt(2,leader_Id);
+
+
+            prepStatement.executeUpdate();
+            party_Id = partyDB_Id;
+            partyDB_Id++;
+            return party_Id;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return 0;
+    }
 }

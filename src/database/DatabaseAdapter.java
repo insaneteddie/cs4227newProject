@@ -39,9 +39,10 @@ public class DatabaseAdapter implements DatabaseInterface {
             sqlDB.add_User(username,password,email);
     }
 
+    //returns party_Id or 0
     @Override
     public int createParty(int partyLeaderID) throws Exception {
-        return 0;
+        return sqlDB.create_Party(partyLeaderID);
     }
 
     @Override
