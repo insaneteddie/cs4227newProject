@@ -5,11 +5,11 @@ import core.session.SessionInformation;
 /**
  * Created by David on 23/10/2016.
  */
-public class PartyAddCommand implements ICommand {
+public class PartyMemberAddCommand implements ICommand {
     private final String name;
     private int userId;
 
-    public PartyAddCommand(String name){
+    public PartyMemberAddCommand(String name){
         this.name = name;
     }
 
