@@ -8,6 +8,8 @@
 **/
 package userinterface;
 
+import core.utils.SessionController;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -71,7 +73,7 @@ public class MainMenu extends Menu {
                 if (sessionInfo.isPlayerInParty()) {
                     System.out.println("getting partyDetails");
                     sessionInfo.getPartyDetails();
-                    
+
                     menuMgr.getMenuFromFactory(3);
                 } else {
                     int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
