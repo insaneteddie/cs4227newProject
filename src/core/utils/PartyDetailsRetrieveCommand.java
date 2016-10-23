@@ -6,7 +6,7 @@ import core.session.SessionInformation;
  * Created by David on 23/10/2016.
  */
 public class PartyDetailsRetrieveCommand implements ICommand {
-    private String name;
+    private final String name;
 
     public PartyDetailsRetrieveCommand(String name){
         this.name = name;
