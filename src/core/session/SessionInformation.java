@@ -9,7 +9,7 @@
 package core.session;
 
 import core.user.Player;
-import core.utils.Log;
+import core.utils.*;
 import database.DatabaseAdapter;
 import database.DatabaseInterface;
 import message.Invite;
@@ -32,6 +32,7 @@ public class SessionInformation {
     private final Log log = new Log(getClass().getName());
     
     private SessionInformation() {
+        setUpController();
         setPlayer();
         party = new Party();
         player.attach(party);
@@ -44,6 +45,22 @@ public class SessionInformation {
         }
 
         return sessionInfo;
+    }
+
+    /**
+     * instantiate a SessionController object and add default commands */
+    public void setUpController(){
+        SessionController.getInstance().addCommand(new FriendInviteSendCommand("FRIEND_INVITE_SEND"));
+        SessionController.getInstance().addCommand(new InviteRemoveCommand("INVITE_REMOVE"));
+        SessionController.getInstance().addCommand(new PartyCreateCommand("PARTY_CREATE"));
+        SessionController.getInstance().addCommand(new PartyDetailsRetrieveCommand("PARTY_DETAILS_RETRIEVE"));
+        SessionController.getInstance().addCommand(new PartyInvitesRetrieveCommand("PARTY_INVITES_RETRIEVE"));
+        SessionController.getInstance().addCommand(new PartyLeaveCommand("PARTY_LEAVE"));
+        SessionController.getInstance().addCommand(new PartyMemberAddCommand("PARTY_MEMBER_ADD"));
+        SessionController.getInstance().addCommand(new PartyMemberRemoveCommand("PARTY_MEMBER_REMOVE"));
+        SessionController.getInstance().addCommand(new PlayerCreateCommand("PLAYER_CREATE"));
+        SessionController.getInstance().addCommand(new PlayerInvitesRetrieveCommand("PLAYER_INVITES_RETRIEVE"));
+        SessionController.getInstance().addCommand(new PlayerLogOutCommand("PLAYER_LOG_OUT"));
     }
 
     /**

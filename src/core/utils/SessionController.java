@@ -18,7 +18,7 @@ public class SessionController {
         sessionInformation = SessionInformation.getInstance();
     }
 
-    public SessionController getInstance(){
+    public static SessionController getInstance(){
         if(sessionController == null){
             sessionController = new SessionController();
         }
