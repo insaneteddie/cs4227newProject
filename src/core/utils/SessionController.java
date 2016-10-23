@@ -33,4 +33,19 @@ public class SessionController {
             }
         }
     }
+
+    public void addCommand(ICommand command){
+        if(commands != null){
+            commands.add(command);
+        }
+    }
+
+    public void removeCommand(String commandName){
+        for(Object c : commands){
+            if(((ICommand)c).getCommandName().matches(commandName)){
+                commands.remove(c);
+                return;
+            }
+        }
+    }
 }
