@@ -26,12 +26,12 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception {
-        return null;
+        return sqlDB.get_FriendsList(playerID);
     }
 
     @Override
     public ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception {
-        return null;
+        return sqlDB.get_Invites(playerID);
     }
 
     @Override
