@@ -5,11 +5,11 @@ import core.session.SessionInformation;
 /**
  * Created by David on 23/10/2016.
  */
-public class PartyRemoveCommand implements ICommand{
+public class PartyMemberRemoveCommand implements ICommand{
     private final String name;
     private int member_id;
 
-    public PartyRemoveCommand(String name){
+    public PartyMemberRemoveCommand(String name){
         this.name = name;
     }
     @Override
