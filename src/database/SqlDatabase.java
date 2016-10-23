@@ -316,4 +316,42 @@ public class SqlDatabase {
         }
         return checker;
     }
+
+    public ArrayList<Integer> get_FriendsList(int user_Id){
+        ArrayList<Integer> friendsList = new ArrayList<>();
+        try {
+            Class.forName(JDBC_DRIVER);
+            int iterator = 0;
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
+            prepStatement.setInt(1,user_Id);
+
+            ResultSet res = prepStatement.executeQuery();
+            while(res.next())
+            {
+                friendsList.add(res.getInt(iterator));
+                iterator++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return friendsList;
+    }
+
 }
