@@ -10,12 +10,10 @@ import java.util.List;
  */
 public class SessionController {
     private List commands;
-    private SessionInformation sessionInformation;
     private static SessionController sessionController;
 
     private SessionController(){
         commands = new ArrayList<ICommand>();
-        sessionInformation = SessionInformation.getInstance();
     }
 
     public static SessionController getInstance(){
