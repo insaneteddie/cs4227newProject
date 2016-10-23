@@ -26,12 +26,12 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception {
-        return null;
+        return sqlDB.get_FriendsList(playerID);
     }
 
     @Override
     public ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception {
-        return null;
+        return sqlDB.get_Invites(playerID);
     }
 
     @Override
@@ -39,9 +39,10 @@ public class DatabaseAdapter implements DatabaseInterface {
             sqlDB.add_User(username,password,email);
     }
 
+    //returns party_Id or 0
     @Override
     public int createParty(int partyLeaderID) throws Exception {
-        return 0;
+        return sqlDB.create_Party(partyLeaderID);
     }
 
     @Override

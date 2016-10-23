@@ -14,6 +14,7 @@ public class SqlDatabase {
     static final String DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
     private int userCount = 100;
     private int friendDB_Id = 100;
+    private int partyDB_Id = 100;
     //  Database credentials
     static final String USER = "admin";
     static final String PASS = "teamawesome";
@@ -77,7 +78,8 @@ public class SqlDatabase {
                 // user_invites,
                 // user_parties
     //add a user to the user table should look at hash tables.
-    public void add_User(String user_Name, String user_Pass, String email) {
+    public void add_User(String user_Name, String user_Pass, String email)
+    {
 
 
         System.out.println("Attempting to Connect");
@@ -114,7 +116,8 @@ public class SqlDatabase {
 
     }
     //method to add a friend we need to add this to the interface
-    public void add_Friend(int user_Id, int friend_Id) {
+    public void add_Friend(int user_Id, int friend_Id)
+    {
         System.out.println("Inserting records into the table...");
         try {
             friendDB_Id++;
@@ -146,7 +149,8 @@ public class SqlDatabase {
         }
     }
     //checks the username and password from the users database
-    public boolean can_Login(String user_Name,String user_Pass){
+    public boolean can_Login(String user_Name,String user_Pass)
+    {
         boolean canLogin = false;
         System.out.println("checking login details");
         try {
@@ -179,7 +183,8 @@ public class SqlDatabase {
         return canLogin;
     }
     //needs testing too...
-    public String get_PlayerName(int user_Id){
+    public String get_PlayerName(int user_Id)
+    {
         String player_Name = "";
         System.out.println("checking player details");
         try {
@@ -210,7 +215,8 @@ public class SqlDatabase {
         return player_Name;
     }
     //haven't tested yet...
-    public int get_UserId(String user_Name) {
+    public int get_UserId(String user_Name)
+    {
         int userId = 0;
         try {
             Class.forName(JDBC_DRIVER);
@@ -315,5 +321,122 @@ public class SqlDatabase {
             }
         }
         return checker;
+    }
+
+    public ArrayList<Integer> get_FriendsList(int user_Id)
+    {
+        ArrayList<Integer> friendsList = new ArrayList<>();
+        try {
+            Class.forName(JDBC_DRIVER);
+            int iterator = 0;
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
+            prepStatement.setInt(1,user_Id);
+
+            ResultSet res = prepStatement.executeQuery();
+            while(res.next())
+            {
+                friendsList.add(res.getInt(iterator));
+                iterator++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return friendsList;
+    }
+
+    public ArrayList<Integer []> get_Invites(int player_Id)
+    {
+        ArrayList<Integer []> invitesList = new ArrayList<>();
+        try {
+            Class.forName(JDBC_DRIVER);
+            int iterator = 0;
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Integer [] user_invites = new Integer[100];
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
+            prepStatement.setInt(1,player_Id);
+
+            ResultSet res = prepStatement.executeQuery();
+            while(res.next())
+            {
+                user_invites[iterator] = res.getInt(iterator);
+
+                iterator++;
+            }
+            invitesList.add(user_invites);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return invitesList;
+    }
+    //takes in party creator user_Id and sets it as leader_Id in the table
+    public int create_Party(int leader_Id)
+    {
+        int party_Id;
+        System.out.println("Inserting records into the table...");
+        try {
+
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (party_Id, leader_Id) VALUES( ?, ?)");
+
+            prepStatement.setInt(1,partyDB_Id);
+            prepStatement.setInt(2,leader_Id);
+
+
+            prepStatement.executeUpdate();
+            party_Id = partyDB_Id;
+            partyDB_Id++;
+            return party_Id;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return 0;
     }
 }
