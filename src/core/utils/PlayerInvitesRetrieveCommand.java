@@ -3,7 +3,7 @@ package core.utils;
 /**
  * Created by David on 23/10/2016.
  */
-public class InviteMessageRetrieveCommand implements ICommand {
+public class PlayerInvitesRetrieveCommand implements ICommand {
     @Override
     public void execute() {
 
