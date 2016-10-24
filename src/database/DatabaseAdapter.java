@@ -57,7 +57,8 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public void addPlayerToParty(int playerID, int partyID) throws Exception {
-
+        if(!isPartyFull(partyID))
+            sqlDB.addPlayerToParty(playerID,partyID);
     }
 
     @Override
@@ -73,12 +74,12 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public boolean doesPartyExist(int partyID) throws Exception {
-        return false;
+        return sqlDB.does_Party_Exist(partyID);
     }
 
     @Override
     public int doesPlayerExist(String username) throws Exception {
-        return 0;
+        return sqlDB.does_Player_Exist(username);
     }
 
     @Override
@@ -97,7 +98,8 @@ public class DatabaseAdapter implements DatabaseInterface {
     }
 
     @Override
-    public void add_Friend(int user_Id, int friend_Id) {
+    public void add_Friend(int user_Id, int friend_Id)
+    {
         sqlDB.add_Friend(user_Id,friend_Id);
     }
 }
