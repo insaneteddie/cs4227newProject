@@ -92,12 +92,12 @@ public class SqlDatabase {
             userCount++;
             statement = connection.createStatement();
             //stupid mfking sql stuff
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users (user_Id, user_Name, user_Pass, user_Email) VALUES(?,?,?,?)");
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
 
-            prepStatement.setInt(1,userCount);
-            prepStatement.setString(2,user_Name);
-            prepStatement.setString(3,user_Pass);
-            prepStatement.setString(4,email);
+
+            prepStatement.setString(1,user_Name);
+            prepStatement.setString(2,user_Pass);
+            prepStatement.setString(3,email);
             prepStatement.executeUpdate();
 
         } catch (SQLException e) {

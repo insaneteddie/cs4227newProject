@@ -25,7 +25,7 @@ public class MessageCollection implements Collection<Message>
 	@Override
 	public Message get(int id)
 	{
-		for (Message m in messages)
+		for (Message m : messages)
 		{
 			// should we have each message have an id? date code?
 			// much faster and I'm unsure as to why we are "getting" like this
