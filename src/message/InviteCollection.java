@@ -66,4 +66,9 @@ public class InviteCollection implements Collection<Invite> {
             }
         }
     }
+
+    @Override
+    public void removeX(int mid) {
+
+    }
 }
