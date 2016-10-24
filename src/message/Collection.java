@@ -30,4 +30,11 @@ public interface Collection<E> {
      * @param pid
      * */
     void remove(int id, int pid);
+
+    /**
+     * @param mid
+     * */
+    void removeX(int mid);
+
+
 }
