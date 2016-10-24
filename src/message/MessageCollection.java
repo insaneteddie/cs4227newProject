@@ -29,7 +29,7 @@ public class MessageCollection implements Collection<Message>
 		{
 			// should we have each message have an id? date code?
 			// much faster and I'm unsure as to why we are "getting" like this
-			if(id == m.getSenderID())
+			if(id == m.getID())
 			{
 				return m;
 			}
@@ -41,7 +41,6 @@ public class MessageCollection implements Collection<Message>
 	@Override
 	public List<Message> getAll()
 	{
-
 		return messages;
 	}
 
@@ -56,4 +55,16 @@ public class MessageCollection implements Collection<Message>
 		*/
 	}
 
+	@Override
+	public void removeX(int mid)
+	{
+		for (Message m : messages)
+		{
+			if(mid == m.getID())
+			{
+				messages.remove(m);
+				break;
+			}
+		}
+	}
 }
