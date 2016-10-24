@@ -1,26 +1,32 @@
 package message;
 
-public class PartyInvite extends Invite
+import java.util.ArrayList;
+
+public class PartyInvite extends Message
 {
+    private int partyID;
+
     public PartyInvite(int senderID, int receiverID, int partyID)
     {
         this.senderID = senderID;
-        this.receiverID = receiverID;
+        this.receiverID.add(receiverID);
         this.partyID = partyID;
     }
-    @Override
     public int getSenderID() {
         return senderID;
     }
 
-    @Override
-    public int getReceiverID() {
+    public ArrayList<Integer> getReceiverID() {
         return receiverID;
     }
 
-    @Override
     public String getMessage() {
-        return "Party Invite received from User " + senderID;
+        return message;
+    }
+
+    public int getID()
+    {
+        return mId;
     }
 
     @Override
@@ -33,7 +39,6 @@ public class PartyInvite extends Invite
             return false;
     }
 
-    @Override
     public int getPartyID() {
         return partyID;
     }
