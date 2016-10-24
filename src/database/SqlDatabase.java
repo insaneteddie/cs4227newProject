@@ -301,11 +301,12 @@ public class SqlDatabase {
             //prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
-            if(!res.next())
+            if(res.next())
             {
                 checker = false;
                 return checker;
-            }
+            }else
+                return checker;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -439,4 +440,36 @@ public class SqlDatabase {
         }
         return 0;
     }
+    //sent norah an email in regards to this query. not sure exactly how to make it go to the first null field it finds, might require writing another method to find first col with null value.
+    public void addPlayerToParty(int playerID, int partyID)
+    {
+        try {
+            Class.forName(JDBC_DRIVER);
+
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT ? INTO user_parties  WHERE party_Id = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
+            prepStatement.setInt(1,playerID);
+            prepStatement.setInt(2,partyID);
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
 }
