@@ -92,7 +92,7 @@ public class SqlDatabase {
             userCount++;
             statement = connection.createStatement();
             //stupid mfking sql stuff
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?,?)");
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
 
 
             prepStatement.setString(1,user_Name);
