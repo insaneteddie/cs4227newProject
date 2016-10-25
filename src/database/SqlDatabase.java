@@ -14,7 +14,7 @@ public class SqlDatabase {
     static final String DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
     private int userCount = 100;
     private int friendDB_Id = 100;
-    private int partyDB_Id = 100;
+   // private int partyDB_Id = 100;
     //  Database credentials
     static final String USER = "admin";
     static final String PASS = "teamawesome";
@@ -127,11 +127,11 @@ public class SqlDatabase {
             statement = connection.createStatement();
             //stupid mfking sql stuff
             //creating the prepared statement.
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?, ?)");
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?)");
 
-            prepStatement.setInt(1,friendDB_Id);
-            prepStatement.setInt(2,user_Id);
-            prepStatement.setInt(3,friend_Id);
+
+            prepStatement.setInt(1,user_Id);
+            prepStatement.setInt(2,friend_Id);
 
             prepStatement.executeUpdate();
         } catch (SQLException e) {
@@ -297,14 +297,18 @@ public class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
-            prepStatement.setInt(1,party_Id);
+            prepStatement.setInt(1, party_Id);
+
             //prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
-            if(!res.next())
+
+            while (res.next())
             {
-                checker = false;
-                return checker;
+                if (res.wasNull()) {
+                    checker = false;
+                    return checker;
+                }
             }
 
         } catch (SQLException e) {
@@ -402,7 +406,7 @@ public class SqlDatabase {
     //takes in party creator user_Id and sets it as leader_Id in the table :)
     public int create_Party(int leader_Id)
     {
-        int party_Id;
+        int party_Id = 0;
         System.out.println("Inserting records into the table...");
         try {
 
@@ -412,15 +416,14 @@ public class SqlDatabase {
             statement = connection.createStatement();
             //stupid mfking sql stuff
             //creating the prepared statement.
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (party_Id, leader_Id) VALUES( ?, ?)");
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (leader_Id) VALUES(?)");
 
-            prepStatement.setInt(1,partyDB_Id);
-            prepStatement.setInt(2,leader_Id);
+
+            prepStatement.setInt(1,leader_Id);
 
 
             prepStatement.executeUpdate();
-            party_Id = partyDB_Id;
-            partyDB_Id++;
+            party_Id = 1;
             return party_Id;
 
         } catch (SQLException e) {
@@ -437,6 +440,175 @@ public class SqlDatabase {
                 se.printStackTrace();
             }
         }
-        return 0;
+        return party_Id;
     }
+    //sent norah an email in regards to this query.
+    // not sure exactly how to make it go to the first null field it finds,
+    // might require writing another method to find first col with null value.
+    public void addPlayerToParty(int playerID, int partyID)
+    {
+        try {
+            Class.forName(JDBC_DRIVER);
+
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            int colId = find_Null_From_Parties(partyID);
+            String sqlCol = "";
+            switch(colId)
+            {
+                case 1: sqlCol ="user_1_Id";
+                    break;
+                case 2: sqlCol = "user_2_Id";
+                    break;
+                case 3: sqlCol = "user_3_Id";
+                    break;
+                case 4: sqlCol = "user_4_Id";
+                    break;
+                case 5: sqlCol = "user_5_Id";
+                    break;
+            }
+            PreparedStatement prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties ?  WHERE party_Id = ?");
+            prepStatement.setInt(1,playerID);
+            prepStatement.setString(2,sqlCol);
+            prepStatement.setInt(3,partyID);
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+    //sorted
+    public boolean does_Party_Exist(int partyID)
+    {
+        boolean full = true;
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_Id = ?");
+            prepStatement.setInt(1, partyID);
+
+            ResultSet res = prepStatement.executeQuery();
+            if (res.next()) {
+                full = false;
+                return full;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return full;
+    }
+    //should work
+    public int does_Player_Exist(String username)
+    {
+        int checker = 0;
+        System.out.println("checking player details");
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
+            prepStatement.setString(1,username);
+
+
+            ResultSet res = prepStatement.executeQuery();
+            if(!res.next())
+            {
+                checker = 1;
+                return checker;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return checker;
+    }
+
+    public int find_Null_From_Parties(int party_Id)
+    {
+        int counter = 0;
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            counter = 1;
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+
+            prepStatement.setInt(1,party_Id);
+
+
+            ResultSet res = prepStatement.executeQuery();
+                while(res.next())
+                {
+                    if(res.wasNull())
+                    {
+                        return counter;
+                    }else {
+                        counter++;
+                    }
+
+                }
+            counter = 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+        e.getException();
+    } finally {
+        try {
+            if (statement != null)
+                connection.close();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+        return counter;
+    }
+
+
 }
