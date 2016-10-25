@@ -2,47 +2,50 @@ package message;
 
 public class FriendMessage extends Message
 {
-    public FriendMessage(int senderID, int receiverID, int partyID)
+
+    public FriendMessage(int senderID, int receiverID, String message)
     {
         this.senderID = senderID;
-        this.receiverID = receiverID;
-        this.partyID = partyID;
+        this.receiverID.add(receiverID);
+        this.message = message;
     }
-    @Override
-    public int getSenderID() {
+
+    public int getSenderID()
+    {
         return senderID;
     }
 
-    @Override
-    public int getReceiverID() {
-        return receiverID;
+    public int getReceiverID()
+    {
+        return receiverID.get(0);
     }
 
-    @Override
-    public String getMessage() {
-        return "Message received from User " + senderID;
+    public String getMessage()
+    {
+        return message;
     }
 
-    @Override
-    public boolean equals(Object otherInvite) {
-        if(otherInvite != null) {
-            PartyInvite p = (PartyInvite) otherInvite;
-            return senderID == p.getSenderID() && partyID == p.partyID;
+    public int getID()
+    {
+        return mId;
+    }
+
+    public boolean equals(Object message)
+    {
+        if(message != null) {
+            Message m = (Message) message;
+            return this.mId == m.getID();
         }
         else
             return false;
-    }
-
-    @Override
-    public int getPartyID() {
-        return partyID;
     }
 
     /**
      * @return
      * */
     @Override
-    public int hashCode(){
+    public int hashCode()
+    {
         return super.hashCode();
     }
 }

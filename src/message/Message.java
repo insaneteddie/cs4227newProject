@@ -1,28 +1,28 @@
 package message;
 
+import java.util.ArrayList;
+
 /**
  *  created by c_malone 23/10/16
  * */
 public abstract class Message
 {
+    protected int mId;
     protected int senderID;
-    protected int receiverID;
-    protected int partyID;
+    protected ArrayList<Integer> receiverID;
     protected String message;
-    
+
+    public abstract int getID();
+
     public abstract int getSenderID();
-    
-    public abstract int getReceiverID();
-    
-    public abstract int getPartyID();
-    
+
     public abstract String getMessage();
 
     /**
-     *  @param otherInvite
+     *  @param otherMessage
      * */
     @Override
-    public abstract boolean equals(Object otherInvite);
+    public abstract boolean equals(Object otherMessage);
 
     /**
      * @return
