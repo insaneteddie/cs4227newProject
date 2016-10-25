@@ -127,11 +127,11 @@ public class SqlDatabase {
             statement = connection.createStatement();
             //stupid mfking sql stuff
             //creating the prepared statement.
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?, ?)");
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?)");
 
-            prepStatement.setInt(1,friendDB_Id);
-            prepStatement.setInt(2,user_Id);
-            prepStatement.setInt(3,friend_Id);
+
+            prepStatement.setInt(1,user_Id);
+            prepStatement.setInt(2,friend_Id);
 
             prepStatement.executeUpdate();
         } catch (SQLException e) {
@@ -453,7 +453,7 @@ public class SqlDatabase {
             statement = connection.createStatement();
             //stupid mfking sql stuff
             //creating the prepared statement.
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT ? INTO user_parties  WHERE party_Id = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
+            PreparedStatement prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties user_1_Id ifnull()  WHERE party_Id = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
             prepStatement.setInt(1,playerID);
             prepStatement.setInt(2,partyID);
 
