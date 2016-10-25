@@ -9,9 +9,7 @@
 package core.user;
 
 import core.session.SessionObserver;
-import message.Collection;
-import message.Invite;
-import message.InviteCollection;
+import message.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,7 @@ public class Player extends User implements SessionSubject {
         observers = new ArrayList<>();
         friends = new ArrayList<>();
         partyInformation = new ArrayList<>();
-        inviteCollection = new InviteCollection();
+        inviteCollection = new MessageCollection();
     }
 
     public static Player getInstance() {
@@ -98,7 +96,7 @@ public class Player extends User implements SessionSubject {
         friends.add(friendID);
     }
 
-    public void addInvite(Invite invite) {
+    public void addInvite(Message invite) {
         inviteCollection.add(invite);
     }
 
