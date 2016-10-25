@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class DatabaseAdapter implements DatabaseInterface {
 
 
-    public SqlDatabase sqlDB;
+    private SqlDatabase sqlDB;
     // k im not sure about this....
     public DatabaseAdapter(){
         sqlDB = new SqlDatabase();
