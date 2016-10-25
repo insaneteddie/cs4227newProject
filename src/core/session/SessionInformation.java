@@ -14,6 +14,7 @@ import database.DatabaseAdapter;
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;
+import message.Message;
 import message.PartyInviteFactory;
 
 import java.util.ArrayList;
@@ -163,7 +164,7 @@ public class SessionInformation {
             ArrayList<Integer[]> invites = database.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
-                    Invite newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
+                    Message newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
                     player.addInvite(newInvite);
                 }
             }
