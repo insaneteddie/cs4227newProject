@@ -9,30 +9,39 @@ import java.sql.*;
  */
 public class SqlDatabase {
     // JDBC driver name and database URL
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    static String JDBC_DRIVER;
     //set up to connect to an rds instance on my aws account
-    static final String DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
-    private int userCount = 100;
-    private int friendDB_Id = 100;
-   // private int partyDB_Id = 100;
-    //  Database credentials
-    static final String USER = "admin";
-    static final String PASS = "teamawesome";
+    static  String DB_URL ;
 
-    protected static final String userDB = "users";
-    protected static final String friendDB = "user_friends";
-    protected static final String gameDB = "user_games";
-    protected static final String inviteDB = "user_invites";
-    protected static final String messagesDB = "user_messages";
+    //  Database credentials
+    static  String USER;
+    static  String PASS;
+
 
     public Connection connection;
     public Statement statement;
 
-    public SqlDatabase(){
+    public SqlDatabase()
+    {
+        JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
+        USER = "admin";
+        PASS = "teamawesome";
         connectToDb();
     }
+
+    public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
+    {
+        JDBC_DRIVER = jdbcDriver;
+        DB_URL = databaseURL;
+        USER = dbUser;
+        PASS = dbPass;
+        connectToDb();
+    }
+
     //String user,String pass - don't think its needed
-    private void connectToDb() {
+    private void connectToDb()
+    {
         //initialise to null
         connection = null;
         statement = null;
@@ -89,7 +98,7 @@ public class SqlDatabase {
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            userCount++;
+
             statement = connection.createStatement();
             //stupid mfking sql stuff
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
@@ -120,7 +129,7 @@ public class SqlDatabase {
     {
         System.out.println("Inserting records into the table...");
         try {
-            friendDB_Id++;
+
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
