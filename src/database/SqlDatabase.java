@@ -54,22 +54,12 @@ public class SqlDatabase {
             //connection
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
-
-            // String sqlString = "CREATE DATABASE "+ dbName;
-            // statement.execute(sqlString);
-
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException se) {
             se.printStackTrace();
         } finally {
             try {
-                /*if (statement != null)
-                    statement.close();
-            } catch (SQLException se2) {
-                se2.printStackTrace();//nothing else to be done
-            }try {*/
                 if (connection != null)
                     connection.close();
             } catch (SQLException se) {
@@ -79,13 +69,14 @@ public class SqlDatabase {
 
     }//end of connection method
 
-                //table name,columns *string is varchar, int is int
-                // users, String table name,String user_Name, String user_Pass, String email
-                // user_friends,int user_Id (from users table),int friend_Id from users
-                // user_messages,
-                // user_games,
-                // user_invites,
-                // user_parties
+        //table name,columns *string is varchar, int is int.
+        // users, String table name,String user_Name, String user_Pass, String email.
+        // user_friends,int user_Id (from users table),int friend_Id from users.
+        // user_messages.
+        // user_games.
+        // user_invites.
+        // user_parties.
+
     //add a user to the user table should look at hash tables.
     public void add_User(String user_Name, String user_Pass, String email)
     {
@@ -451,9 +442,7 @@ public class SqlDatabase {
         }
         return party_Id;
     }
-    //sent norah an email in regards to this query.
-    // not sure exactly how to make it go to the first null field it finds,
-    // might require writing another method to find first col with null value.
+    //hacked a fix
     public void addPlayerToParty(int playerID, int partyID)
     {
         try {
@@ -574,7 +563,7 @@ public class SqlDatabase {
         }
         return checker;
     }
-
+    //the above mentioned hacked fix
     public int find_Null_From_Parties(int party_Id)
     {
         int counter = 0;
