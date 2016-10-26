@@ -21,7 +21,7 @@ public interface SessionSubject
     void update();
 
     /**
-     * @return 
+     * @return
      * */
     List<Integer> getState();
 }
