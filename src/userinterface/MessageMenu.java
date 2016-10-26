@@ -121,7 +121,8 @@ public class MessageMenu extends Menu {
         inviteOptionPanel.add(declineInviteButton);
          JButton refreshInviteButton = new JButton("Refresh Invites");
         refreshInviteButton.addActionListener(e -> {
-                sessionInfo.getPlayerInvites();
+                //sessionInfo.getPlayerInvites();
+                SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 populateInviteList(inviteList);
         });
         
