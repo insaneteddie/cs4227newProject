@@ -4,6 +4,7 @@ import core.user.SessionSubject;
 
 import java.util.ArrayList;
 
+/** Party class; contains party information*/
 public class Party implements SessionObserver {
 
     private int id;
