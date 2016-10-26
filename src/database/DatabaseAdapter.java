@@ -94,9 +94,9 @@ public class DatabaseAdapter implements DatabaseInterface {
         return sqlDB.is_In_Party(playerID);
     }
 
-    @Override
-    public void addInvite(int senderID, int receiverID, int partyId, String content,int type) throws Exception {
-        sqlDB.add_Invite(senderID,receiverID,type,content,partyId);
+    @Override// String content,int type
+    public void addInvite(int senderID, int receiverID, int partyId) throws Exception {
+        sqlDB.add_Invite(senderID,receiverID,partyId);
     }
 
     @Override

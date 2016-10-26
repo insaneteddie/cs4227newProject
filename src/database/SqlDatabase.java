@@ -641,8 +641,8 @@ class SqlDatabase {
         }
         return false;
     }
-
-    public void add_Invite(int senderID, int receiverID,int typeID,String invite_content, int partyId)
+//int typeID,String invite_content,
+    public void add_Invite(int senderID, int receiverID, int partyId)
     {
         try {
             Class.forName(JDBCDRIVER);
@@ -655,9 +655,9 @@ class SqlDatabase {
 
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,typeId,party_Id)  VALUES( ?, ?, ?, ?, ?)");
             prepStatement.setInt(1,senderID);
-            prepStatement.setString(2,invite_content);
+            prepStatement.setString(2,"this is content");
             prepStatement.setInt(3,receiverID);
-            prepStatement.setInt(4,typeID);
+            prepStatement.setInt(4,4);
             prepStatement.setInt(5,partyId);
 
             prepStatement.executeQuery();
