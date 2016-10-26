@@ -19,7 +19,7 @@ public class Party implements SessionObserver {
 
     @Override
     public void update(SessionSubject s) {
-        ArrayList<Integer> partyInfo = s.getState();
+        List<Integer> partyInfo = s.getState();
         if (!partyInfo.isEmpty()) {
             id = partyInfo.get(0);
             partyMembers.clear();
