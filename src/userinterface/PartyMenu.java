@@ -137,7 +137,6 @@ public class PartyMenu extends Menu {
                         else if (sessionInfo.isMemberOfParty(memberToRemove)) {
 
                             sessionInfo.removePlayerFromParty(memberToRemove);
-                            //sessionInfo.getPartyDetails();
                             SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
                             menuMgr.getMenuFromFactory(3);
                         }
