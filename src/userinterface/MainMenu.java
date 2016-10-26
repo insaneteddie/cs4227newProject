@@ -90,7 +90,7 @@ public class MainMenu extends Menu {
         centerMenuButtonsPanel.add(communityButton);
         JButton messageButton = new JButton("Messages");
         messageButton.addActionListener(e ->{
-                sessionInfo.getPlayerInvites();
+                //sessionInfo.getPlayerInvites();
                 SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 menuMgr.getMenuFromFactory(4);
         });
