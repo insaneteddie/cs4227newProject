@@ -1,16 +1,16 @@
 package core.utils;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by David on 22/10/2016.
  */
 public class ClientRequestDispatcher implements ClientRequestInterceptor {
     private static ClientRequestDispatcher dispatcher;
-    Vector _interceptors;
+    ArrayList interceptors;
 
     private ClientRequestDispatcher(){
-        _interceptors = new Vector();
+        interceptors = new ArrayList();
     }
 
     public static ClientRequestDispatcher getInstance(){
@@ -23,11 +23,11 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     @Override
     public void onPreMarshalRequest(UnmarshaledRequest contextObject) {
         //default implementation
-        Vector interceptors;
+        ArrayList interceptorsList;
         synchronized(this){
-            interceptors = (Vector)_interceptors.clone();
+            interceptorsList = (ArrayList) this.interceptors.clone();
         }
-        for(Object i : interceptors){
+        for(Object i : interceptorsList){
             ((ClientRequestInterceptor)i).onPreMarshalRequest(contextObject);
         }
     }
@@ -35,20 +35,26 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     @Override
     public void onPostMarshalRequest(MarshaledRequest contextObject) {
         //default implementation
-        Vector interceptors;
+        ArrayList interceptorList;
         synchronized(this){
-            interceptors = (Vector)_interceptors.clone();
+            interceptorList = (ArrayList) this.interceptors.clone();
         }
-        for(Object i : interceptors){
+        for(Object i : interceptorList){
             ((ClientRequestInterceptor)i).onPostMarshalRequest(contextObject);
         }
     }
 
-    synchronized public void registerClientRequestInterceptor(ClientRequestInterceptor i){
-        _interceptors.addElement(i);
+    /**
+     * @param i
+     * */
+    public synchronized void registerClientRequestInterceptor(ClientRequestInterceptor i){
+        interceptors.add(i);
     }
 
-    synchronized public void removeClientRequestInterceptor(ClientRequestInterceptor i){
-        _interceptors.remove(i);
+    /**
+     * @param i
+     * */
+    public synchronized void removeClientRequestInterceptor(ClientRequestInterceptor i){
+        interceptors.remove(i);
     }
 }

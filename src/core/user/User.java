@@ -1,5 +1,6 @@
 package core.user;
-//Making commit to show commit messaging.
+
+/** Abstract class for a user */
 public abstract class User {
     protected int id;
     protected String name;

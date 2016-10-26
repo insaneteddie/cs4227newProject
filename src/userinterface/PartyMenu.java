@@ -8,6 +8,7 @@
 **/
 package userinterface;
 
+import core.utils.Log;
 import core.utils.SessionController;
 
 import java.awt.BorderLayout;
@@ -15,9 +16,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,12 +24,21 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+
+/**
+ *  UI class for party menu
+ * */
 public class PartyMenu extends Menu {
 
+    private Log logger;
+
+    /** public constructor */
     public PartyMenu() {
+        logger = new Log(getClass().getName());
         showPartyMenu();
     }
 
+    /** set up UI for party menu */
     public void showPartyMenu() {
         JPanel mainMenuPanel = new JPanel();
         BorderLayout mainMenuLayout = new BorderLayout();
@@ -47,12 +54,11 @@ public class PartyMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                //sessionInfo.logPlayerOut();
                 SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
-        mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
+        mainMenuPanel.add(topBarPanel, BorderLayout.NORTH);
 
         JPanel centerMenuPanel = new JPanel();
         BorderLayout centerMenuLayout = new BorderLayout();
@@ -76,19 +82,17 @@ public class PartyMenu extends Menu {
         JButton leavePartyButton = new JButton("Leave Party");
         leavePartyButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(null, "You have left the party");
-                //sessionInfo.leaveParty();
                 SessionController.getInstance().executeCommand("PARTY_LEAVE");
                 menuMgr.getMenuFromFactory(2);
         });
         topCenterMenuPanel.add(leavePartyButton);
-        centerMenuPanel.add(topCenterMenuPanel, centerMenuLayout.NORTH);
+        centerMenuPanel.add(topCenterMenuPanel, BorderLayout.NORTH);
 
         JPanel centerMenuButtonsPanel = new JPanel();
         GridLayout centerMenuButtonsLayout = new GridLayout(4, 1);
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton refreshButton = new JButton("Refresh Members List");
         refreshButton.addActionListener(e -> {
-                //sessionInfo.getPartyDetails();
                 SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
                 if (sessionInfo.isPlayerInParty()) {
                     populateMembersList(memberList);
@@ -113,50 +117,44 @@ public class PartyMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                    logger.logWarning(ex, "Input invalid.");
                 }
 
         });
         centerMenuButtonsPanel.add(inviteButton);
         JButton removeMemberButton = new JButton("Remove Member");
         removeMemberButton.addActionListener(e -> {
-                if (sessionInfo.isPartyLeader()) {
-                    if (sessionInfo.getPartySize() > 1) {
-                        // select member to remove
-                        boolean validID = false;
+                if (sessionInfo.isPartyLeader() && sessionInfo.getPartySize() > 1) {
 
-                        try {
-                            int memberToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the member you would"
-                                    + "\nlike to remove from the party"));
-                            if(memberToRemove == sessionInfo.getPlayerId())
-                            {
-                                JOptionPane.showMessageDialog(null, "To leave party, please select the 'Leave Party' button\nor log out.", null, JOptionPane.WARNING_MESSAGE);
-                            }
-                            else if (sessionInfo.isMemberOfParty(memberToRemove)) {
-
-                                sessionInfo.removePlayerFromParty(memberToRemove);
-                                //sessionInfo.getPartyDetails();
-                                SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
-                                menuMgr.getMenuFromFactory(3);
-                            }
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Input must be an integer number", null, JOptionPane.WARNING_MESSAGE);
+                    // select member to remove
+                    try {
+                        int memberToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the member you would"
+                                + "\nlike to remove from the party"));
+                        if(memberToRemove == sessionInfo.getPlayerId())
+                        {
+                            JOptionPane.showMessageDialog(null, "To leave party, please select the 'Leave Party' button\nor log out.", null, JOptionPane.WARNING_MESSAGE);
                         }
+                        else if (sessionInfo.isMemberOfParty(memberToRemove)) {
 
-                    } else {
-                        JOptionPane.showMessageDialog(null, "You are the only member in the party.\n"
-                                + "To leave the party click the 'Leave Party' button or\nlog out.", null, JOptionPane.WARNING_MESSAGE);
+                            sessionInfo.removePlayerFromParty(memberToRemove);
+                            SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
+                            menuMgr.getMenuFromFactory(3);
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Input must be an integer number", null, JOptionPane.WARNING_MESSAGE);
+                        logger.logWarning(ex, "Input must be an integer number");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "You must be Party Leader to remove members", null, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You cannot perform this action", null, JOptionPane.WARNING_MESSAGE);
                 }
         });
         centerMenuButtonsPanel.add(removeMemberButton);
         JButton gameButton = new JButton("Games");
         gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(gameButton);
-        centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);
+        centerMenuPanel.add(centerMenuButtonsPanel, BorderLayout.CENTER);
 
-        mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
+        mainMenuPanel.add(centerMenuPanel, BorderLayout.CENTER);
 
         JPanel bottomBarPanel = new JPanel();
         FlowLayout bottomBarLayout = new FlowLayout();
@@ -165,11 +163,12 @@ public class PartyMenu extends Menu {
         JButton returnButton = new JButton("<-Return");
         returnButton.addActionListener(e -> menuMgr.getMenuFromFactory(2));
         bottomBarPanel.add(returnButton);
-        mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);
+        mainMenuPanel.add(bottomBarPanel, BorderLayout.SOUTH);
         panel = mainMenuPanel;
 
     }
 
+    /** Gets party member info and appends to the members list */
     public void populateMembersList(JTextArea memberList) {
         memberList.setText("");
         memberList.append("Members:\n");

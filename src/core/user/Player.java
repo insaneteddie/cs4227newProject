@@ -14,6 +14,7 @@ import message.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/** class storing information relating to the user */
 public class Player extends User implements SessionSubject {
 
     private static Player player = null;
@@ -58,6 +59,7 @@ public class Player extends User implements SessionSubject {
         }
     }
 
+    /** resets member variable values*/
     public void resetValues() {
         id = 0;
         name = "";
@@ -92,14 +94,24 @@ public class Player extends User implements SessionSubject {
         this.email = email;
     }
 
+    /**
+     * @param friendID
+     * */
     public void addFriend(int friendID) {
         friends.add(friendID);
     }
 
+    /**
+     * @param invite
+     * */
     public void addInvite(Message invite) {
         inviteCollection.add(invite);
     }
 
+    /**
+     * @param senderID
+     * @param partyID
+     * */
     public void removeInvite(int senderID, int partyID) {
         inviteCollection.remove(senderID, partyID);
     }
@@ -108,23 +120,34 @@ public class Player extends User implements SessionSubject {
         return inviteCollection.getAll();
     }
     @Override
-    public ArrayList<Integer> getState() {
+    public List<Integer> getState() {
         return partyInformation;
     }
 
+    /**
+     * @param info
+     * */
     public void addToPartyInformation(int info)
     {
         partyInformation.add(info);
     }
-    
-    public void updatePartyInformation(ArrayList<Integer> info) {
-        partyInformation = info;
+
+    /**
+     * @param info
+     * */
+    public void updatePartyInformation(List<Integer> info) {
+        partyInformation = (ArrayList<Integer>) info;
     }
 
+    /** clears party info*/
     public void clearPartyInformation() {
         partyInformation.clear();
     }
 
+    /**
+     * @param id
+     * @return
+     * */
     public boolean isFriend(int id) {
         return friends.contains(id);
     }

@@ -3,20 +3,23 @@ package core.session;
 import core.user.SessionSubject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/** Party class; contains party information*/
 public class Party implements SessionObserver {
 
     private int id;
     private int leaderID;
     private ArrayList<Integer> partyMembers;
 
+    /** public constructor */
     public Party() {
         partyMembers = new ArrayList<>();
     }
 
     @Override
     public void update(SessionSubject s) {
-        ArrayList<Integer> partyInfo = s.getState();
+        List<Integer> partyInfo = s.getState();
         if (!partyInfo.isEmpty()) {
             id = partyInfo.get(0);
             partyMembers.clear();
@@ -31,12 +34,19 @@ public class Party implements SessionObserver {
         }
     }
 
+    /**
+     * @param id
+     * @return
+     * */
     public boolean isPartyLeader(int id) {
-        return (leaderID == id);
+        return leaderID == id;
     }
 
+    /**
+     * @return
+     * */
     public boolean doesPartyExist() {
-        if (partyMembers.size() == 0) {
+        if (partyMembers.isEmpty()) {
             return false;
         }
         return true;
@@ -47,12 +57,17 @@ public class Party implements SessionObserver {
     }
 
     public int getPartySize() {
-        return (partyMembers.size() > 0) ? (partyMembers.size()) : 0;
+        return partyMembers.isEmpty() ? partyMembers.size() : 0;
     }
-    public ArrayList<Integer> getPartyMembers()
+    public List<Integer> getPartyMembers()
     {
         return partyMembers;
     }
+
+    /**
+     * @param id
+     * @return
+     * */
     public boolean isMember(int id)
     {
         boolean validMember = false;

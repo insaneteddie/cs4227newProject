@@ -8,16 +8,19 @@
 **/
 package userinterface;
 
+import core.utils.Log;
 import database.DatabaseAccess;
 import database.DatabaseInterface;
 import core.session.SessionInformation;
-
+/** class to launch gui */
 public class StartUpUI {
-
+    private Log logger;
+    /** public constructor */
     public StartUpUI() {
-
+        logger = new Log(getClass().getName());
     }
 
+    /** Handles initial set up*/
     public void run() {
         try {
             /* Creates window to display GUI components */
@@ -34,7 +37,7 @@ public class StartUpUI {
             MenuManager menuMgr = new MenuManager(menuFac);
             menuMgr.registerObserver(screen);
         } catch (Exception e) {
-            System.out.println("Error bootingUI: " + e.toString());
+            logger.logSevere(e);
         }
     }
 }

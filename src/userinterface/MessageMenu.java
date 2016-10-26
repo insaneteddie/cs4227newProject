@@ -8,6 +8,7 @@
 **/
 package userinterface;
 
+import core.utils.Log;
 import core.utils.SessionController;
 
 import java.awt.BorderLayout;
@@ -15,9 +16,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -26,12 +24,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ *  UI class for displaying messaging window
+ * */
 public class MessageMenu extends Menu {
+    private Log logger;
 
+    /** public constructor */
     public MessageMenu() {
         showMessageMenu();
+        logger = new Log(getClass().getName());
     }
 
+    /** Builds the UI components for the menu */
     public void showMessageMenu() {
         JPanel mainMenuPanel = new JPanel();
         BorderLayout mainMenuLayout = new BorderLayout();
@@ -47,12 +52,11 @@ public class MessageMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                //sessionInfo.logPlayerOut();
             SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
-        mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
+        mainMenuPanel.add(topBarPanel, BorderLayout.NORTH);
 
         JPanel centerMenuPanel = new JPanel();
         BorderLayout centerMenuLayout = new BorderLayout();
@@ -88,14 +92,14 @@ public class MessageMenu extends Menu {
                         if (sessionInfo.isFriend(userid)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
                             sessionInfo.removeInvite(userid);
-                            //sessionInfo.getPlayerInvites();
-                            SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
+                            SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                             menuMgr.getMenuFromFactory(4);
                         } else {
                             JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
                         }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                        logger.logWarning(ex, "Input invalid.");
                     }
                 }
         });
@@ -107,7 +111,6 @@ public class MessageMenu extends Menu {
                             + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
                         sessionInfo.removeInvite(userid);
-                        //sessionInfo.getPlayerInvites();
                         SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                         menuMgr.getMenuFromFactory(4);
                     }
@@ -116,21 +119,21 @@ public class MessageMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                    logger.logWarning(ex, "Input invalid.");
                 }
         });
         inviteOptionPanel.add(declineInviteButton);
          JButton refreshInviteButton = new JButton("Refresh Invites");
         refreshInviteButton.addActionListener(e -> {
-                //sessionInfo.getPlayerInvites();
                 SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 populateInviteList(inviteList);
         });
         
         inviteOptionPanel.add(refreshInviteButton);
         midCenterMenuPanel.add(inviteOptionPanel);
-        centerMenuPanel.add(midCenterMenuPanel, centerMenuLayout.CENTER);
+        centerMenuPanel.add(midCenterMenuPanel, BorderLayout.CENTER);
 
-        mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
+        mainMenuPanel.add(centerMenuPanel, BorderLayout.CENTER);
 
         JPanel bottomBarPanel = new JPanel();
         FlowLayout bottomBarLayout = new FlowLayout();
@@ -138,11 +141,10 @@ public class MessageMenu extends Menu {
         bottomBarPanel.setLayout(bottomBarLayout);
         JButton returnButton = new JButton("<-Return");
         returnButton.addActionListener(e -> {
-                //sessionInfo.logPlayerOut();
                 menuMgr.getMenuFromFactory(2);
         });
         bottomBarPanel.add(returnButton);
-        mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);
+        mainMenuPanel.add(bottomBarPanel, BorderLayout.SOUTH);
         panel = mainMenuPanel;
     }
 
@@ -161,7 +163,7 @@ public class MessageMenu extends Menu {
         inviteList.append("Party Invitations:\n");
         if (sessionInfo != null) {
             List<String> invitations = sessionInfo.getInviteMessages(); // get invite messages
-            if (invitations.size() > 0) {
+            if (invitations.isEmpty()) {
                 inviteList.append(invitations.get(0) + "\n");
                 for (int i = 1; i < invitations.size(); i++) {
                     inviteList.append("" + invitations.get(i) + "\n");
