@@ -45,7 +45,7 @@ public class Party implements SessionObserver {
      * @return
      * */
     public boolean doesPartyExist() {
-        if (partyMembers.size() == 0) {
+        if (partyMembers.isEmpty()) {
             return false;
         }
         return true;
