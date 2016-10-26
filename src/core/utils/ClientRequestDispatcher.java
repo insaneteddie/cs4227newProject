@@ -1,5 +1,6 @@
 package core.utils;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -7,10 +8,10 @@ import java.util.Vector;
  */
 public class ClientRequestDispatcher implements ClientRequestInterceptor {
     private static ClientRequestDispatcher dispatcher;
-    Vector _interceptors;
+    ArrayList _interceptors;
 
     private ClientRequestDispatcher(){
-        _interceptors = new Vector();
+        _interceptors = new ArrayList();
     }
 
     public static ClientRequestDispatcher getInstance(){
@@ -23,9 +24,9 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     @Override
     public void onPreMarshalRequest(UnmarshaledRequest contextObject) {
         //default implementation
-        Vector interceptors;
+        ArrayList interceptors;
         synchronized(this){
-            interceptors = (Vector)_interceptors.clone();
+            interceptors = (ArrayList) _interceptors.clone();
         }
         for(Object i : interceptors){
             ((ClientRequestInterceptor)i).onPreMarshalRequest(contextObject);
@@ -35,9 +36,9 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     @Override
     public void onPostMarshalRequest(MarshaledRequest contextObject) {
         //default implementation
-        Vector interceptors;
+        ArrayList interceptors;
         synchronized(this){
-            interceptors = (Vector)_interceptors.clone();
+            interceptors = (ArrayList) _interceptors.clone();
         }
         for(Object i : interceptors){
             ((ClientRequestInterceptor)i).onPostMarshalRequest(contextObject);
@@ -45,7 +46,7 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     }
 
     synchronized public void registerClientRequestInterceptor(ClientRequestInterceptor i){
-        _interceptors.addElement(i);
+        _interceptors.add(i);
     }
 
     synchronized public void removeClientRequestInterceptor(ClientRequestInterceptor i){
