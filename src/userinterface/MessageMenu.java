@@ -98,7 +98,6 @@ public class MessageMenu extends Menu {
                             JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
                         }
                     } catch (Exception ex) {
-
                         JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
                         logger.logWarning(ex, "Input invalid.");
                     }
@@ -112,7 +111,6 @@ public class MessageMenu extends Menu {
                             + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
                         sessionInfo.removeInvite(userid);
-                        //sessionInfo.getPlayerInvites();
                         SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                         menuMgr.getMenuFromFactory(4);
                     }
