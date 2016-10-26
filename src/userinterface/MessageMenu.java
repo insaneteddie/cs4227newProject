@@ -107,7 +107,8 @@ public class MessageMenu extends Menu {
                             + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
                         sessionInfo.removeInvite(userid);
-                        sessionInfo.getPlayerInvites();
+                        //sessionInfo.getPlayerInvites();
+                        SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                         menuMgr.getMenuFromFactory(4);
                     }
                     else{
