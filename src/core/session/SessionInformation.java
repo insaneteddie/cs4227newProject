@@ -308,10 +308,10 @@ public class SessionInformation {
 
     /**
      *  @param friendToInvite
-     * */
+     * *///,String content, int type
     public void sendInvite(int friendToInvite) {
         try {
-            database.addInvite(player.getId(), friendToInvite, party.getId());
+            database.addInvite(player.getId(), friendToInvite, party.getId() );
         } catch (Exception ex) {
             log.logException(ex);
         }

@@ -314,7 +314,7 @@ public class DatabaseAccess implements DatabaseInterface {
         return isInParty;
     }
 
-    @Override  
+    @Override  //,String content, int type
     public void addInvite(int senderID, int receiverID, int partyID) throws Exception {
         file = new File(INVITE_DETAILS_FILE);
         String newInvite = "" + senderID + "," + receiverID + "," + partyID;

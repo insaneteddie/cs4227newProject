@@ -41,8 +41,8 @@ public interface DatabaseInterface {
     int doesPlayerExist(String username) throws Exception;
 
     boolean isPlayerInParty(int playerID) throws Exception;
-
-    void addInvite(int senderID, int receiverID, int partyID,String content, int type) throws Exception;
+    //String content, int type
+    void addInvite(int senderID, int receiverID, int partyID) throws Exception;
 
     void removeInvite(int senderID, int receiverID, int partyID) throws Exception;
 
