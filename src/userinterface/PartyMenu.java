@@ -34,6 +34,7 @@ public class PartyMenu extends Menu {
         showPartyMenu();
     }
 
+    /** set up UI for party menu */
     public void showPartyMenu() {
         JPanel mainMenuPanel = new JPanel();
         BorderLayout mainMenuLayout = new BorderLayout();
