@@ -81,7 +81,8 @@ public class MainMenu extends Menu {
                     int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
                     if (choice == JOptionPane.YES_OPTION) {
                         System.out.println("clicked yes");
-                        sessionInfo.createParty();
+                        //sessionInfo.createParty();
+                        SessionController.getInstance().executeCommand("PARTY_CREATE");
                     }
                 }
         });
