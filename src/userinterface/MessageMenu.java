@@ -8,6 +8,7 @@
 **/
 package userinterface;
 
+import core.utils.Log;
 import core.utils.SessionController;
 
 import java.awt.BorderLayout;
@@ -27,9 +28,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class MessageMenu extends Menu {
+    private Log logger;
 
     public MessageMenu() {
         showMessageMenu();
+        logger = new Log(getClass().getName());
     }
 
     public void showMessageMenu() {
@@ -95,7 +98,9 @@ public class MessageMenu extends Menu {
                             JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
                         }
                     } catch (Exception ex) {
+
                         JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                        logger.logWarning(ex, "Input invalid.");
                     }
                 }
         });
@@ -116,6 +121,7 @@ public class MessageMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                    logger.logWarning(ex, "Input invalid.");
                 }
         });
         inviteOptionPanel.add(declineInviteButton);
