@@ -11,6 +11,7 @@ public class Party implements SessionObserver {
     private int leaderID;
     private ArrayList<Integer> partyMembers;
 
+    /** public constructor */
     public Party() {
         partyMembers = new ArrayList<>();
     }
