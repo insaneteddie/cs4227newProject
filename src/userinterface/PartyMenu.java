@@ -168,6 +168,7 @@ public class PartyMenu extends Menu {
 
     }
 
+    /** Gets party member info and appends to the members list */
     public void populateMembersList(JTextArea memberList) {
         memberList.setText("");
         memberList.append("Members:\n");
