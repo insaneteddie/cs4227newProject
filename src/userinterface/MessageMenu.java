@@ -24,6 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/**
+ *  UI class for displaying messaging window
+ * */
 public class MessageMenu extends Menu {
     private Log logger;
 
