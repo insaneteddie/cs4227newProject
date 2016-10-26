@@ -8,6 +8,7 @@
 **/
 package userinterface;
 
+import core.utils.Log;
 import core.utils.SessionController;
 
 import java.awt.BorderLayout;
@@ -29,8 +30,11 @@ import javax.swing.JTextArea;
  * */
 public class PartyMenu extends Menu {
 
+    private Log logger;
+
     /** public constructor */
     public PartyMenu() {
+        logger = new Log(getClass().getName());
         showPartyMenu();
     }
 
@@ -113,6 +117,7 @@ public class PartyMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                    logger.logWarning(ex, "Input invalid.");
                 }
 
         });
