@@ -91,6 +91,7 @@ public class MainMenu extends Menu {
         JButton messageButton = new JButton("Messages");
         messageButton.addActionListener(e ->{
                 sessionInfo.getPlayerInvites();
+                SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 menuMgr.getMenuFromFactory(4);
         });
         centerMenuButtonsPanel.add(messageButton);
