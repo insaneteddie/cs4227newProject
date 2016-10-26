@@ -78,7 +78,6 @@ public class PartyMenu extends Menu {
         JButton leavePartyButton = new JButton("Leave Party");
         leavePartyButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(null, "You have left the party");
-                //sessionInfo.leaveParty();
                 SessionController.getInstance().executeCommand("PARTY_LEAVE");
                 menuMgr.getMenuFromFactory(2);
         });
