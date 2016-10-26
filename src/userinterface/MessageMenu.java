@@ -131,7 +131,7 @@ public class MessageMenu extends Menu {
         
         inviteOptionPanel.add(refreshInviteButton);
         midCenterMenuPanel.add(inviteOptionPanel);
-        centerMenuPanel.add(midCenterMenuPanel, centerMenuLayout.CENTER);
+        centerMenuPanel.add(midCenterMenuPanel, BorderLayout.CENTER);
 
         mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
 
