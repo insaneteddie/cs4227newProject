@@ -94,6 +94,9 @@ public class Player extends User implements SessionSubject {
         this.email = email;
     }
 
+    /**
+     * @param friendID
+     * */
     public void addFriend(int friendID) {
         friends.add(friendID);
     }
