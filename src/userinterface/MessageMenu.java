@@ -133,7 +133,7 @@ public class MessageMenu extends Menu {
         midCenterMenuPanel.add(inviteOptionPanel);
         centerMenuPanel.add(midCenterMenuPanel, BorderLayout.CENTER);
 
-        mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
+        mainMenuPanel.add(centerMenuPanel, BorderLayout.CENTER);
 
         JPanel bottomBarPanel = new JPanel();
         FlowLayout bottomBarLayout = new FlowLayout();
