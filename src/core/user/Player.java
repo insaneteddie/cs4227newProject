@@ -146,6 +146,7 @@ public class Player extends User implements SessionSubject {
 
     /**
      * @param id
+     * @return 
      * */
     public boolean isFriend(int id) {
         return friends.contains(id);
