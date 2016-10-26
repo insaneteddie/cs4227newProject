@@ -8,6 +8,8 @@
 **/
 package userinterface;
 
+import core.utils.SessionController;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -45,7 +47,8 @@ public class MessageMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                sessionInfo.logPlayerOut();
+                //sessionInfo.logPlayerOut();
+            SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
@@ -85,7 +88,8 @@ public class MessageMenu extends Menu {
                         if (sessionInfo.isFriend(userid)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
                             sessionInfo.removeInvite(userid);
-                            sessionInfo.getPlayerInvites();
+                            //sessionInfo.getPlayerInvites();
+                            SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                             menuMgr.getMenuFromFactory(4);
                         } else {
                             JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
@@ -103,7 +107,8 @@ public class MessageMenu extends Menu {
                             + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
                         sessionInfo.removeInvite(userid);
-                        sessionInfo.getPlayerInvites();
+                        //sessionInfo.getPlayerInvites();
+                        SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                         menuMgr.getMenuFromFactory(4);
                     }
                     else{
@@ -116,7 +121,8 @@ public class MessageMenu extends Menu {
         inviteOptionPanel.add(declineInviteButton);
          JButton refreshInviteButton = new JButton("Refresh Invites");
         refreshInviteButton.addActionListener(e -> {
-                sessionInfo.getPlayerInvites();
+                //sessionInfo.getPlayerInvites();
+                SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 populateInviteList(inviteList);
         });
         

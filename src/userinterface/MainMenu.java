@@ -8,6 +8,8 @@
 **/
 package userinterface;
 
+import core.utils.SessionController;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -40,7 +42,8 @@ public class MainMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                sessionInfo.logPlayerOut();
+                //sessionInfo.logPlayerOut();
+                SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
@@ -70,14 +73,16 @@ public class MainMenu extends Menu {
         partyButton.addActionListener(e -> {
                 if (sessionInfo.isPlayerInParty()) {
                     System.out.println("getting partyDetails");
-                    sessionInfo.getPartyDetails();
-                    
+                    //sessionInfo.getPartyDetails();
+                    SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
+
                     menuMgr.getMenuFromFactory(3);
                 } else {
                     int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
                     if (choice == JOptionPane.YES_OPTION) {
                         System.out.println("clicked yes");
-                        sessionInfo.createParty();
+                        //sessionInfo.createParty();
+                        SessionController.getInstance().executeCommand("PARTY_CREATE");
                     }
                 }
         });
@@ -85,7 +90,8 @@ public class MainMenu extends Menu {
         centerMenuButtonsPanel.add(communityButton);
         JButton messageButton = new JButton("Messages");
         messageButton.addActionListener(e ->{
-                sessionInfo.getPlayerInvites();
+                //sessionInfo.getPlayerInvites();
+                SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 menuMgr.getMenuFromFactory(4);
         });
         centerMenuButtonsPanel.add(messageButton);
