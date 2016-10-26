@@ -63,6 +63,11 @@ public class Party implements SessionObserver {
     {
         return partyMembers;
     }
+
+    /**
+     * @param id
+     * @return
+     * */
     public boolean isMember(int id)
     {
         boolean validMember = false;
