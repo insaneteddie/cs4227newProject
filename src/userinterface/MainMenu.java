@@ -73,7 +73,8 @@ public class MainMenu extends Menu {
         partyButton.addActionListener(e -> {
                 if (sessionInfo.isPlayerInParty()) {
                     System.out.println("getting partyDetails");
-                    sessionInfo.getPartyDetails();
+                    //sessionInfo.getPartyDetails();
+                    SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
 
                     menuMgr.getMenuFromFactory(3);
                 } else {
