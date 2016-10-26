@@ -8,10 +8,13 @@ import java.util.List;
 public interface SessionSubject
 {
     /**
-     * @param o 
+     * @param o
      * */
     void attach(SessionObserver o);
-    
+
+    /**
+     * @param o 
+     * */
     void detach(SessionObserver o);
     
     void update();
