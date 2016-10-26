@@ -10,9 +10,15 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     private SqlDatabase sqlDB;
     // k im not sure about this....
-    public DatabaseAdapter(){
+    public DatabaseAdapter()
+    {
         sqlDB = new SqlDatabase();
 
+    }
+    //overloaded to allow connection to own database
+    public DatabaseAdapter(String databaseURL,String dbUser, String dbPass,String JDBCDriver)
+    {
+        sqlDB = new SqlDatabase(databaseURL,dbUser,dbPass,JDBCDriver);
     }
     @Override
     public boolean canLogin(String username, String password) throws Exception {
