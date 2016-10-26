@@ -20,6 +20,7 @@ public class StartUpUI {
          * */
     }
 
+    /** Handles initial set up*/
     public void run() {
         try {
             /* Creates window to display GUI components */
