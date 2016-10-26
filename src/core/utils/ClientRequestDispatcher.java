@@ -1,7 +1,6 @@
 package core.utils;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Created by David on 22/10/2016.
