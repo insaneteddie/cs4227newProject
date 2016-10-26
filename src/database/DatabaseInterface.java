@@ -42,7 +42,7 @@ public interface DatabaseInterface {
 
     boolean isPlayerInParty(int playerID) throws Exception;
 
-    void addInvite(int senderID, int receiverID, int partyID) throws Exception;
+    void addInvite(int senderID, int receiverID, int partyID,String content, int type) throws Exception;
 
     void removeInvite(int senderID, int receiverID, int partyID) throws Exception;
 

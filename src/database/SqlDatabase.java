@@ -9,9 +9,9 @@ import java.sql.*;
  */
 class SqlDatabase {
     // JDBC driver name and database URL
-    private static String JDBC_DRIVER;
+    private static String JDBCDRIVER;
     //set up to connect to an rds instance on my aws account
-    private static  String DB_URL ;
+    private static  String DBURL;
 
     //  Database credentials
     private static  String USER;
@@ -23,8 +23,8 @@ class SqlDatabase {
 
     public SqlDatabase()
     {
-        JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        DB_URL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
+        JDBCDRIVER = "com.mysql.jdbc.Driver";
+        DBURL = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
         USER = "admin";
         PASS = "teamawesome";
         connectToDb();
@@ -32,8 +32,8 @@ class SqlDatabase {
 
     public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
-        JDBC_DRIVER = jdbcDriver;
-        DB_URL = databaseURL;
+        JDBCDRIVER = jdbcDriver;
+        DBURL = databaseURL;
         USER = dbUser;
         PASS = dbPass;
         connectToDb();
@@ -48,11 +48,11 @@ class SqlDatabase {
 
         try {
             //Register JDBC driver
-            Class.forName(JDBC_DRIVER);
+            Class.forName(JDBCDRIVER);
 
             System.out.println("Attempting to Connect");
             //connection
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -87,8 +87,8 @@ class SqlDatabase {
 
         System.out.println("Inserting records into the table...");
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -121,8 +121,8 @@ class SqlDatabase {
         System.out.println("Inserting records into the table...");
         try {
 
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -154,8 +154,8 @@ class SqlDatabase {
         boolean canLogin = false;
         System.out.println("checking login details");
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -188,8 +188,8 @@ class SqlDatabase {
         String player_Name = "";
         System.out.println("checking player details");
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -219,8 +219,8 @@ class SqlDatabase {
     {
         int userId = 0;
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -252,8 +252,8 @@ class SqlDatabase {
         int checker = 0;
         System.out.println("checking player details");
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -288,8 +288,8 @@ class SqlDatabase {
     public boolean isPartyFull(int party_Id)
     {
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -329,9 +329,9 @@ class SqlDatabase {
     {
         ArrayList<Integer> friendsList = new ArrayList<>();
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName(JDBCDRIVER);
             int iterator = 0;
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -367,9 +367,9 @@ class SqlDatabase {
     {
         ArrayList<Integer []> invitesList = new ArrayList<>();
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName(JDBCDRIVER);
             int iterator = 0;
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
             Integer [] user_invites = new Integer[100];
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -408,8 +408,8 @@ class SqlDatabase {
         System.out.println("Inserting records into the table...");
         try {
 
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -444,9 +444,9 @@ class SqlDatabase {
     public void addPlayerToParty(int playerID, int partyID)
     {
         try {
-            Class.forName(JDBC_DRIVER);
+            Class.forName(JDBCDRIVER);
 
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -471,7 +471,7 @@ class SqlDatabase {
             prepStatement.setString(2,sqlCol);
             prepStatement.setInt(3,partyID);
 
-
+            prepStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -492,8 +492,8 @@ class SqlDatabase {
     {
 
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -529,8 +529,8 @@ class SqlDatabase {
         int checker = 0;
         System.out.println("checking player details");
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
@@ -566,8 +566,8 @@ class SqlDatabase {
     {
         int counter = 0;
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
             counter = 1;
 
             statement = connection.createStatement();
@@ -609,15 +609,15 @@ class SqlDatabase {
     public boolean is_In_Party(int player_Id)
     {
         try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
             statement = connection.createStatement();
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
             prepStatement.setInt(1, player_Id);
-            prepStatement.setInt(2,player_Id);
+            prepStatement.setInt(2, player_Id);
 
             ResultSet res = prepStatement.executeQuery();
             if (res.next())
@@ -642,5 +642,199 @@ class SqlDatabase {
         return false;
     }
 
+    public void add_Invite(int senderID, int receiverID,int typeID,String invite_content, int partyId)
+    {
+        try {
+            Class.forName(JDBCDRIVER);
 
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,typeId,party_Id)  VALUES( ?, ?, ?, ?, ?)");
+            prepStatement.setInt(1,senderID);
+            prepStatement.setString(2,invite_content);
+            prepStatement.setInt(3,receiverID);
+            prepStatement.setInt(4,typeID);
+            prepStatement.setInt(5,partyId);
+
+            prepStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    public void remove_Invite(int senderID, int receiverID, int inviteId)
+    {
+        try {
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND invite_Id = ?)");
+            prepStatement.setInt(1, senderID);
+            prepStatement.setInt(2,receiverID);
+            prepStatement.setInt(3,inviteId);
+
+            prepStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    public void removePlayerFromParty(int partyID, int playerID)
+    {
+        try {
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+
+            statement = connection.createStatement();
+            int colId = find_User_In_Party(playerID,partyID);
+            String sqlCol = "";
+            switch(colId)
+            {
+                case 1: sqlCol ="user_1_Id";
+                    break;
+                case 2: sqlCol = "user_2_Id";
+                    break;
+                case 3: sqlCol = "user_3_Id";
+                    break;
+                case 4: sqlCol = "user_4_Id";
+                    break;
+                case 5: sqlCol = "user_5_Id";
+                    break;
+            }
+
+
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
+
+            prepStatement.setString(1,sqlCol);
+            prepStatement.setInt(2,playerID);
+            prepStatement.setInt(3,partyID);
+
+
+
+
+            prepStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    public int find_User_In_Party(int user_Id, int party_Id)
+    {
+        int counter = 0;
+        try {
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+            counter = 0;
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+
+            prepStatement.setInt(1,party_Id);
+
+
+            ResultSet res = prepStatement.executeQuery();
+            while(res.next())
+            {
+                counter++;
+                if(res.getInt(counter) == user_Id)
+                {
+                    return counter;
+                }
+
+            }
+            counter = 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return counter;
+    }
+
+    public ArrayList<Integer> get_PartyDetails(int partyID, int playerID) {
+        ArrayList<Integer> partyList = new ArrayList<>();
+        try {
+            Class.forName(JDBCDRIVER);
+            int iterator = 0;
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_Id = ?");
+            prepStatement.setInt(1, partyID);
+
+            ResultSet res = prepStatement.executeQuery();
+            while (res.next()) {
+                if(res.getInt(iterator)!= playerID)
+                partyList.add(res.getInt(iterator));
+                iterator++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return partyList;
+    }
 }
