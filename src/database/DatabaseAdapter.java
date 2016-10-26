@@ -76,7 +76,7 @@ public class DatabaseAdapter implements DatabaseInterface {
     @Override
     public int checkUserNameAndEmail(String username, String email) throws Exception {
         return sqlDB.check_Name_Email(username,email);
-        //return 0;
+
     }
 
     @Override
@@ -95,13 +95,13 @@ public class DatabaseAdapter implements DatabaseInterface {
     }
 
     @Override
-    public void addInvite(int senderID, int receiverID, int partyID) throws Exception {
-
+    public void addInvite(int senderID, int receiverID, int partyId, String content,int type) throws Exception {
+        sqlDB.add_Invite(senderID,receiverID,type,content,partyId);
     }
 
     @Override
-    public void removeInvite(int senderID, int receiverID, int partyID) throws Exception {
-
+    public void removeInvite(int senderID, int receiverID, int inviteId) throws Exception {
+        sqlDB.remove_Invite(senderID,receiverID,inviteId);
     }
 
     @Override
