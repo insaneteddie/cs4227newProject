@@ -11,7 +11,7 @@ package userinterface;
 import database.DatabaseAccess;
 import database.DatabaseInterface;
 import core.session.SessionInformation;
-
+/** class to launch gui */
 public class StartUpUI {
 
     public StartUpUI() {
