@@ -7,10 +7,10 @@ import java.util.ArrayList;
  */
 public class ClientRequestDispatcher implements ClientRequestInterceptor {
     private static ClientRequestDispatcher dispatcher;
-    ArrayList _interceptors;
+    ArrayList interceptors;
 
     private ClientRequestDispatcher(){
-        _interceptors = new ArrayList();
+        interceptors = new ArrayList();
     }
 
     public static ClientRequestDispatcher getInstance(){
@@ -25,7 +25,7 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
         //default implementation
         ArrayList interceptors;
         synchronized(this){
-            interceptors = (ArrayList) _interceptors.clone();
+            interceptors = (ArrayList) this.interceptors.clone();
         }
         for(Object i : interceptors){
             ((ClientRequestInterceptor)i).onPreMarshalRequest(contextObject);
@@ -37,7 +37,7 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
         //default implementation
         ArrayList interceptors;
         synchronized(this){
-            interceptors = (ArrayList) _interceptors.clone();
+            interceptors = (ArrayList) this.interceptors.clone();
         }
         for(Object i : interceptors){
             ((ClientRequestInterceptor)i).onPostMarshalRequest(contextObject);
@@ -45,10 +45,10 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     }
 
     synchronized public void registerClientRequestInterceptor(ClientRequestInterceptor i){
-        _interceptors.add(i);
+        interceptors.add(i);
     }
 
     synchronized public void removeClientRequestInterceptor(ClientRequestInterceptor i){
-        _interceptors.remove(i);
+        interceptors.remove(i);
     }
 }
