@@ -31,16 +31,6 @@ public class Log {
         }
     }
 
-    /*public void logException(Exception e){
-        logger.log(Level.WARNING, e.getMessage());
-    }
-    public void logException(String msg, Exception e){
-        logger.log(Level.WARNING, msg + "\n" + e.getMessage());
-    }
-    public void logException(String desc){
-        logger.log(Level.INFO, desc);
-    }*/
-
     public void logWarning(Exception e, String desc){
         logger.log(Level.WARNING, e.getMessage());
     }
