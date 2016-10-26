@@ -125,15 +125,15 @@ public class Player extends User implements SessionSubject {
     }
 
     /**
-     * @param info 
+     * @param info
      * */
     public void addToPartyInformation(int info)
     {
         partyInformation.add(info);
     }
     
-    public void updatePartyInformation(ArrayList<Integer> info) {
-        partyInformation = info;
+    public void updatePartyInformation(List<Integer> info) {
+        partyInformation = (ArrayList<Integer>) info;
     }
 
     public void clearPartyInformation() {
