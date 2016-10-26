@@ -163,7 +163,7 @@ public class MessageMenu extends Menu {
         inviteList.append("Party Invitations:\n");
         if (sessionInfo != null) {
             List<String> invitations = sessionInfo.getInviteMessages(); // get invite messages
-            if (invitations.size() > 0) {
+            if (invitations.isEmpty()) {
                 inviteList.append(invitations.get(0) + "\n");
                 for (int i = 1; i < invitations.size(); i++) {
                     inviteList.append("" + invitations.get(i) + "\n");
