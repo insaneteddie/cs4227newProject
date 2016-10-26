@@ -3,6 +3,7 @@ package core.session;
 import core.user.SessionSubject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Party class; contains party information*/
 public class Party implements SessionObserver {
@@ -58,7 +59,7 @@ public class Party implements SessionObserver {
     public int getPartySize() {
         return partyMembers.isEmpty() ? partyMembers.size() : 0;
     }
-    public ArrayList<Integer> getPartyMembers()
+    public List<Integer> getPartyMembers()
     {
         return partyMembers;
     }
