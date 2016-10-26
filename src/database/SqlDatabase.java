@@ -5,21 +5,21 @@ import java.sql.*;
 
 
 /**
- * Created by s_harte CS4227 Awesome Gaming  on 10/20/2016.
+ * Created by s_harte Awesome Gaming  : CS4227 Project on 10/20/2016.
  */
-public class SqlDatabase {
+class SqlDatabase {
     // JDBC driver name and database URL
-    static String JDBC_DRIVER;
+    private static String JDBC_DRIVER;
     //set up to connect to an rds instance on my aws account
-    static  String DB_URL ;
+    private static  String DB_URL ;
 
     //  Database credentials
-    static  String USER;
-    static  String PASS;
+    private static  String USER;
+    private static  String PASS;
 
 
-    public Connection connection;
-    public Statement statement;
+    private Connection connection;
+    private Statement statement;
 
     public SqlDatabase()
     {
@@ -54,22 +54,12 @@ public class SqlDatabase {
             //connection
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
-
-            // String sqlString = "CREATE DATABASE "+ dbName;
-            // statement.execute(sqlString);
-
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException se) {
             se.printStackTrace();
         } finally {
             try {
-                /*if (statement != null)
-                    statement.close();
-            } catch (SQLException se2) {
-                se2.printStackTrace();//nothing else to be done
-            }try {*/
                 if (connection != null)
                     connection.close();
             } catch (SQLException se) {
@@ -79,13 +69,14 @@ public class SqlDatabase {
 
     }//end of connection method
 
-                //table name,columns *string is varchar, int is int
-                // users, String table name,String user_Name, String user_Pass, String email
-                // user_friends,int user_Id (from users table),int friend_Id from users
-                // user_messages,
-                // user_games,
-                // user_invites,
-                // user_parties
+        //table name,columns *string is varchar, int is int.
+        // users, String table name,String user_Name, String user_Pass, String email.
+        // user_friends,int user_Id (from users table),int friend_Id from users.
+        // user_messages.
+        // user_games.
+        // user_invites.
+        // user_parties.
+
     //add a user to the user table should look at hash tables.
     public void add_User(String user_Name, String user_Pass, String email)
     {
@@ -296,8 +287,6 @@ public class SqlDatabase {
     //is party full method
     public boolean isPartyFull(int party_Id)
     {
-        boolean checker = true;
-
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -315,8 +304,8 @@ public class SqlDatabase {
             while (res.next())
             {
                 if (res.wasNull()) {
-                    checker = false;
-                    return checker;
+
+                    return false;
                 }
             }
 
@@ -333,7 +322,7 @@ public class SqlDatabase {
                 se.printStackTrace();
             }
         }
-        return checker;
+        return true;
     }
 
     public ArrayList<Integer> get_FriendsList(int user_Id)
@@ -451,9 +440,7 @@ public class SqlDatabase {
         }
         return party_Id;
     }
-    //sent norah an email in regards to this query.
-    // not sure exactly how to make it go to the first null field it finds,
-    // might require writing another method to find first col with null value.
+    //hacked a fix
     public void addPlayerToParty(int playerID, int partyID)
     {
         try {
@@ -503,7 +490,7 @@ public class SqlDatabase {
     //sorted
     public boolean does_Party_Exist(int partyID)
     {
-        boolean full = true;
+
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -516,8 +503,8 @@ public class SqlDatabase {
 
             ResultSet res = prepStatement.executeQuery();
             if (res.next()) {
-                full = false;
-                return full;
+
+                return false;
             }
 
 
@@ -534,7 +521,7 @@ public class SqlDatabase {
                 se.printStackTrace();
             }
         }
-        return full;
+        return true;
     }
     //should work
     public int does_Player_Exist(String username)
@@ -574,8 +561,8 @@ public class SqlDatabase {
         }
         return checker;
     }
-
-    public int find_Null_From_Parties(int party_Id)
+    //the above mentioned hacked fix
+    private int find_Null_From_Parties(int party_Id)
     {
         int counter = 0;
         try {
@@ -617,6 +604,42 @@ public class SqlDatabase {
         }
     }
         return counter;
+    }
+
+    public boolean is_In_Party(int player_Id)
+    {
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
+            prepStatement.setInt(1, player_Id);
+            prepStatement.setInt(2,player_Id);
+
+            ResultSet res = prepStatement.executeQuery();
+            if (res.next())
+            {
+                return true;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return false;
     }
 
 
