@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class DatabaseAdapter implements DatabaseInterface {
 
 
-    private SqlDatabase sqlDB;
+    private final SqlDatabase sqlDB;
     // k im not sure about this....
     public DatabaseAdapter()
     {
@@ -16,7 +16,8 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     }
     //overloaded to allow connection to own database
-    public DatabaseAdapter(String databaseURL,String dbUser, String dbPass,String JDBCDriver)
+    @SuppressWarnings("unused")
+    public DatabaseAdapter(String databaseURL, String dbUser, String dbPass, String JDBCDriver)
     {
         sqlDB = new SqlDatabase(databaseURL,dbUser,dbPass,JDBCDriver);
     }
@@ -90,7 +91,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public boolean isPlayerInParty(int playerID) throws Exception {
-        return false;
+        return sqlDB.is_In_Party(playerID);
     }
 
     @Override
@@ -108,4 +109,6 @@ public class DatabaseAdapter implements DatabaseInterface {
     {
         sqlDB.add_Friend(user_Id,friend_Id);
     }
+
+
 }

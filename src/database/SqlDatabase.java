@@ -5,21 +5,21 @@ import java.sql.*;
 
 
 /**
- * Created by s_harte CS4227 Awesome Gaming  on 10/20/2016.
+ * Created by s_harte Awesome Gaming  : CS4227 Project on 10/20/2016.
  */
-public class SqlDatabase {
+class SqlDatabase {
     // JDBC driver name and database URL
-    static String JDBC_DRIVER;
+    private static String JDBC_DRIVER;
     //set up to connect to an rds instance on my aws account
-    static  String DB_URL ;
+    private static  String DB_URL ;
 
     //  Database credentials
-    static  String USER;
-    static  String PASS;
+    private static  String USER;
+    private static  String PASS;
 
 
-    public Connection connection;
-    public Statement statement;
+    private Connection connection;
+    private Statement statement;
 
     public SqlDatabase()
     {
@@ -287,8 +287,6 @@ public class SqlDatabase {
     //is party full method
     public boolean isPartyFull(int party_Id)
     {
-        boolean checker = true;
-
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -306,8 +304,8 @@ public class SqlDatabase {
             while (res.next())
             {
                 if (res.wasNull()) {
-                    checker = false;
-                    return checker;
+
+                    return false;
                 }
             }
 
@@ -324,7 +322,7 @@ public class SqlDatabase {
                 se.printStackTrace();
             }
         }
-        return checker;
+        return true;
     }
 
     public ArrayList<Integer> get_FriendsList(int user_Id)
@@ -492,7 +490,7 @@ public class SqlDatabase {
     //sorted
     public boolean does_Party_Exist(int partyID)
     {
-        boolean full = true;
+
         try {
             Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -505,8 +503,8 @@ public class SqlDatabase {
 
             ResultSet res = prepStatement.executeQuery();
             if (res.next()) {
-                full = false;
-                return full;
+
+                return false;
             }
 
 
@@ -523,7 +521,7 @@ public class SqlDatabase {
                 se.printStackTrace();
             }
         }
-        return full;
+        return true;
     }
     //should work
     public int does_Player_Exist(String username)
@@ -564,7 +562,7 @@ public class SqlDatabase {
         return checker;
     }
     //the above mentioned hacked fix
-    public int find_Null_From_Parties(int party_Id)
+    private int find_Null_From_Parties(int party_Id)
     {
         int counter = 0;
         try {
@@ -606,6 +604,42 @@ public class SqlDatabase {
         }
     }
         return counter;
+    }
+
+    public boolean is_In_Party(int player_Id)
+    {
+        try {
+            Class.forName(JDBC_DRIVER);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
+            prepStatement.setInt(1, player_Id);
+            prepStatement.setInt(2,player_Id);
+
+            ResultSet res = prepStatement.executeQuery();
+            if (res.next())
+            {
+                return true;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return false;
     }
 
 
