@@ -800,4 +800,41 @@ class SqlDatabase {
         }
         return counter;
     }
+
+    public ArrayList<Integer> get_PartyDetails(int partyID, int playerID) {
+        ArrayList<Integer> partyList = new ArrayList<>();
+        try {
+            Class.forName(JDBCDRIVER);
+            int iterator = 0;
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_Id = ?");
+            prepStatement.setInt(1, partyID);
+
+            ResultSet res = prepStatement.executeQuery();
+            while (res.next()) {
+                if(res.getInt(iterator)!= playerID)
+                partyList.add(res.getInt(iterator));
+                iterator++;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return partyList;
+    }
 }

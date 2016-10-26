@@ -54,7 +54,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
-        return null;
+        return sqlDB.get_PartyDetails(partyID,playerID);
     }
 
     @Override
