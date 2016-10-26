@@ -30,6 +30,7 @@ import javax.swing.JTextArea;
 public class MessageMenu extends Menu {
     private Log logger;
 
+    /** public constructor */
     public MessageMenu() {
         showMessageMenu();
         logger = new Log(getClass().getName());
