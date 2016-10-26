@@ -154,7 +154,7 @@ public class PartyMenu extends Menu {
         centerMenuButtonsPanel.add(gameButton);
         centerMenuPanel.add(centerMenuButtonsPanel, BorderLayout.CENTER);
 
-        mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
+        mainMenuPanel.add(centerMenuPanel, BorderLayout.CENTER);
 
         JPanel bottomBarPanel = new JPanel();
         FlowLayout bottomBarLayout = new FlowLayout();
