@@ -5,8 +5,11 @@ package core.utils;
  */
 public interface ClientRequestInterceptor {
     /**
-     * @param contextObject 
+     * @param contextObject
      * */
     void onPreMarshalRequest(UnmarshaledRequest contextObject);
+    /**
+     * @param contextObject 
+     * */
     void onPostMarshalRequest(MarshaledRequest contextObject);
 }
