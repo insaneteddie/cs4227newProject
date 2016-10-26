@@ -35,11 +35,11 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     @Override
     public void onPostMarshalRequest(MarshaledRequest contextObject) {
         //default implementation
-        ArrayList interceptors;
+        ArrayList interceptorList;
         synchronized(this){
-            interceptors = (ArrayList) this.interceptors.clone();
+            interceptorList = (ArrayList) this.interceptors.clone();
         }
-        for(Object i : interceptors){
+        for(Object i : interceptorList){
             ((ClientRequestInterceptor)i).onPostMarshalRequest(contextObject);
         }
     }
