@@ -142,7 +142,6 @@ public class SessionInformation {
 
             DatabaseAdapter dbA = new DatabaseAdapter();
             dbA.createPlayer(username,password,email);
-            //database.createPlayer(username, password, email);
         } catch (Exception e) {
             log.logWarning(e, "Error creating player: ");
         }
