@@ -8,6 +8,8 @@
 **/
 package userinterface;
 
+import core.utils.SessionController;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -45,7 +47,8 @@ public class PartyMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                sessionInfo.logPlayerOut();
+                //sessionInfo.logPlayerOut();
+                SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
