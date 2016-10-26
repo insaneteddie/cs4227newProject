@@ -13,9 +13,11 @@ import database.DatabaseInterface;
 import core.session.SessionInformation;
 /** class to launch gui */
 public class StartUpUI {
-
+    /** public constructor */
     public StartUpUI() {
-
+        /** empty constructor.
+         *  no member variables to initialise
+         * */
     }
 
     public void run() {
