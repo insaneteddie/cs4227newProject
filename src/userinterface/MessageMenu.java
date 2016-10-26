@@ -141,7 +141,6 @@ public class MessageMenu extends Menu {
         bottomBarPanel.setLayout(bottomBarLayout);
         JButton returnButton = new JButton("<-Return");
         returnButton.addActionListener(e -> {
-                //sessionInfo.logPlayerOut();
                 menuMgr.getMenuFromFactory(2);
         });
         bottomBarPanel.add(returnButton);
