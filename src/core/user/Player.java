@@ -133,12 +133,13 @@ public class Player extends User implements SessionSubject {
     }
 
     /**
-     * @param info 
+     * @param info
      * */
     public void updatePartyInformation(List<Integer> info) {
         partyInformation = (ArrayList<Integer>) info;
     }
 
+    /** clears party info*/
     public void clearPartyInformation() {
         partyInformation.clear();
     }
