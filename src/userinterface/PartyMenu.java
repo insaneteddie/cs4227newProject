@@ -29,6 +29,7 @@ import javax.swing.JTextArea;
  * */
 public class PartyMenu extends Menu {
 
+    /** public constructor */
     public PartyMenu() {
         showPartyMenu();
     }
