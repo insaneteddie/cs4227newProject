@@ -127,7 +127,6 @@ public class PartyMenu extends Menu {
                 if (sessionInfo.isPartyLeader()) {
                     if (sessionInfo.getPartySize() > 1) {
                         // select member to remove
-                        boolean validID = false;
 
                         try {
                             int memberToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the member you would"
