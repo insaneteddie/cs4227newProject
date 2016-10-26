@@ -617,7 +617,7 @@ class SqlDatabase {
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
             prepStatement.setInt(1, player_Id);
-            prepStatement.setInt(2,player_Id);
+            prepStatement.setInt(2, player_Id);
 
             ResultSet res = prepStatement.executeQuery();
             if (res.next())
@@ -707,5 +707,97 @@ class SqlDatabase {
         }
     }
 
+    public void removePlayerFromParty(int partyID, int playerID)
+    {
+        try {
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
 
+            statement = connection.createStatement();
+            int colId = find_User_In_Party(playerID,partyID);
+            String sqlCol = "";
+            switch(colId)
+            {
+                case 1: sqlCol ="user_1_Id";
+                    break;
+                case 2: sqlCol = "user_2_Id";
+                    break;
+                case 3: sqlCol = "user_3_Id";
+                    break;
+                case 4: sqlCol = "user_4_Id";
+                    break;
+                case 5: sqlCol = "user_5_Id";
+                    break;
+            }
+
+
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
+
+            prepStatement.setString(1,sqlCol);
+            prepStatement.setInt(2,playerID);
+            prepStatement.setInt(3,partyID);
+
+
+
+
+            prepStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    }
+
+    public int find_User_In_Party(int user_Id, int party_Id)
+    {
+        int counter = 0;
+        try {
+            Class.forName(JDBCDRIVER);
+            connection = DriverManager.getConnection(DBURL, USER, PASS);
+            counter = 0;
+
+            statement = connection.createStatement();
+            //stupid mfking sql stuff
+            //creating the prepared statement.
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+
+            prepStatement.setInt(1,party_Id);
+
+
+            ResultSet res = prepStatement.executeQuery();
+            while(res.next())
+            {
+                counter++;
+                if(res.getInt(counter) == user_Id)
+                {
+                    return counter;
+                }
+
+            }
+            counter = 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            e.getException();
+        } finally {
+            try {
+                if (statement != null)
+                    connection.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+        return counter;
+    }
 }

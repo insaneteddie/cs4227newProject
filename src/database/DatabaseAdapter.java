@@ -70,7 +70,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     @Override
     public void removePlayerFromParty(int partyID, int playerID) throws Exception {
-
+        sqlDB.removePlayerFromParty(partyID,playerID);
     }
 
     @Override
