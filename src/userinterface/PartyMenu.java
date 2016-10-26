@@ -152,7 +152,7 @@ public class PartyMenu extends Menu {
         JButton gameButton = new JButton("Games");
         gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
         centerMenuButtonsPanel.add(gameButton);
-        centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);
+        centerMenuPanel.add(centerMenuButtonsPanel, BorderLayout.CENTER);
 
         mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
 
