@@ -22,9 +22,11 @@ public class Log {
         logger =  Logger.getLogger(name);
         if(fh == null){
             try {
-                fh = new FileHandler(FILEPATH);
-                logger.addHandler(fh);
-                logger.setUseParentHandlers(false);
+                synchronized (logger) {
+                    fh = new FileHandler(FILEPATH);
+                    logger.addHandler(fh);
+                    logger.setUseParentHandlers(false);
+                }
             } catch (IOException e) {
                 logSevere(e, CLASSNAME);
             }
