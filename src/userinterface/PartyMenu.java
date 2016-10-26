@@ -23,6 +23,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+
+/**
+ *  UI class for party menu
+ * */
 public class PartyMenu extends Menu {
 
     public PartyMenu() {
