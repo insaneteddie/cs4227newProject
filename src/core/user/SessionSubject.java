@@ -19,6 +19,9 @@ public interface SessionSubject
 
     /** concrete implementers will override this to notify observers*/
     void update();
-    
+
+    /**
+     * @return 
+     * */
     List<Integer> getState();
 }
