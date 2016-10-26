@@ -74,7 +74,7 @@ public class SessionInformation {
                 getPlayerInvites();
             }
         } catch (Exception e) {
-            log.logException("Error logging in: ", e);
+            log.logWarning(e, "Error logging in: ");
         }
 
         return canLogin;
@@ -92,7 +92,7 @@ public class SessionInformation {
                 exists = true;
             }
         } catch (Exception e) {
-            log.logException("doesPlayerExist Error: ", e);
+            log.logWarning(e, "doesPlayerExist Error: ");
         }
 
         return exists;
@@ -109,7 +109,7 @@ public class SessionInformation {
         try {
             existsType = database.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
-            log.logException("Error validating username/email: ", e);
+            log.logWarning(e, "Error validating username/email: ");
         }
 
         return existsType;
@@ -127,7 +127,7 @@ public class SessionInformation {
             dbA.createPlayer(username,password,email);
             //database.createPlayer(username, password, email);
         } catch (Exception e) {
-            log.logException("Error creating player: ", e);
+            log.logWarning(e, "Error creating player: ");
         }
     }
 
@@ -142,7 +142,7 @@ public class SessionInformation {
             this.player.setName(details[1]);
             this.player.setEmail(details[2]);
         } catch (Exception e) {
-            log.logException("Error getting player details: ", e);
+            log.logWarning(e, "Error getting player details: ");
         }
     }
 
@@ -155,7 +155,7 @@ public class SessionInformation {
                 }
             }
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -169,7 +169,7 @@ public class SessionInformation {
                 }
             }
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -181,7 +181,7 @@ public class SessionInformation {
             player.updatePartyInformation(partyDetails);
             player.update();
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -215,7 +215,7 @@ public class SessionInformation {
             player.addToPartyInformation(player.getId());
             player.update();
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -225,13 +225,11 @@ public class SessionInformation {
     public void leaveParty() {
         try {
             int partyID = party.getId();
-            log.logException("Party ID: " + partyID);
-            log.logException("Player ID: " + player.getId());
             database.removePlayerFromParty(partyID, player.getId());
             player.clearPartyInformation();
             player.update();
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -246,7 +244,7 @@ public class SessionInformation {
         if (party.doesPartyExist()) {
             leaveParty();
         }
-        log.logException("Logged out");
+        log.logInfo("Logged out");
         player.resetValues();
     }
 
@@ -271,7 +269,7 @@ public class SessionInformation {
 
             getPartyDetails();
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -282,7 +280,7 @@ public class SessionInformation {
         try {
             database.removePlayerFromParty(party.getId(), playerID);
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 
@@ -313,7 +311,7 @@ public class SessionInformation {
         try {
             database.addInvite(player.getId(), friendToInvite, party.getId());
         } catch (Exception ex) {
-            log.logException(ex);
+            log.logWarning(ex);
         }
     }
 
@@ -331,7 +329,7 @@ public class SessionInformation {
                 break;
             }
         }
-        log.logException("Party ID: " + partyID);
+        log.logInfo("Party ID: " + partyID);
         return partyID;
     }
     /**
@@ -343,7 +341,7 @@ public class SessionInformation {
         try {
             database.removeInvite(playerID, player.getId(), partyID);
         } catch (Exception e) {
-            log.logException(e);
+            log.logWarning(e);
         }
     }
 

@@ -26,18 +26,36 @@ public class Log {
                 logger.addHandler(fh);
                 logger.setUseParentHandlers(false);
             } catch (IOException e) {
-                logException(CLASSNAME, e);
+                logSevere(e, CLASSNAME);
             }
         }
     }
 
-    public void logException(Exception e){
+    /*public void logException(Exception e){
         logger.log(Level.WARNING, e.getMessage());
     }
     public void logException(String msg, Exception e){
-        logger.log(Level.WARNING, msg + "\t" + e.getMessage());
+        logger.log(Level.WARNING, msg + "\n" + e.getMessage());
     }
     public void logException(String desc){
         logger.log(Level.INFO, desc);
+    }*/
+
+    public void logWarning(Exception e, String desc){
+        logger.log(Level.WARNING, e.getMessage());
+    }
+    public void logWarning(Exception e){
+        logWarning(e, "");
+    }
+    public void logInfo(String desc){
+        logger.log(Level.INFO, desc);
+    }
+
+    public void logSevere(Exception e){
+        logSevere(e, "");
+    }
+
+    public void logSevere(Exception e, String desc){
+        logger.log(Level.SEVERE, desc + "\n" + e.getMessage());
     }
 }
