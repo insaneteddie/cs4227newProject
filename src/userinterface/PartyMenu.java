@@ -142,6 +142,7 @@ public class PartyMenu extends Menu {
                         }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Input must be an integer number", null, JOptionPane.WARNING_MESSAGE);
+                        logger.logWarning(ex, "Input must be an integer number");
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "You cannot perform this action", null, JOptionPane.WARNING_MESSAGE);
