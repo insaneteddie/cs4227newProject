@@ -144,7 +144,7 @@ public class MessageMenu extends Menu {
                 menuMgr.getMenuFromFactory(2);
         });
         bottomBarPanel.add(returnButton);
-        mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);
+        mainMenuPanel.add(bottomBarPanel, BorderLayout.SOUTH);
         panel = mainMenuPanel;
     }
 
