@@ -101,6 +101,9 @@ public class Player extends User implements SessionSubject {
         friends.add(friendID);
     }
 
+    /**
+     * @param invite
+     * */
     public void addInvite(Message invite) {
         inviteCollection.add(invite);
     }
