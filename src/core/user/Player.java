@@ -124,6 +124,9 @@ public class Player extends User implements SessionSubject {
         return partyInformation;
     }
 
+    /**
+     * @param info 
+     * */
     public void addToPartyInformation(int info)
     {
         partyInformation.add(info);
