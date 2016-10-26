@@ -124,34 +124,28 @@ public class PartyMenu extends Menu {
         centerMenuButtonsPanel.add(inviteButton);
         JButton removeMemberButton = new JButton("Remove Member");
         removeMemberButton.addActionListener(e -> {
-                if (sessionInfo.isPartyLeader()) {
-                    if (sessionInfo.getPartySize() > 1) {
-                        // select member to remove
+                if (sessionInfo.isPartyLeader() && sessionInfo.getPartySize() > 1) {
 
-                        try {
-                            int memberToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the member you would"
-                                    + "\nlike to remove from the party"));
-                            if(memberToRemove == sessionInfo.getPlayerId())
-                            {
-                                JOptionPane.showMessageDialog(null, "To leave party, please select the 'Leave Party' button\nor log out.", null, JOptionPane.WARNING_MESSAGE);
-                            }
-                            else if (sessionInfo.isMemberOfParty(memberToRemove)) {
-
-                                sessionInfo.removePlayerFromParty(memberToRemove);
-                                //sessionInfo.getPartyDetails();
-                                SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
-                                menuMgr.getMenuFromFactory(3);
-                            }
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(null, "Input must be an integer number", null, JOptionPane.WARNING_MESSAGE);
+                    // select member to remove
+                    try {
+                        int memberToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the member you would"
+                                + "\nlike to remove from the party"));
+                        if(memberToRemove == sessionInfo.getPlayerId())
+                        {
+                            JOptionPane.showMessageDialog(null, "To leave party, please select the 'Leave Party' button\nor log out.", null, JOptionPane.WARNING_MESSAGE);
                         }
+                        else if (sessionInfo.isMemberOfParty(memberToRemove)) {
 
-                    } else {
-                        JOptionPane.showMessageDialog(null, "You are the only member in the party.\n"
-                                + "To leave the party click the 'Leave Party' button or\nlog out.", null, JOptionPane.WARNING_MESSAGE);
+                            sessionInfo.removePlayerFromParty(memberToRemove);
+                            //sessionInfo.getPartyDetails();
+                            SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
+                            menuMgr.getMenuFromFactory(3);
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(null, "Input must be an integer number", null, JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "You must be Party Leader to remove members", null, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "You cannot perform this action", null, JOptionPane.WARNING_MESSAGE);
                 }
         });
         centerMenuButtonsPanel.add(removeMemberButton);
