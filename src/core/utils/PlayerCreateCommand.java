@@ -8,7 +8,7 @@ import core.session.SessionInformation;
 public class PlayerCreateCommand implements ICommand{
     private final String name;
     private String username;
-    private String password;
+    private String pass;
     private String email;
 
     public PlayerCreateCommand(String name){
@@ -16,15 +16,15 @@ public class PlayerCreateCommand implements ICommand{
     }
     @Override
     public void execute() {
-        SessionInformation.getInstance().createPlayer(username, password, email);
+        SessionInformation.getInstance().createPlayer(username, pass, email);
         username = "";
-        password = "";
+        pass = "";
         email = "";
     }
 
-    public void execute(String username, String password, String email){
+    public void execute(String username, String pass, String email){
         this.username = username;
-        this.password = password;
+        this.pass = pass;
         this.email = email;
         execute();
     }
