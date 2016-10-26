@@ -41,6 +41,9 @@ public class Party implements SessionObserver {
         return leaderID == id;
     }
 
+    /**
+     * @return
+     * */
     public boolean doesPartyExist() {
         if (partyMembers.size() == 0) {
             return false;
