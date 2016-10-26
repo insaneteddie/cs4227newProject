@@ -58,7 +58,8 @@ public class Player extends User implements SessionSubject {
             }
         }
     }
-    
+
+    /** resets member variable values*/
     public void resetValues() {
         id = 0;
         name = "";
