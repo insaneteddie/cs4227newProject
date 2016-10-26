@@ -13,10 +13,11 @@ public interface SessionSubject
     void attach(SessionObserver o);
 
     /**
-     * @param o 
+     * @param o
      * */
     void detach(SessionObserver o);
-    
+
+    /** concrete implementers will override this to notify observers*/
     void update();
     
     List<Integer> getState();
