@@ -56,7 +56,7 @@ public class Party implements SessionObserver {
     }
 
     public int getPartySize() {
-        return (partyMembers.size() > 0) ? (partyMembers.size()) : 0;
+        return (partyMembers.isEmpty()) ? (partyMembers.size()) : 0;
     }
     public ArrayList<Integer> getPartyMembers()
     {
