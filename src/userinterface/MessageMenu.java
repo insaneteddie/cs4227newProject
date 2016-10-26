@@ -92,7 +92,6 @@ public class MessageMenu extends Menu {
                         if (sessionInfo.isFriend(userid)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
                             sessionInfo.removeInvite(userid);
-                            //sessionInfo.getPlayerInvites();
                             SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                             menuMgr.getMenuFromFactory(4);
                         } else {
