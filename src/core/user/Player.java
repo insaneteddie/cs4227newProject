@@ -110,7 +110,7 @@ public class Player extends User implements SessionSubject {
 
     /**
      * @param senderID
-     * @param partyID 
+     * @param partyID
      * */
     public void removeInvite(int senderID, int partyID) {
         inviteCollection.remove(senderID, partyID);
@@ -120,7 +120,7 @@ public class Player extends User implements SessionSubject {
         return inviteCollection.getAll();
     }
     @Override
-    public ArrayList<Integer> getState() {
+    public List<Integer> getState() {
         return partyInformation;
     }
 

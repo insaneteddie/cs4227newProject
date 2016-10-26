@@ -2,7 +2,7 @@ package core.user;
 
 import core.session.SessionObserver;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface SessionSubject
 {
@@ -12,5 +12,5 @@ public interface SessionSubject
     
     void update();
     
-    ArrayList<Integer> getState();
+    List<Integer> getState();
 }
