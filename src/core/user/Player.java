@@ -108,6 +108,10 @@ public class Player extends User implements SessionSubject {
         inviteCollection.add(invite);
     }
 
+    /**
+     * @param senderID
+     * @param partyID 
+     * */
     public void removeInvite(int senderID, int partyID) {
         inviteCollection.remove(senderID, partyID);
     }
