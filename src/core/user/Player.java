@@ -14,6 +14,7 @@ import message.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/** class storing information relating to the user */
 public class Player extends User implements SessionSubject {
 
     private static Player player = null;
@@ -57,7 +58,7 @@ public class Player extends User implements SessionSubject {
             }
         }
     }
-
+    
     public void resetValues() {
         id = 0;
         name = "";
