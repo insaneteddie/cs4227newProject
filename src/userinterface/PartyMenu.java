@@ -163,7 +163,7 @@ public class PartyMenu extends Menu {
         JButton returnButton = new JButton("<-Return");
         returnButton.addActionListener(e -> menuMgr.getMenuFromFactory(2));
         bottomBarPanel.add(returnButton);
-        mainMenuPanel.add(bottomBarPanel, mainMenuLayout.SOUTH);
+        mainMenuPanel.add(bottomBarPanel, BorderLayout.SOUTH);
         panel = mainMenuPanel;
 
     }
