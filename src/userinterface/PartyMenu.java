@@ -54,7 +54,7 @@ public class PartyMenu extends Menu {
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
-        mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
+        mainMenuPanel.add(topBarPanel, BorderLayout.NORTH);
 
         JPanel centerMenuPanel = new JPanel();
         BorderLayout centerMenuLayout = new BorderLayout();
