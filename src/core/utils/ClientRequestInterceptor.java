@@ -9,7 +9,7 @@ public interface ClientRequestInterceptor {
      * */
     void onPreMarshalRequest(UnmarshaledRequest contextObject);
     /**
-     * @param contextObject 
+     * @param contextObject
      * */
     void onPostMarshalRequest(MarshaledRequest contextObject);
 }

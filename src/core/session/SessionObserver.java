@@ -6,6 +6,8 @@ import core.user.SessionSubject;
 @FunctionalInterface
 public interface SessionObserver
 {
-    /** Abstract method for updating observers of the passed in subject */
+    /**
+     * @param s
+     * */
     void update(SessionSubject s);
 }
