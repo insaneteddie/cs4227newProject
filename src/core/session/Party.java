@@ -35,10 +35,10 @@ public class Party implements SessionObserver {
 
     /**
      * @param id
-     * @return 
+     * @return
      * */
     public boolean isPartyLeader(int id) {
-        return (leaderID == id);
+        return leaderID == id;
     }
 
     public boolean doesPartyExist() {
