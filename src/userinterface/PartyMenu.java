@@ -82,7 +82,7 @@ public class PartyMenu extends Menu {
                 menuMgr.getMenuFromFactory(2);
         });
         topCenterMenuPanel.add(leavePartyButton);
-        centerMenuPanel.add(topCenterMenuPanel, centerMenuLayout.NORTH);
+        centerMenuPanel.add(topCenterMenuPanel, BorderLayout.NORTH);
 
         JPanel centerMenuButtonsPanel = new JPanel();
         GridLayout centerMenuButtonsLayout = new GridLayout(4, 1);
