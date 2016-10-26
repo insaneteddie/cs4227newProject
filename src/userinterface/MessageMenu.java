@@ -36,6 +36,7 @@ public class MessageMenu extends Menu {
         logger = new Log(getClass().getName());
     }
 
+    /** Builds the UI components for the menu */
     public void showMessageMenu() {
         JPanel mainMenuPanel = new JPanel();
         BorderLayout mainMenuLayout = new BorderLayout();
