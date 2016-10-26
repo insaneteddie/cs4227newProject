@@ -23,7 +23,7 @@ public class SessionController {
     public static final String PLAYER_CREATE = "PLAYER_CREATE";
     public static final String PLAYER_INVITES_RETRIEVE = "PLAYER_INVITES_RETRIEVE";
     public static final String PLAYER_LOG_OUT = "PLAYER_LOG_OUT";
-    
+
     private SessionController(){
         commands = new ArrayList<ICommand>();
     }

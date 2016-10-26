@@ -92,7 +92,7 @@ public class MessageMenu extends Menu {
                         if (sessionInfo.isFriend(userid)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
                             sessionInfo.removeInvite(userid);
-                            SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
+                            SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                             menuMgr.getMenuFromFactory(4);
                         } else {
                             JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
