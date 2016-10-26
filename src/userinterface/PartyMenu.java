@@ -88,7 +88,8 @@ public class PartyMenu extends Menu {
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton refreshButton = new JButton("Refresh Members List");
         refreshButton.addActionListener(e -> {
-                sessionInfo.getPartyDetails();
+                //sessionInfo.getPartyDetails();
+                SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
                 if (sessionInfo.isPlayerInParty()) {
                     populateMembersList(memberList);
                 }
