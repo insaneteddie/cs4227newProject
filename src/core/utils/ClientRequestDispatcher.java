@@ -45,12 +45,15 @@ public class ClientRequestDispatcher implements ClientRequestInterceptor {
     }
 
     /**
-     * @param i 
+     * @param i
      * */
     synchronized public void registerClientRequestInterceptor(ClientRequestInterceptor i){
         interceptors.add(i);
     }
 
+    /**
+     * @param i 
+     * */
     synchronized public void removeClientRequestInterceptor(ClientRequestInterceptor i){
         interceptors.remove(i);
     }
