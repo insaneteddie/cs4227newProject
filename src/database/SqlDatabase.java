@@ -123,7 +123,7 @@ class SqlDatabase {
     //method to add a friend we need to add this to the interface
     public void addFriend(int userId, int friendId)
     {
-        System.out.println("Inserting records into the table...");
+        logger.logInfo("Inserting records into the table...");
         try {
 
             Class.forName(jdbcDriver);
