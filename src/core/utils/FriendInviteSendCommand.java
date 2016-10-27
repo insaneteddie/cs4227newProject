@@ -7,7 +7,7 @@ import core.session.SessionInformation;
  */
 public class FriendInviteSendCommand implements ICommand {
     private final String name;
-    private int player_id;
+    private int playerId;
 
     /**
      * @param name
@@ -17,15 +17,15 @@ public class FriendInviteSendCommand implements ICommand {
     }
     @Override
     public void execute() {
-        SessionInformation.getInstance().sendInvite(player_id);
-        player_id = 0;
+        SessionInformation.getInstance().sendInvite(playerId);
+        playerId = 0;
     }
 
     /**
      * @param playerId
      * */
     public void execute(int playerId){
-        this.player_id = playerId;
+        this.playerId = playerId;
         execute();
     }
     @Override
