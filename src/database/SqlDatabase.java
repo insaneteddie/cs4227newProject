@@ -106,16 +106,16 @@ class SqlDatabase {
 
             prepStatement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.logWarning(e);
         } catch (ClassNotFoundException ce) {
-            ce.printStackTrace();
+            logger.logWarning(ce);
             ce.getException();
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
 
