@@ -86,10 +86,10 @@ class SqlDatabase {
     {
 
 
-        System.out.println("Attempting to Connect");
+        logger.logInfo("Attempting to Connect");
         //connection
 
-        System.out.println("Inserting records into the table...");
+        logger.logInfo("Inserting records into the table...");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
