@@ -456,6 +456,7 @@ class SqlDatabase {
                     break;
                 case 5: sqlCol = "user_5_Id";
                     break;
+                default:
             }
             PreparedStatement prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties ?  WHERE party_Id = ?");
             prepStatement.setInt(1,playerID);
@@ -702,6 +703,7 @@ class SqlDatabase {
                     break;
                 case 5: sqlCol = "user_5_Id";
                     break;
+                default:
             }
             PreparedStatement prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
             prepStatement.setString(1,sqlCol);
