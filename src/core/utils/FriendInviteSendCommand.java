@@ -9,6 +9,9 @@ public class FriendInviteSendCommand implements ICommand {
     private final String name;
     private int player_id;
 
+    /**
+     * @param name
+     * */
     public FriendInviteSendCommand(String name){
         this.name = name;
     }
@@ -18,6 +21,9 @@ public class FriendInviteSendCommand implements ICommand {
         player_id = 0;
     }
 
+    /**
+     * @param playerId
+     * */
     public void execute(int player_id){
         this.player_id = player_id;
         execute();
