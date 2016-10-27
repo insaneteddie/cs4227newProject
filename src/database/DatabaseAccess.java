@@ -322,7 +322,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override  //,String content, int type
     public void addInvite(int senderID, int receiverID, int partyID) throws Exception {
         file = new File(INVITE_DETAILS_FILE);
-        String newInvite = "" + senderID + "," + receiverID + "," + partyID;
+        String newInvite = Integer.toString(senderID) + "," + receiverID + "," + partyID;
 
         fWriter = new FileWriter(file, true);
         pWriter = new PrintWriter(fWriter);
