@@ -1,7 +1,5 @@
 package core.utils;
 
-import core.session.SessionInformation;
-
 import java.util.ArrayList;
 import java.util.List;
 
