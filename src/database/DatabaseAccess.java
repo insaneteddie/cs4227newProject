@@ -118,7 +118,7 @@ public class DatabaseAccess implements DatabaseInterface {
         }catch (FileNotFoundException e){
             logger.logWarning(e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -148,7 +148,7 @@ public class DatabaseAccess implements DatabaseInterface {
         }catch (FileNotFoundException e){
             logger.logWarning(e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
@@ -241,7 +241,7 @@ public class DatabaseAccess implements DatabaseInterface {
         }catch(FileNotFoundException e){
             logger.logWarning(e);
         }
-        return null;
+        return new ArrayList<>();
     }
 
     /**
