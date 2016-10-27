@@ -79,7 +79,7 @@ public class DatabaseAccess implements DatabaseInterface {
         file = new File(FRIEND_DETAILS_FILE);
         fileReader = new Scanner(file);
         while (fileReader.hasNextLine()) {
-            String lineFromFile[] = (fileReader.nextLine()).split(",");
+            String[] lineFromFile = (fileReader.nextLine()).split(",");
             if (pidStr.equals(lineFromFile[0])) {
                 friendIDs.add(Integer.parseInt(lineFromFile[1]));
             } else if (pidStr.equals(lineFromFile[1])){
