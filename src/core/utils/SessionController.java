@@ -63,7 +63,7 @@ public class SessionController {
     }
 
     /**
-     * @param commandName 
+     * @param commandName
      * */
     public void removeCommand(String commandName){
         for(Object c : commands){
