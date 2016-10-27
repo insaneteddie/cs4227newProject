@@ -54,11 +54,5 @@ public class FriendInvite extends Message
     {
         return message;
     }
-
-    @Override
-    public int hashCode()
-    {
-        return super.hashCode();
-    }
 }
 
