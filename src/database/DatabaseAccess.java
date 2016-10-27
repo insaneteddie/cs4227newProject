@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DatabaseAccess implements DatabaseInterface {
@@ -72,9 +73,9 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     @Override
-    public ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception {
+    public List<Integer> getPlayerFriendList(int playerID) throws Exception {
         String pidStr = playerID + "";
-        ArrayList<Integer> friendIDs = new ArrayList<>();
+        List<Integer> friendIDs = new ArrayList<>();
         file = new File(FRIEND_DETAILS_FILE);
         fileReader = new Scanner(file);
         while (fileReader.hasNextLine()) {

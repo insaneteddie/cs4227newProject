@@ -10,6 +10,7 @@
 package database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface DatabaseInterface {
 
@@ -18,7 +19,7 @@ public interface DatabaseInterface {
     /* References the local Player class */
     String getPlayerDetails(String username) throws Exception;
 
-    ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception;
+    List<Integer> getPlayerFriendList(int playerID) throws Exception;
 
     ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception;
 
