@@ -4,6 +4,7 @@ import core.utils.Log;
 
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.List;
 
 
 /**
@@ -344,9 +345,9 @@ class SqlDatabase {
      * @param userId
      * @return
      * */
-    public ArrayList<Integer> getFriendsList(int userId)
+    public List<Integer> getFriendsList(int userId)
     {
-        ArrayList<Integer> friendsList = new ArrayList<>();
+        List<Integer> friendsList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
             int iterator = 0;
@@ -383,9 +384,9 @@ class SqlDatabase {
      * @param playerId
      * @return
      * */
-    public ArrayList<Integer []> getInvites(int playerId)
+    public List<Integer []> getInvites(int playerId)
     {
-        ArrayList<Integer []> invitesList = new ArrayList<>();
+        List<Integer []> invitesList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
             int iterator = 0;
@@ -816,8 +817,8 @@ class SqlDatabase {
      * @param playerID
      * @return
      * */
-    public ArrayList<Integer> getPartyDetails(int partyID, int playerID) {
-        ArrayList<Integer> partyList = new ArrayList<>();
+    public List<Integer> getPartyDetails(int partyID, int playerID) {
+        List<Integer> partyList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
             int iterator = 0;
