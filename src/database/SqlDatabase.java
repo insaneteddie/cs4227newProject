@@ -187,7 +187,7 @@ class SqlDatabase {
         return canLogin;
     }
     //needs testing too...
-    public String get_PlayerName(int user_Id)
+    public String getPlayerName(int userId)
     {
         String player_Name = "";
         System.out.println("checking player details");
@@ -199,7 +199,7 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Name FROM users WHERE user_Id = ?");
-            prepStatement.setInt(1,user_Id);
+            prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
             player_Name = res.getString("user_Name");
@@ -219,7 +219,7 @@ class SqlDatabase {
         return player_Name;
     }
     //haven't tested yet...
-    public int get_UserId(String user_Name)
+    public int getUserId(String userName)
     {
         int userId = 0;
         try {
@@ -230,7 +230,7 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id FROM users WHERE user_Name = ?");
-            prepStatement.setString(1,user_Name);
+            prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
             userId = res.getInt("user_Id");
@@ -251,7 +251,7 @@ class SqlDatabase {
     }
 
     //check username,and email
-    public int check_Name_Email(String user_Name,String email)
+    public int checkNameEmail(String userName, String email)
     {
         int checker = 0;
         System.out.println("checking player details");
@@ -263,7 +263,7 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
-            prepStatement.setString(1,user_Name);
+            prepStatement.setString(1,userName);
             prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
@@ -289,7 +289,7 @@ class SqlDatabase {
         return checker;
     }
     //is party full method
-    public boolean isPartyFull(int party_Id)
+    public boolean isPartyFull(int partyId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -299,7 +299,7 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
-            prepStatement.setInt(1, party_Id);
+            prepStatement.setInt(1, partyId);
 
             //prepStatement.setString(2,email);
 
@@ -329,7 +329,7 @@ class SqlDatabase {
         return true;
     }
 
-    public ArrayList<Integer> get_FriendsList(int user_Id)
+    public ArrayList<Integer> getFriendsList(int userId)
     {
         ArrayList<Integer> friendsList = new ArrayList<>();
         try {
@@ -341,7 +341,7 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
-            prepStatement.setInt(1,user_Id);
+            prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
             while(res.next())
@@ -367,7 +367,7 @@ class SqlDatabase {
         return friendsList;
     }
 
-    public ArrayList<Integer []> get_Invites(int player_Id)
+    public ArrayList<Integer []> getInvites(int playerId)
     {
         ArrayList<Integer []> invitesList = new ArrayList<>();
         try {
@@ -379,7 +379,7 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
-            prepStatement.setInt(1,player_Id);
+            prepStatement.setInt(1,playerId);
 
             ResultSet res = prepStatement.executeQuery();
             while(res.next())
@@ -406,7 +406,7 @@ class SqlDatabase {
         return invitesList;
     }
     //takes in party creator user_Id and sets it as leader_Id in the table :)
-    public int create_Party(int leader_Id)
+    public int createParty(int leaderId)
     {
         int party_Id = 0;
         System.out.println("Inserting records into the table...");
@@ -421,7 +421,7 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (leader_Id) VALUES(?)");
 
 
-            prepStatement.setInt(1,leader_Id);
+            prepStatement.setInt(1,leaderId);
 
 
             prepStatement.executeUpdate();
@@ -455,7 +455,7 @@ class SqlDatabase {
             statement = connection.createStatement();
             //stupid mfking sql stuff
             //creating the prepared statement.
-            int colId = find_Null_From_Parties(partyID);
+            int colId = findNullFromParties(partyID);
             String sqlCol = "";
             switch(colId)
             {
@@ -492,7 +492,7 @@ class SqlDatabase {
         }
     }
     //sorted
-    public boolean does_Party_Exist(int partyID)
+    public boolean doesPartyExist(int partyID)
     {
 
         try {
@@ -528,7 +528,7 @@ class SqlDatabase {
         return true;
     }
     //should work
-    public int does_Player_Exist(String username)
+    public int doesPlayerExist(String username)
     {
         int checker = 0;
         System.out.println("checking player details");
@@ -566,7 +566,7 @@ class SqlDatabase {
         return checker;
     }
     //the above mentioned hacked fix
-    private int find_Null_From_Parties(int party_Id)
+    private int findNullFromParties(int partyId)
     {
         int counter = 0;
         try {
@@ -579,7 +579,7 @@ class SqlDatabase {
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
 
-            prepStatement.setInt(1,party_Id);
+            prepStatement.setInt(1,partyId);
 
 
             ResultSet res = prepStatement.executeQuery();
@@ -610,7 +610,7 @@ class SqlDatabase {
         return counter;
     }
 
-    public boolean is_In_Party(int player_Id)
+    public boolean isInParty(int playerId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -620,8 +620,8 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
-            prepStatement.setInt(1, player_Id);
-            prepStatement.setInt(2, player_Id);
+            prepStatement.setInt(1, playerId);
+            prepStatement.setInt(2, playerId);
 
             ResultSet res = prepStatement.executeQuery();
             if (res.next())
@@ -646,7 +646,7 @@ class SqlDatabase {
         return false;
     }
 //int typeID,String invite_content,
-    public void add_Invite(int senderID, int receiverID, int partyId)
+    public void addInvite(int senderID, int receiverID, int partyId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -681,7 +681,7 @@ class SqlDatabase {
         }
     }
 
-    public void remove_Invite(int senderID, int receiverID, int inviteId)
+    public void removeInvite(int senderID, int receiverID, int inviteId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -718,7 +718,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            int colId = find_User_In_Party(playerID,partyID);
+            int colId = findUserInParty(playerID,partyID);
             String sqlCol = "";
             switch(colId)
             {
@@ -762,7 +762,7 @@ class SqlDatabase {
         }
     }
 
-    public int find_User_In_Party(int user_Id, int party_Id)
+    public int findUserInParty(int userId, int partyId)
     {
         int counter = 0;
         try {
@@ -775,14 +775,14 @@ class SqlDatabase {
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
 
-            prepStatement.setInt(1,party_Id);
+            prepStatement.setInt(1,partyId);
 
 
             ResultSet res = prepStatement.executeQuery();
             while(res.next())
             {
                 counter++;
-                if(res.getInt(counter) == user_Id)
+                if(res.getInt(counter) == userId)
                 {
                     return counter;
                 }
@@ -805,7 +805,7 @@ class SqlDatabase {
         return counter;
     }
 
-    public ArrayList<Integer> get_PartyDetails(int partyID, int playerID) {
+    public ArrayList<Integer> getPartyDetails(int partyID, int playerID) {
         ArrayList<Integer> partyList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
