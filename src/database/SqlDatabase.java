@@ -157,7 +157,7 @@ class SqlDatabase {
     public boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
-        System.out.println("checking login details");
+        logger.logInfo("checking login details");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -173,16 +173,15 @@ class SqlDatabase {
             canLogin = prepStatement.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.logWarning(e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return canLogin;
