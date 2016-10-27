@@ -37,7 +37,6 @@ public class InviteCollection implements Collection<Invite> {
     @Override
     public  Invite get(int id)
     {
-        //Invite inv = new PartyInvite();
         for(Invite x : invites)
         {
             if(id == x.getSenderID())
