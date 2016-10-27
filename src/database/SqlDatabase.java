@@ -1,5 +1,7 @@
 package database;
 
+import core.utils.Log;
+
 import java.util.ArrayList;
 import java.sql.*;
 
@@ -20,6 +22,8 @@ class SqlDatabase {
     private Connection connection;
     private Statement statement;
 
+    private Log logger;
+
     public SqlDatabase()
     {
         jdbcDriver = "com.mysql.jdbc.Driver";
@@ -27,6 +31,7 @@ class SqlDatabase {
         user = "admin";
         pass = "teamawesome";
         connectToDb();
+        logger = new Log(getClass().getName());
     }
 
     public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
@@ -49,20 +54,20 @@ class SqlDatabase {
             //Register JDBC driver
             Class.forName(jdbcDriver);
 
-            System.out.println("Attempting to Connect");
+            logger.logInfo("Attempting to Connect");
             //connection
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.logWarning(e);
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.logWarning(se);
         } finally {
             try {
                 if (connection != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }//end finally
 
