@@ -57,18 +57,18 @@ public class DatabaseAccess implements DatabaseInterface {
     public String getPlayerDetails(String username) throws Exception {
         file = new File(USER_DETAILS_FILE);
         fileReader = new Scanner(file);
-        String playerDetails = "";
+        StringBuilder playerDetails = new StringBuilder();
         while (fileReader.hasNextLine()) {
             String[] lineFromFile = (fileReader.nextLine()).split(",");
             if (lineFromFile[1].equals(username)) {
-                playerDetails += lineFromFile[0] + ",";
-                playerDetails += lineFromFile[1] + ",";
-                playerDetails += lineFromFile[3] + ",";
+                playerDetails.append(lineFromFile[0] + ",");
+                playerDetails.append(lineFromFile[1] + ",");
+                playerDetails.append(lineFromFile[3] + ",");
             }
         }
         fileReader.close();
         file = null;
-        return playerDetails;
+        return playerDetails.toString();
     }
 
     @Override
