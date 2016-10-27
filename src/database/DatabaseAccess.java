@@ -350,7 +350,7 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     @Override
-    public void add_Friend(int userId, int friendId) {
+    public void addFriend(int userId, int friendId) {
 
     }
 
