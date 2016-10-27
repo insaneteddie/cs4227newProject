@@ -351,7 +351,7 @@ public class DatabaseAccess implements DatabaseInterface {
 
     @Override
     public void addFriend(int userId, int friendId) {
-
+        /** insert implementation here*/
     }
 
     private ArrayList<String> fileToList() {
