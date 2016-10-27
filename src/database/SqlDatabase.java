@@ -202,6 +202,7 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             player_Name = res.getString("user_Name");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -233,6 +234,7 @@ class SqlDatabase {
             prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             userId = res.getInt("user_Id");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -267,6 +269,7 @@ class SqlDatabase {
             prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
@@ -304,7 +307,7 @@ class SqlDatabase {
             //prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
-
+            prepStatement.close();
             while (res.next())
             {
                 if (res.wasNull()) {
@@ -344,6 +347,7 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             while(res.next())
             {
                 friendsList.add(res.getInt(iterator));
@@ -382,6 +386,7 @@ class SqlDatabase {
             prepStatement.setInt(1,playerId);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             while(res.next())
             {
                 user_invites[iterator] = res.getInt(iterator);
@@ -419,12 +424,9 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (leader_Id) VALUES(?)");
-
-
             prepStatement.setInt(1,leaderId);
-
-
             prepStatement.executeUpdate();
+            prepStatement.close();
             party_Id = 1;
             return party_Id;
 
@@ -476,6 +478,7 @@ class SqlDatabase {
             prepStatement.setInt(3,partyID);
 
             prepStatement.executeUpdate();
+            prepStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -506,12 +509,10 @@ class SqlDatabase {
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             if (res.next()) {
-
                 return false;
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -542,8 +543,8 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
 
-
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
@@ -578,11 +579,9 @@ class SqlDatabase {
             //stupid mfking sql stuff
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
-
             prepStatement.setInt(1,partyId);
-
-
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
                 while(res.next())
                 {
                     if(res.wasNull())
@@ -624,6 +623,7 @@ class SqlDatabase {
             prepStatement.setInt(2, playerId);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             if (res.next())
             {
                 return true;
@@ -665,6 +665,7 @@ class SqlDatabase {
             prepStatement.setInt(5,partyId);
 
             prepStatement.executeQuery();
+            prepStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -696,6 +697,7 @@ class SqlDatabase {
             prepStatement.setInt(3,inviteId);
 
             prepStatement.executeUpdate();
+            prepStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -733,20 +735,13 @@ class SqlDatabase {
                 case 5: sqlCol = "user_5_Id";
                     break;
             }
-
-
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
 
             prepStatement.setString(1,sqlCol);
             prepStatement.setInt(2,playerID);
             prepStatement.setInt(3,partyID);
-
-
-
-
             prepStatement.executeUpdate();
+            prepStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -771,14 +766,11 @@ class SqlDatabase {
             counter = 0;
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
 
             prepStatement.setInt(1,partyId);
-
-
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             while(res.next())
             {
                 counter++;
@@ -813,19 +805,16 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_Id = ?");
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
             while (res.next()) {
                 if(res.getInt(iterator)!= playerID)
                 partyList.add(res.getInt(iterator));
                 iterator++;
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
