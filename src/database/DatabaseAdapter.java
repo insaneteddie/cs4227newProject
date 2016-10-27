@@ -189,7 +189,7 @@ public class DatabaseAdapter implements DatabaseInterface {
     @Override
     public void addFriend(int userId, int friendId)
     {
-        sqlDB.add_Friend(userId,friendId);
+        sqlDB.addFriend(userId,friendId);
     }
 
 
