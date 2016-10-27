@@ -27,7 +27,7 @@ public interface DatabaseInterface {
 
     int createParty(int partyLeaderID) throws Exception;
 
-    ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception;
+    List<Integer> getPartyDetails(int partyID, int playerID) throws Exception;
 
     boolean isPartyFull(int partyID) throws Exception;
 

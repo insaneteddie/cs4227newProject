@@ -160,7 +160,7 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     @Override
-    public ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
+    public List<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
         fileReader = new Scanner(file);
         ArrayList<Integer> partyDetails = new ArrayList<>();
