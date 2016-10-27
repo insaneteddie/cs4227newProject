@@ -223,18 +223,18 @@ public class DatabaseAccess implements DatabaseInterface {
         ArrayList<String> parties = fileToList();
 
         for (int i = 0; i < parties.size(); i++) {
-            String amendedParty = "";
+            StringBuilder amendedParty = new StringBuilder();
             String[] partyInfo = (parties.get(i)).split(",");
             if (partyID == Integer.parseInt(partyInfo[0])) {
-                amendedParty += partyInfo[0];
+                amendedParty.append(partyInfo[0]);
                 for (int j = 1; j < partyInfo.length; j++) {
                     if (playerID != Integer.parseInt(partyInfo[j])) {
-                        amendedParty += "," + partyInfo[j];
+                        amendedParty.append("," + partyInfo[j]);
                     }
                 }
                 parties.remove(i);
-                if (amendedParty.contains(",")) {
-                    parties.add(i, amendedParty);
+                if (amendedParty.toString().contains(",")) {
+                    parties.add(i, amendedParty.toString());
                 }
                 break;
             }
