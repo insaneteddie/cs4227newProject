@@ -24,8 +24,8 @@ public class FriendInviteSendCommand implements ICommand {
     /**
      * @param playerId
      * */
-    public void execute(int player_id){
-        this.player_id = player_id;
+    public void execute(int playerId){
+        this.player_id = playerId;
         execute();
     }
     @Override
