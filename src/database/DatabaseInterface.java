@@ -6,10 +6,8 @@
 *   Adapted file: Serenity_Gaming/DatabaseInterface.java
 *   Approximate use: 30%
 **/
-
 package database;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface DatabaseInterface {
