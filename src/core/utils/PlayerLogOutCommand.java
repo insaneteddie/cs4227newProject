@@ -7,7 +7,6 @@ import core.session.SessionInformation;
  */
 public class PlayerLogOutCommand implements ICommand{
     private final String name;
-    private SessionInformation sessionInformation;
 
     public PlayerLogOutCommand(String name){
         this.name = name;
