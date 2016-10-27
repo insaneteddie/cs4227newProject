@@ -104,6 +104,7 @@ class SqlDatabase {
             prepStatement.setString(3,email);
             prepStatement.executeUpdate();
 
+            prepStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException ce) {
