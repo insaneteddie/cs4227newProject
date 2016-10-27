@@ -82,7 +82,7 @@ class SqlDatabase {
         // user_parties.
 
     //add a user to the user table should look at hash tables.
-    public void add_User(String userName, String userPass, String email)
+    public void addUser(String userName, String userPass, String email)
     {
 
 

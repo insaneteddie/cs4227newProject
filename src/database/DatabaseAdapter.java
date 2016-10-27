@@ -74,7 +74,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * */
     @Override
     public void createPlayer(String username, String password, String email) throws SQLException {
-            sqlDB.add_User(username,password,email);
+            sqlDB.addUser(username,password,email);
     }
 
     //returns party_Id or 0
