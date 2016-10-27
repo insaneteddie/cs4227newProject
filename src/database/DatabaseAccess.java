@@ -206,10 +206,10 @@ public class DatabaseAccess implements DatabaseInterface {
         for (int i = 0; i < parties.size(); i++) {
             String[] lineFromFile = parties.get(i).split(",");
             if (partyID == Integer.parseInt(lineFromFile[0])) {
-                String amendedParty = parties.get(i);
-                amendedParty += "," + playerID;
+                StringBuilder amendedParty = new StringBuilder(parties.get(i));
+                amendedParty.append("," + playerID);
                 parties.remove(i);
-                parties.add(i, amendedParty);
+                parties.add(i, amendedParty.toString());
                 break;
             }
         }
