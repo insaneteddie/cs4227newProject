@@ -362,6 +362,7 @@ public class DatabaseAccess implements DatabaseInterface {
             }
             fileReader.close();
         } catch (Exception e) {
+            logger.logWarning(e);
         }
         return list;
     }
