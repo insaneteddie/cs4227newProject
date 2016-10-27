@@ -120,5 +120,5 @@ public interface DatabaseInterface {
      * @param userId
      * @param friendId
      * */
-    void addFriend(int user_Id, int friend_Id);
+    void addFriend(int userId, int friendId);
 }
