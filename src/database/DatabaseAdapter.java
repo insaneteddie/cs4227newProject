@@ -1,5 +1,6 @@
 package database;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -35,7 +36,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean canLogin(String username, String password) throws Exception {
+    public boolean canLogin(String username, String password) throws SQLException {
         return sqlDB.can_Login(username,password);
     }
     //this needs to be edited... seems a bit pointless to pass in the username to get the username
@@ -44,7 +45,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public String getPlayerDetails(String username) throws Exception {
+    public String getPlayerDetails(String username) throws SQLException {
         return sqlDB.get_PlayerName(sqlDB.get_UserId(username));
     }
 
@@ -53,7 +54,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer> getPlayerFriendList(int playerID) throws Exception {
+    public List<Integer> getPlayerFriendList(int playerID) throws SQLException {
         return sqlDB.get_FriendsList(playerID);
     }
 
@@ -62,7 +63,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer[]> getPlayerInvites(int playerID) throws Exception {
+    public List<Integer[]> getPlayerInvites(int playerID) throws SQLException {
         return sqlDB.get_Invites(playerID);
     }
 
@@ -72,7 +73,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param email
      * */
     @Override
-    public void createPlayer(String username, String password, String email) throws Exception {
+    public void createPlayer(String username, String password, String email) throws SQLException {
             sqlDB.add_User(username,password,email);
     }
 
@@ -82,7 +83,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int createParty(int partyLeaderID) throws Exception {
+    public int createParty(int partyLeaderID) throws SQLException {
         return sqlDB.create_Party(partyLeaderID);
     }
 
@@ -92,7 +93,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
+    public List<Integer> getPartyDetails(int partyID, int playerID) throws SQLException {
         return sqlDB.get_PartyDetails(partyID,playerID);
     }
 
@@ -101,7 +102,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean isPartyFull(int partyID) throws Exception {
+    public boolean isPartyFull(int partyID) throws SQLException {
         return sqlDB.isPartyFull(partyID);
     }
 
@@ -110,7 +111,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param partyID
      * */
     @Override
-    public void addPlayerToParty(int playerID, int partyID) throws Exception {
+    public void addPlayerToParty(int playerID, int partyID) throws SQLException {
         if(!isPartyFull(partyID))
             sqlDB.addPlayerToParty(playerID,partyID);
     }
@@ -120,7 +121,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param playerID
      * */
     @Override
-    public void removePlayerFromParty(int partyID, int playerID) throws Exception {
+    public void removePlayerFromParty(int partyID, int playerID) throws SQLException {
         sqlDB.removePlayerFromParty(partyID,playerID);
     }
 
@@ -130,7 +131,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int checkUserNameAndEmail(String username, String email) throws Exception {
+    public int checkUserNameAndEmail(String username, String email) throws SQLException {
         return sqlDB.check_Name_Email(username,email);
     }
 
@@ -139,7 +140,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean doesPartyExist(int partyID) throws Exception {
+    public boolean doesPartyExist(int partyID) throws SQLException {
         return sqlDB.does_Party_Exist(partyID);
     }
 
@@ -148,7 +149,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int doesPlayerExist(String username) throws Exception {
+    public int doesPlayerExist(String username) throws SQLException {
         return sqlDB.does_Player_Exist(username);
     }
 
@@ -157,7 +158,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean isPlayerInParty(int playerID) throws Exception {
+    public boolean isPlayerInParty(int playerID) throws SQLException {
         return sqlDB.is_In_Party(playerID);
     }
 
@@ -167,7 +168,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param partyId
      * */
     @Override// String content,int type
-    public void addInvite(int senderID, int receiverID, int partyId) throws Exception {
+    public void addInvite(int senderID, int receiverID, int partyId) throws SQLException {
         sqlDB.add_Invite(senderID,receiverID,partyId);
     }
 
@@ -177,7 +178,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param inviteId
      * */
     @Override
-    public void removeInvite(int senderID, int receiverID, int inviteId) throws Exception {
+    public void removeInvite(int senderID, int receiverID, int inviteId) throws SQLException {
         sqlDB.remove_Invite(senderID,receiverID,inviteId);
     }
 

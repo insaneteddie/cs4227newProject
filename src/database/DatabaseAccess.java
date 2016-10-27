@@ -10,9 +10,8 @@ package database;
 
 import core.utils.Log;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,22 +41,27 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean canLogin(String username, String password) throws Exception {
-        file = new File(USER_DETAILS_FILE);
-        if (file.exists()) {
-            fileReader = new Scanner(file);
-            while (fileReader.hasNextLine()) {
-                String[] lineFromFile = (fileReader.nextLine()).split(",");
-                if (lineFromFile[2].equals(password)) {
-                    fileReader.close();
-                    file = null;
-                    return true;
+    public boolean canLogin(String username, String password) throws SQLException {
+        try {
+            file = new File(USER_DETAILS_FILE);
+            if (file.exists()) {
+                fileReader = new Scanner(file);
+                while (fileReader.hasNextLine()) {
+                    String[] lineFromFile = (fileReader.nextLine()).split(",");
+                    if (lineFromFile[2].equals(password)) {
+                        fileReader.close();
+                        file = null;
+                        return true;
+                    }
                 }
             }
-        }
 
-        fileReader.close();
-        file = null;
+            fileReader.close();
+            file = null;
+            return false;
+        }catch (FileNotFoundException e){
+            logger.logWarning(e);
+        }
         return false;
     }
 
@@ -66,70 +70,85 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public String getPlayerDetails(String username) throws Exception {
-        file = new File(USER_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        StringBuilder playerDetails = new StringBuilder();
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = (fileReader.nextLine()).split(",");
-            if (lineFromFile[1].equals(username)) {
-                playerDetails.append(lineFromFile[0] + ",");
-                playerDetails.append(lineFromFile[1] + ",");
-                playerDetails.append(lineFromFile[3] + ",");
-            }
-        }
-        fileReader.close();
-        file = null;
-        return playerDetails.toString();
-    }
-
-    /**
-     * @param playerID
-     * @return
-     * */
-    @Override
-    public List<Integer> getPlayerFriendList(int playerID) throws Exception {
-        String pidStr = Integer.toString(playerID);
-        List<Integer> friendIDs = new ArrayList<>();
-        file = new File(FRIEND_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = (fileReader.nextLine()).split(",");
-            if (pidStr.equals(lineFromFile[0])) {
-                friendIDs.add(Integer.parseInt(lineFromFile[1]));
-            } else if (pidStr.equals(lineFromFile[1])){
-                friendIDs.add(Integer.parseInt(lineFromFile[0]));
-            }
-        }
-        fileReader.close();
-        file = null;
-
-        return friendIDs;
-    }
-
-    /**
-     * @param playerID
-     * @return
-     * */
-    @Override
-    public List<Integer[]> getPlayerInvites(int playerID) throws Exception {
-        ArrayList<Integer[]> idList = new ArrayList<>();
-        Integer [] ids = new Integer [2];
-        file = new File(INVITE_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = (fileReader.nextLine()).split(",");
-            if (playerID == Integer.parseInt(lineFromFile[1])) {
-                ids[0] = Integer.parseInt(lineFromFile[0]);
-                ids[1] = Integer.parseInt(lineFromFile[2]);
-                if (!idList.contains(ids)) {
-                    idList.add(ids);
+    public String getPlayerDetails(String username) throws SQLException {
+        try {
+            file = new File(USER_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            StringBuilder playerDetails = new StringBuilder();
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = (fileReader.nextLine()).split(",");
+                if (lineFromFile[1].equals(username)) {
+                    playerDetails.append(lineFromFile[0] + ",");
+                    playerDetails.append(lineFromFile[1] + ",");
+                    playerDetails.append(lineFromFile[3] + ",");
                 }
             }
+            fileReader.close();
+            file = null;
+            return playerDetails.toString();
+        }catch(FileNotFoundException e){
+            logger.logWarning(e);
         }
-        fileReader.close();
-        file = null;
-        return idList;
+        return null;
+    }
+
+    /**
+     * @param playerID
+     * @return
+     * */
+    @Override
+    public List<Integer> getPlayerFriendList(int playerID) throws SQLException {
+        try {
+            String pidStr = Integer.toString(playerID);
+            List<Integer> friendIDs = new ArrayList<>();
+            file = new File(FRIEND_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = (fileReader.nextLine()).split(",");
+                if (pidStr.equals(lineFromFile[0])) {
+                    friendIDs.add(Integer.parseInt(lineFromFile[1]));
+                } else if (pidStr.equals(lineFromFile[1])) {
+                    friendIDs.add(Integer.parseInt(lineFromFile[0]));
+                }
+            }
+            fileReader.close();
+            file = null;
+
+            return friendIDs;
+        }catch (FileNotFoundException e){
+            logger.logWarning(e);
+        }
+        return null;
+    }
+
+    /**
+     * @param playerID
+     * @return
+     * */
+    @Override
+    public List<Integer[]> getPlayerInvites(int playerID) throws SQLException {
+        try {
+            ArrayList<Integer[]> idList = new ArrayList<>();
+            Integer[] ids = new Integer[2];
+            file = new File(INVITE_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = (fileReader.nextLine()).split(",");
+                if (playerID == Integer.parseInt(lineFromFile[1])) {
+                    ids[0] = Integer.parseInt(lineFromFile[0]);
+                    ids[1] = Integer.parseInt(lineFromFile[2]);
+                    if (!idList.contains(ids)) {
+                        idList.add(ids);
+                    }
+                }
+            }
+            fileReader.close();
+            file = null;
+            return idList;
+        }catch (FileNotFoundException e){
+            logger.logWarning(e);
+        }
+        return null;
     }
 
     /**
@@ -138,7 +157,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param email
      * */
     @Override
-    public void createPlayer(String username, String password, String email) throws Exception {
+    public void createPlayer(String username, String password, String email) throws SQLException {
         file = new File(USER_DETAILS_FILE);
         List<String> userDetails = fileToList();
         String playerDetails = "";
@@ -150,11 +169,15 @@ public class DatabaseAccess implements DatabaseInterface {
         } else {
             playerDetails += 1 + "," + username + "," + password + "," + email;
         }
-        fWriter = new FileWriter(file, true);
-        pWriter = new PrintWriter(fWriter);
-        pWriter.println(playerDetails);
-        pWriter.close();
-        fWriter.close();
+        try {
+            fWriter = new FileWriter(file, true);
+            pWriter = new PrintWriter(fWriter);
+            pWriter.println(playerDetails);
+            pWriter.close();
+            fWriter.close();
+        }catch (IOException e){
+            logger.logWarning(e);
+        }
         file = null;
     }
 
@@ -163,7 +186,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int createParty(int partyLeaderID) throws Exception {
+    public int createParty(int partyLeaderID) throws SQLException {
         file = new File(PARTY_DETAILS_FILE);
         List<String> parties = fileToList();
         String newParty = "";
@@ -176,12 +199,15 @@ public class DatabaseAccess implements DatabaseInterface {
                 else{
                     newParty += 1 + "," +  partyLeaderID;
                 }
-
-        fWriter = new FileWriter(file, true);
-        pWriter = new PrintWriter(fWriter);
-        pWriter.println(newParty);
-        pWriter.close();
-        fWriter.close();
+        try {
+            fWriter = new FileWriter(file, true);
+            pWriter = new PrintWriter(fWriter);
+            pWriter.println(newParty);
+            pWriter.close();
+            fWriter.close();
+        }catch(IOException e){
+            logger.logWarning(e);
+        }
         file = null;
 
         return newPartyID;
@@ -193,25 +219,29 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
-        file = new File(PARTY_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        ArrayList<Integer> partyDetails = new ArrayList<>();
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = fileReader.nextLine().split(",");
-            if (partyID == Integer.parseInt(lineFromFile[0])) {
-                for (String x : lineFromFile) {
-                    partyDetails.add(Integer.parseInt(x));
+    public List<Integer> getPartyDetails(int partyID, int playerID) throws SQLException {
+        try {
+            file = new File(PARTY_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            ArrayList<Integer> partyDetails = new ArrayList<>();
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = fileReader.nextLine().split(",");
+                if (partyID == Integer.parseInt(lineFromFile[0])) {
+                    for (String x : lineFromFile) {
+                        partyDetails.add(Integer.parseInt(x));
+                    }
                 }
-
             }
+            fileReader.close();
+            file = null;
+            if (!partyDetails.contains(playerID)) {
+                partyDetails.clear();
+            }
+            return partyDetails;
+        }catch(FileNotFoundException e){
+            logger.logWarning(e);
         }
-        fileReader.close();
-        file = null;
-        if (!partyDetails.contains(playerID)) {
-            partyDetails.clear();
-        }
-        return partyDetails;
+        return null;
     }
 
     /**
@@ -219,20 +249,25 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean isPartyFull(int partyID) throws Exception {
-        boolean partyFull = true;
-        file = new File(PARTY_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = fileReader.nextLine().split(",");
-            if (partyID == Integer.parseInt(lineFromFile[0]) && lineFromFile.length < 6) {
-                partyFull = false;
-                break;
+    public boolean isPartyFull(int partyID) throws SQLException {
+        try {
+            boolean partyFull = true;
+            file = new File(PARTY_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = fileReader.nextLine().split(",");
+                if (partyID == Integer.parseInt(lineFromFile[0]) && lineFromFile.length < 6) {
+                    partyFull = false;
+                    break;
+                }
             }
+            fileReader.close();
+            file = null;
+            return partyFull;
+        }catch(FileNotFoundException e){
+            logger.logWarning(e);
         }
-        fileReader.close();
-        file = null;
-        return partyFull;
+        return true;
     }
 
     /**
@@ -240,7 +275,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param playerID
      * */
     @Override
-    public void addPlayerToParty(int playerID, int partyID) throws Exception {
+    public void addPlayerToParty(int playerID, int partyID) throws SQLException {
         file = new File(PARTY_DETAILS_FILE);
         List<String> parties = fileToList();
     
@@ -263,7 +298,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param playerID
      * */
     @Override
-    public void removePlayerFromParty(int partyID, int playerID) throws Exception {
+    public void removePlayerFromParty(int partyID, int playerID) throws SQLException {
         file = new File(PARTY_DETAILS_FILE);
         List<String> parties = fileToList();
 
@@ -294,24 +329,29 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int checkUserNameAndEmail(String username, String email) throws Exception {
-        file = new File(USER_DETAILS_FILE);
-        fileReader = new Scanner(file);
+    public int checkUserNameAndEmail(String username, String email) throws SQLException {
+        try {
+            file = new File(USER_DETAILS_FILE);
+            fileReader = new Scanner(file);
 
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = (fileReader.nextLine()).split(",");
-            if (lineFromFile[1].equals(username)) {
-                fileReader.close();
-                file = null;
-                return 0;
-            } else if (lineFromFile[3].equals(email)) {
-                fileReader.close();
-                file = null;
-                return 1;
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = (fileReader.nextLine()).split(",");
+                if (lineFromFile[1].equals(username)) {
+                    fileReader.close();
+                    file = null;
+                    return 0;
+                } else if (lineFromFile[3].equals(email)) {
+                    fileReader.close();
+                    file = null;
+                    return 1;
+                }
             }
+            fileReader.close();
+            file = null;
+            return 2;
+        }catch (FileNotFoundException e){
+            logger.logWarning(e);
         }
-        fileReader.close();
-        file = null;
         return 2;
     }
 
@@ -320,20 +360,24 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean doesPartyExist(int partyID) throws Exception {
+    public boolean doesPartyExist(int partyID) throws SQLException {
         file = new File(PARTY_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        boolean partyExists = false;
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = fileReader.nextLine().split(",");
-            if (partyID == Integer.parseInt(lineFromFile[0]))
-            {
-                partyExists = true;
+        try {
+            fileReader = new Scanner(file);
+            boolean partyExists = false;
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = fileReader.nextLine().split(",");
+                if (partyID == Integer.parseInt(lineFromFile[0])) {
+                    partyExists = true;
+                }
             }
+            fileReader.close();
+            file = null;
+            return partyExists;
+        }catch(FileNotFoundException e){
+            logger.logWarning(e);
         }
-        fileReader.close();
-        file = null;
-        return partyExists;
+        return false;
     }
 
     /**
@@ -341,19 +385,24 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int doesPlayerExist(String username) throws Exception {
-        file = new File(USER_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = fileReader.nextLine().split(",");
-            if (username.equals(lineFromFile[1])) {
-                fileReader.close();
-                file = null;
-                return Integer.parseInt(lineFromFile[0]);
+    public int doesPlayerExist(String username) throws SQLException {
+        try {
+            file = new File(USER_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = fileReader.nextLine().split(",");
+                if (username.equals(lineFromFile[1])) {
+                    fileReader.close();
+                    file = null;
+                    return Integer.parseInt(lineFromFile[0]);
+                }
             }
+            fileReader.close();
+            file = null;
+            return 0;
+        }catch(FileNotFoundException e){
+            logger.logWarning(e);
         }
-        fileReader.close();
-        file = null;
         return 0;
     }
 
@@ -362,23 +411,28 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean isPlayerInParty(int playerID) throws Exception {
-        boolean isInParty = false;
-        file = new File(PARTY_DETAILS_FILE);
-        fileReader = new Scanner(file);
-        while (fileReader.hasNextLine()) {
-            String[] lineFromFile = fileReader.nextLine().split(",");
-            for (int i = 1; i < lineFromFile.length; i++) {
-                if (playerID == Integer.parseInt(lineFromFile[i])) {
-                    isInParty = true;
-                    break;
+    public boolean isPlayerInParty(int playerID) throws SQLException {
+        try {
+            boolean isInParty = false;
+            file = new File(PARTY_DETAILS_FILE);
+            fileReader = new Scanner(file);
+            while (fileReader.hasNextLine()) {
+                String[] lineFromFile = fileReader.nextLine().split(",");
+                for (int i = 1; i < lineFromFile.length; i++) {
+                    if (playerID == Integer.parseInt(lineFromFile[i])) {
+                        isInParty = true;
+                        break;
+                    }
                 }
             }
-        }
-        fileReader.close();
-        file = null;
+            fileReader.close();
+            file = null;
 
-        return isInParty;
+            return isInParty;
+        }catch (FileNotFoundException e){
+            logger.logWarning(e);
+        }
+        return false;
     }
 
     /**
@@ -387,16 +441,20 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param partyID
      * */
     @Override  //,String content, int type
-    public void addInvite(int senderID, int receiverID, int partyID) throws Exception {
-        file = new File(INVITE_DETAILS_FILE);
-        String newInvite = Integer.toString(senderID) + "," + receiverID + "," + partyID;
+    public void addInvite(int senderID, int receiverID, int partyID) throws SQLException {
+        try {
+            file = new File(INVITE_DETAILS_FILE);
+            String newInvite = Integer.toString(senderID) + "," + receiverID + "," + partyID;
 
-        fWriter = new FileWriter(file, true);
-        pWriter = new PrintWriter(fWriter);
-        pWriter.println(newInvite);
-        pWriter.close();
-        fWriter.close();
-        file = null;
+            fWriter = new FileWriter(file, true);
+            pWriter = new PrintWriter(fWriter);
+            pWriter.println(newInvite);
+            pWriter.close();
+            fWriter.close();
+            file = null;
+        }catch (IOException e){
+            logger.logWarning(e);
+        }
     }
 
     /**
@@ -405,7 +463,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param partyID
      * */
     @Override
-    public void removeInvite(int senderID, int receiverID, int partyID) throws Exception {
+    public void removeInvite(int senderID, int receiverID, int partyID) throws SQLException {
         file = new File(INVITE_DETAILS_FILE);
         List<String> invites = fileToList();
     
