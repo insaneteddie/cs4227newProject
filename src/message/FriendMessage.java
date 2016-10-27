@@ -49,7 +49,7 @@ public class FriendMessage extends Message
     }
 
     /**
-     * @param message 
+     * @param message
      * @return
      * */
     public boolean equals(Object message)
@@ -60,14 +60,5 @@ public class FriendMessage extends Message
         }
         else
             return false;
-    }
-
-    /**
-     * @return
-     * */
-    @Override
-    public int hashCode()
-    {
-        return super.hashCode();
     }
 }
