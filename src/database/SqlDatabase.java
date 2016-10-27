@@ -98,7 +98,7 @@ class SqlDatabase {
     public void addUser(String userName, String userPass, String email)
     {
         logger.logInfo("Attempting to Connect");
-        logger.logInfo("Inserting records into the table...");
+        logger.logInfo("Inserting records into the table....");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -195,7 +195,7 @@ class SqlDatabase {
     public String getPlayerName(int userId)
     {
         String player_Name = "";
-        System.out.println("checking player details");
+        logger.logInfo("checking player details...");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -259,7 +259,7 @@ class SqlDatabase {
     public int checkNameEmail(String userName, String email)
     {
         int checker = 0;
-        System.out.println("checking player details");
+        logger.logInfo("checking player details.");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -406,7 +406,7 @@ class SqlDatabase {
     public int createParty(int leaderId)
     {
         int party_Id = 0;
-        System.out.println("Inserting records into the table...");
+        logger.logInfo("Inserting records into the table...");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -513,7 +513,7 @@ class SqlDatabase {
     public int doesPlayerExist(String username)
     {
         int checker = 0;
-        System.out.println("checking player details");
+        logger.logInfo("Checking player details");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
