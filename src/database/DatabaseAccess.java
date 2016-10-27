@@ -74,7 +74,7 @@ public class DatabaseAccess implements DatabaseInterface {
 
     @Override
     public List<Integer> getPlayerFriendList(int playerID) throws Exception {
-        String pidStr = playerID + "";
+        String pidStr = Integer.toString(playerID);
         List<Integer> friendIDs = new ArrayList<>();
         file = new File(FRIEND_DETAILS_FILE);
         fileReader = new Scanner(file);
