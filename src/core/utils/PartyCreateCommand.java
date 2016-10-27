@@ -21,7 +21,7 @@ public class PartyCreateCommand implements ICommand {
     }
 
     /**
-     * @return 
+     * @return
      * */
     @Override
     public String getCommandName() {
