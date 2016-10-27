@@ -21,12 +21,12 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param databaseURL
      * @param dbUser
      * @param dbPass
-     * @param JDBCDriver
+     * @param jdbcdriver
      * */
     @SuppressWarnings("unused")
-    public DatabaseAdapter(String databaseURL, String dbUser, String dbPass, String JDBCDriver)
+    public DatabaseAdapter(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
-        sqlDB = new SqlDatabase(databaseURL,dbUser,dbPass,JDBCDriver);
+        sqlDB = new SqlDatabase(databaseURL,dbUser,dbPass,jdbcDriver);
     }
 
     /**
