@@ -30,7 +30,7 @@ public class PartyMemberRemoveCommand implements ICommand{
     }
 
     /**
-     * @return 
+     * @return
      * */
     @Override
     public String getCommandName() {

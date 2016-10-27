@@ -11,6 +11,9 @@ public class PlayerCreateCommand implements ICommand{
     private String pass;
     private String email;
 
+    /**
+     * @param name
+     * */
     public PlayerCreateCommand(String name){
         this.name = name;
     }
@@ -22,6 +25,11 @@ public class PlayerCreateCommand implements ICommand{
         email = "";
     }
 
+    /**
+     * @param username
+     * @param pass
+     * @param email
+     * */
     public void execute(String username, String pass, String email){
         this.username = username;
         this.pass = pass;
@@ -29,6 +37,9 @@ public class PlayerCreateCommand implements ICommand{
         execute();
     }
 
+    /**
+     * @return
+     * */
     @Override
     public String getCommandName() {
         return name;
