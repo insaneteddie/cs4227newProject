@@ -1,6 +1,7 @@
 package database;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by s_harte CS4227 Awesome Gaming  on 10/20/2016.
@@ -21,7 +22,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param databaseURL
      * @param dbUser
      * @param dbPass
-     * @param jdbcdriver
+     * @param jdbcDriver
      * */
     @SuppressWarnings("unused")
     public DatabaseAdapter(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
@@ -53,7 +54,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception {
+    public List<Integer> getPlayerFriendList(int playerID) throws Exception {
         return sqlDB.get_FriendsList(playerID);
     }
 
@@ -62,7 +63,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception {
+    public List<Integer[]> getPlayerInvites(int playerID) throws Exception {
         return sqlDB.get_Invites(playerID);
     }
 
@@ -92,7 +93,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @return
      * */
     @Override
-    public ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
+    public List<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
         return sqlDB.get_PartyDetails(partyID,playerID);
     }
 
