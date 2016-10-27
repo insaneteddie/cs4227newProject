@@ -139,6 +139,7 @@ class SqlDatabase {
             prepStatement.setInt(2,friendId);
 
             prepStatement.executeUpdate();
+            prepStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
