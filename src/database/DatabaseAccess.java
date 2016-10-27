@@ -24,10 +24,10 @@ public class DatabaseAccess implements DatabaseInterface {
     private FileWriter fWriter;
     private File file;
     private Scanner fileReader;
-    private final static String USER_DETAILS_FILE = "Resources/UserDetails.txt";
-    private final static String FRIEND_DETAILS_FILE = "Resources/FriendDetails.txt";
-    private final static String PARTY_DETAILS_FILE = "Resources/PartyDetails.txt";
-    private final static String INVITE_DETAILS_FILE = "Resources/InviteDetails.txt";
+    private static final String USER_DETAILS_FILE = "Resources/UserDetails.txt";
+    private static final String FRIEND_DETAILS_FILE = "Resources/FriendDetails.txt";
+    private static final String PARTY_DETAILS_FILE = "Resources/PartyDetails.txt";
+    private static final String INVITE_DETAILS_FILE = "Resources/InviteDetails.txt";
 
     private Log logger;
 
