@@ -8,6 +8,9 @@ import core.session.SessionInformation;
 public class PlayerInvitesRetrieveCommand implements ICommand {
     private final String name;
 
+    /**
+     * @param name
+     * */
     public PlayerInvitesRetrieveCommand(String name){
         this.name = name;
     }
@@ -16,6 +19,9 @@ public class PlayerInvitesRetrieveCommand implements ICommand {
         SessionInformation.getInstance().getPlayerInvites();
     }
 
+    /**
+     * @return
+     * */
     @Override
     public String getCommandName() {
         return name;
