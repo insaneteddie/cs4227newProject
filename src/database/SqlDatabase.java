@@ -154,7 +154,7 @@ class SqlDatabase {
         }
     }
     //checks the username and password from the users database
-    public boolean can_Login(String user_Name,String user_Pass)
+    public boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
         System.out.println("checking login details");
@@ -167,8 +167,8 @@ class SqlDatabase {
             //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
 
-            prepStatement.setString(1,user_Name);
-            prepStatement.setString(2,user_Pass);
+            prepStatement.setString(1,userName);
+            prepStatement.setString(2,userPass);
             //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
             canLogin = prepStatement.execute();
 

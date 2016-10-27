@@ -37,7 +37,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * */
     @Override
     public boolean canLogin(String username, String password) throws SQLException {
-        return sqlDB.can_Login(username,password);
+        return sqlDB.canLogin(username,password);
     }
     //this needs to be edited... seems a bit pointless to pass in the username to get the username
     /**
