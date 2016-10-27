@@ -37,10 +37,6 @@ public class SessionController {
         getCommand(commandName).execute();
     }
 
-    public void executeCommand(String commandName, int id){
-        getCommand(commandName).execute();
-    }
-
     private ICommand getCommand(String commandName){
         for(Object c : commands){
             if(((ICommand)c).getCommandName().matches(commandName)){
