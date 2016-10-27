@@ -8,14 +8,21 @@ import core.session.SessionInformation;
 public class PartyLeaveCommand implements ICommand {
     private final String name;
 
+    /**
+     * @param name
+     * */
     public PartyLeaveCommand(String name){
         this.name  = name;
     }
+
     @Override
     public void execute() {
         SessionInformation.getInstance().leaveParty();
     }
 
+    /**
+     * @return 
+     * */
     @Override
     public String getCommandName() {
         return name;
