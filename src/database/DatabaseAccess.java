@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/** concrete database class*/
 public class DatabaseAccess implements DatabaseInterface {
 
     private PrintWriter pWriter;
@@ -30,10 +31,16 @@ public class DatabaseAccess implements DatabaseInterface {
 
     private Log logger;
 
+    /** public constructor */
     public DatabaseAccess() throws Exception {
         logger = new Log(getClass().getName());
     }
 
+    /**
+     * @param username
+     * @param password
+     * @return
+     * */
     @Override
     public boolean canLogin(String username, String password) throws Exception {
         file = new File(USER_DETAILS_FILE);
@@ -54,6 +61,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return false;
     }
 
+    /**
+     * @param username
+     * @return
+     * */
     @Override
     public String getPlayerDetails(String username) throws Exception {
         file = new File(USER_DETAILS_FILE);
@@ -72,6 +83,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return playerDetails.toString();
     }
 
+    /**
+     * @param playerID
+     * @return
+     * */
     @Override
     public List<Integer> getPlayerFriendList(int playerID) throws Exception {
         String pidStr = Integer.toString(playerID);
@@ -92,6 +107,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return friendIDs;
     }
 
+    /**
+     * @param playerID
+     * @return
+     * */
     @Override
     public List<Integer[]> getPlayerInvites(int playerID) throws Exception {
         ArrayList<Integer[]> idList = new ArrayList<>();
@@ -113,6 +132,11 @@ public class DatabaseAccess implements DatabaseInterface {
         return idList;
     }
 
+    /**
+     * @param username
+     * @param password
+     * @param email
+     * */
     @Override
     public void createPlayer(String username, String password, String email) throws Exception {
         file = new File(USER_DETAILS_FILE);
@@ -134,6 +158,10 @@ public class DatabaseAccess implements DatabaseInterface {
         file = null;
     }
 
+    /**
+     * @param partyLeaderID
+     * @return
+     * */
     @Override
     public int createParty(int partyLeaderID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
@@ -159,6 +187,11 @@ public class DatabaseAccess implements DatabaseInterface {
         return newPartyID;
     }
 
+    /**
+     * @param partyID
+     * @param playerID
+     * @return
+     * */
     @Override
     public List<Integer> getPartyDetails(int partyID, int playerID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
@@ -181,6 +214,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return partyDetails;
     }
 
+    /**
+     * @param partyID
+     * @return
+     * */
     @Override
     public boolean isPartyFull(int partyID) throws Exception {
         boolean partyFull = true;
@@ -198,6 +235,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return partyFull;
     }
 
+    /**
+     * @param partyID
+     * @param playerID
+     * */
     @Override
     public void addPlayerToParty(int playerID, int partyID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
@@ -217,6 +258,10 @@ public class DatabaseAccess implements DatabaseInterface {
         file = null;
     }
 
+    /**
+     * @param partyID
+     * @param playerID
+     * */
     @Override
     public void removePlayerFromParty(int partyID, int playerID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
@@ -243,6 +288,11 @@ public class DatabaseAccess implements DatabaseInterface {
         file = null;
     }
 
+    /**
+     * @param username
+     * @param email
+     * @return
+     * */
     @Override
     public int checkUserNameAndEmail(String username, String email) throws Exception {
         file = new File(USER_DETAILS_FILE);
@@ -265,6 +315,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return 2;
     }
 
+    /**
+     * @param partyID
+     * @return
+     * */
     @Override
     public boolean doesPartyExist(int partyID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
@@ -282,6 +336,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return partyExists;
     }
 
+    /**
+     * @param username
+     * @return
+     * */
     @Override
     public int doesPlayerExist(String username) throws Exception {
         file = new File(USER_DETAILS_FILE);
@@ -299,6 +357,10 @@ public class DatabaseAccess implements DatabaseInterface {
         return 0;
     }
 
+    /**
+     * @param playerID
+     * @return
+     * */
     @Override
     public boolean isPlayerInParty(int playerID) throws Exception {
         boolean isInParty = false;
@@ -319,6 +381,11 @@ public class DatabaseAccess implements DatabaseInterface {
         return isInParty;
     }
 
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param partyID
+     * */
     @Override  //,String content, int type
     public void addInvite(int senderID, int receiverID, int partyID) throws Exception {
         file = new File(INVITE_DETAILS_FILE);
@@ -332,6 +399,11 @@ public class DatabaseAccess implements DatabaseInterface {
         file = null;
     }
 
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param partyID
+     * */
     @Override
     public void removeInvite(int senderID, int receiverID, int partyID) throws Exception {
         file = new File(INVITE_DETAILS_FILE);
@@ -349,11 +421,18 @@ public class DatabaseAccess implements DatabaseInterface {
         file = null;
     }
 
+    /**
+     * @param userId
+     * @param friendId
+     * */
     @Override
     public void addFriend(int userId, int friendId) {
         /** insert implementation here*/
     }
 
+    /**
+     * @return
+     * */
     private List<String> fileToList() {
         List<String> list = new ArrayList<>();
         try {
@@ -367,7 +446,11 @@ public class DatabaseAccess implements DatabaseInterface {
         }
         return list;
     }
-    
+
+    /**
+     * @param list
+     * @param amended
+     * */
     private void writeToFile(List<String> list, boolean amended) {
         try {
             fWriter = new FileWriter(file, amended);
