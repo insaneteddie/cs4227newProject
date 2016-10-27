@@ -378,6 +378,7 @@ public class DatabaseAccess implements DatabaseInterface {
             pWriter.close();
             fWriter.close();
         } catch (Exception e) {
+            logger.logWarning(e);
         }
     }
 }
