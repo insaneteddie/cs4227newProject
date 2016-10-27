@@ -116,7 +116,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override
     public void createPlayer(String username, String password, String email) throws Exception {
         file = new File(USER_DETAILS_FILE);
-        ArrayList<String> userDetails = fileToList();
+        List<String> userDetails = fileToList();
         String playerDetails = "";
 
         if (!userDetails.isEmpty()) {
@@ -137,7 +137,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override
     public int createParty(int partyLeaderID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
-        ArrayList<String> parties = fileToList();
+        List<String> parties = fileToList();
         String newParty = "";
         int newPartyID = 1;
         if(!parties.isEmpty()){
@@ -201,7 +201,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override
     public void addPlayerToParty(int playerID, int partyID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
-        ArrayList<String> parties = fileToList();
+        List<String> parties = fileToList();
     
         for (int i = 0; i < parties.size(); i++) {
             String[] lineFromFile = parties.get(i).split(",");
@@ -220,7 +220,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override
     public void removePlayerFromParty(int partyID, int playerID) throws Exception {
         file = new File(PARTY_DETAILS_FILE);
-        ArrayList<String> parties = fileToList();
+        List<String> parties = fileToList();
 
         for (int i = 0; i < parties.size(); i++) {
             StringBuilder amendedParty = new StringBuilder();
@@ -335,7 +335,7 @@ public class DatabaseAccess implements DatabaseInterface {
     @Override
     public void removeInvite(int senderID, int receiverID, int partyID) throws Exception {
         file = new File(INVITE_DETAILS_FILE);
-        ArrayList<String> invites = fileToList();
+        List<String> invites = fileToList();
     
         for (int i = 0; i < invites.size(); i++) {
             String[] lineFromFile = invites.get(i).split(",");
@@ -354,8 +354,8 @@ public class DatabaseAccess implements DatabaseInterface {
         /** insert implementation here*/
     }
 
-    private ArrayList<String> fileToList() {
-        ArrayList<String> list = new ArrayList<>();
+    private List<String> fileToList() {
+        List<String> list = new ArrayList<>();
         try {
             fileReader = new Scanner(file);
             while (fileReader.hasNextLine()) {
@@ -368,7 +368,7 @@ public class DatabaseAccess implements DatabaseInterface {
         return list;
     }
     
-    private void writeToFile(ArrayList<String> list, boolean amended) {
+    private void writeToFile(List<String> list, boolean amended) {
         try {
             fWriter = new FileWriter(file, amended);
             pWriter = new PrintWriter(fWriter);
