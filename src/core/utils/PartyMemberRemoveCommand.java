@@ -9,6 +9,9 @@ public class PartyMemberRemoveCommand implements ICommand{
     private final String name;
     private int memberId;
 
+    /**
+     * @param name
+     * */
     public PartyMemberRemoveCommand(String name){
         this.name = name;
     }
@@ -18,11 +21,17 @@ public class PartyMemberRemoveCommand implements ICommand{
         memberId = 0;
     }
 
+    /**
+     * @param memberId
+     * */
     public void execute(int memberId){
         this.memberId = memberId;
         execute();
     }
 
+    /**
+     * @return 
+     * */
     @Override
     public String getCommandName() {
         return name;
