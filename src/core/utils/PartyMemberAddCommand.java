@@ -9,6 +9,9 @@ public class PartyMemberAddCommand implements ICommand {
     private final String name;
     private int userId;
 
+    /**
+     * @param name
+     * */
     public PartyMemberAddCommand(String name){
         this.name = name;
     }
@@ -21,11 +24,17 @@ public class PartyMemberAddCommand implements ICommand {
         userId = 0;
     }
 
+    /**
+     * @param userId
+     * */
     public void execute(int userId){
         this.userId = userId;
         execute();
     }
 
+    /**
+     * @return 
+     * */
     @Override
     public String getCommandName() {
         return name;
