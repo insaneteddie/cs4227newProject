@@ -82,7 +82,7 @@ class SqlDatabase {
         // user_parties.
 
     //add a user to the user table should look at hash tables.
-    public void add_User(String user_Name, String user_Pass, String email)
+    public void add_User(String userName, String userPass, String email)
     {
 
 
@@ -99,8 +99,8 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
 
 
-            prepStatement.setString(1,user_Name);
-            prepStatement.setString(2,user_Pass);
+            prepStatement.setString(1,userName);
+            prepStatement.setString(2,userPass);
             prepStatement.setString(3,email);
             prepStatement.executeUpdate();
 
