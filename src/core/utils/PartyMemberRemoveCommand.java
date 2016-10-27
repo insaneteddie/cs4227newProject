@@ -18,8 +18,8 @@ public class PartyMemberRemoveCommand implements ICommand{
         memberId = 0;
     }
 
-    public void execute(int member_id){
-        this.memberId = member_id;
+    public void execute(int memberId){
+        this.memberId = memberId;
         execute();
     }
 
