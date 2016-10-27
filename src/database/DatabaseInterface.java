@@ -21,7 +21,7 @@ public interface DatabaseInterface {
 
     List<Integer> getPlayerFriendList(int playerID) throws Exception;
 
-    ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception;
+    List<Integer[]> getPlayerInvites(int playerID) throws Exception;
 
     void createPlayer(String username, String password, String email) throws Exception;
 

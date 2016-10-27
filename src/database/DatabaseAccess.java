@@ -93,7 +93,7 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     @Override
-    public ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception {
+    public List<Integer[]> getPlayerInvites(int playerID) throws Exception {
         ArrayList<Integer[]> idList = new ArrayList<>();
         Integer [] ids = new Integer [2];
         file = new File(INVITE_DETAILS_FILE);
