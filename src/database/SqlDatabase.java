@@ -144,9 +144,7 @@ class SqlDatabase {
 
             prepStatement.executeUpdate();
             prepStatement.close();
-        } catch (SQLException e) {
-            logger.logWarning(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
@@ -177,11 +175,9 @@ class SqlDatabase {
             //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
             canLogin = prepStatement.execute();
             prepStatement.close();
-        } catch (SQLException e) {
+        } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
-        } catch (ClassNotFoundException e) {
-            logger.logWarning(e);
-        } finally {
+        }finally {
             try {
                 if (statement != null)
                     connection.close();
@@ -210,17 +206,14 @@ class SqlDatabase {
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
             player_Name = res.getString("user_Name");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return player_Name;
@@ -244,17 +237,14 @@ class SqlDatabase {
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
             userId = res.getInt("user_Id");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return userId;
@@ -287,17 +277,14 @@ class SqlDatabase {
                 return checker;
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
-        } finally {
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
+        }finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return checker;
@@ -325,17 +312,14 @@ class SqlDatabase {
                     return false;
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return true;
@@ -364,17 +348,14 @@ class SqlDatabase {
                 friendsList.add(res.getInt(iterator));
                 iterator++;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return friendsList;
@@ -405,17 +386,14 @@ class SqlDatabase {
             }
             invitesList.add(user_invites);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return invitesList;
@@ -440,17 +418,14 @@ class SqlDatabase {
             prepStatement.close();
             party_Id = 1;
             return party_Id;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return party_Id;
@@ -488,17 +463,14 @@ class SqlDatabase {
             prepStatement.setInt(3,partyID);
             prepStatement.executeUpdate();
             prepStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
     }
@@ -521,17 +493,14 @@ class SqlDatabase {
             if (res.next()) {
                 return false;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return true;
@@ -560,17 +529,14 @@ class SqlDatabase {
                 return checker;
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return checker;
@@ -602,17 +568,14 @@ class SqlDatabase {
                     }
                 }
             counter = 0;
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-        e.getException();
+    } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
     } finally {
         try {
             if (statement != null)
                 connection.close();
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.logWarning(se);
         }
     }
         return counter;
@@ -638,17 +601,14 @@ class SqlDatabase {
             {
                 return true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return false;
@@ -675,17 +635,14 @@ class SqlDatabase {
 
             prepStatement.executeQuery();
             prepStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
     }
@@ -709,17 +666,14 @@ class SqlDatabase {
 
             prepStatement.executeUpdate();
             prepStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
     }
@@ -755,17 +709,14 @@ class SqlDatabase {
             prepStatement.setInt(3,partyID);
             prepStatement.executeUpdate();
             prepStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
     }
@@ -796,17 +747,14 @@ class SqlDatabase {
                 }
             }
             counter = 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return counter;
@@ -834,17 +782,14 @@ class SqlDatabase {
                 partyList.add(res.getInt(iterator));
                 iterator++;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            e.getException();
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                se.printStackTrace();
+                logger.logWarning(se);
             }
         }
         return partyList;
