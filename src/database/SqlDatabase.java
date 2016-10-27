@@ -9,15 +9,14 @@ import java.sql.*;
  */
 class SqlDatabase {
     // JDBC driver name and database URL
-    private static String JDBCDRIVER;
+    private final String JDBCDRIVER;
     //set up to connect to an rds instance on my aws account
-    private static  String DBURL;
+    private final String DBURL;
 
     //  Database credentials
-    private static  String USER;
-    private static  String PASS;
-
-
+    private final  String USER;
+    private final  String PASS;
+    
     private Connection connection;
     private Statement statement;
 
