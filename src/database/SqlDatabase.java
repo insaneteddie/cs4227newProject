@@ -171,7 +171,7 @@ class SqlDatabase {
             prepStatement.setString(2,userPass);
             //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
             canLogin = prepStatement.execute();
-
+            prepStatement.close();
         } catch (SQLException e) {
             logger.logWarning(e);
         } catch (ClassNotFoundException e) {
