@@ -121,7 +121,7 @@ class SqlDatabase {
 
     }
     //method to add a friend we need to add this to the interface
-    public void addFriend(int user_Id, int friend_Id)
+    public void addFriend(int userId, int friendId)
     {
         System.out.println("Inserting records into the table...");
         try {
@@ -135,8 +135,8 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?)");
 
 
-            prepStatement.setInt(1,user_Id);
-            prepStatement.setInt(2,friend_Id);
+            prepStatement.setInt(1,userId);
+            prepStatement.setInt(2,friendId);
 
             prepStatement.executeUpdate();
         } catch (SQLException e) {
