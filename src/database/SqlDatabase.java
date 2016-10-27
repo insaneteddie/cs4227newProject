@@ -24,6 +24,7 @@ class SqlDatabase {
 
     private Log logger;
 
+    /** no-args constructor */
     public SqlDatabase()
     {
         jdbcDriver = "com.mysql.jdbc.Driver";
@@ -34,6 +35,12 @@ class SqlDatabase {
         logger = new Log(getClass().getName());
     }
 
+    /**
+     * @param databaseURL
+     * @param dbUser
+     * @param dbPass
+     * @param jdbcDriver
+     * */
     public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
         this.jdbcDriver = jdbcDriver;
@@ -82,23 +89,21 @@ class SqlDatabase {
         // user_parties.
 
     //add a user to the user table should look at hash tables.
+    /**
+     * @param userName
+     * @param userPass
+     * @param email
+     * */
     public void addUser(String userName, String userPass, String email)
     {
-
-
         logger.logInfo("Attempting to Connect");
-        //connection
-
         logger.logInfo("Inserting records into the table...");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
-
-
             prepStatement.setString(1,userName);
             prepStatement.setString(2,userPass);
             prepStatement.setString(3,email);
@@ -121,20 +126,18 @@ class SqlDatabase {
 
     }
     //method to add a friend we need to add this to the interface
+    /**
+     * @param userId
+     * @param friendId
+     * */
     public void addFriend(int userId, int friendId)
     {
         logger.logInfo("Inserting records into the table...");
         try {
-
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?)");
-
-
             prepStatement.setInt(1,userId);
             prepStatement.setInt(2,friendId);
 
@@ -154,6 +157,11 @@ class SqlDatabase {
         }
     }
     //checks the username and password from the users database
+    /**
+     * @param userName
+     * @param userPass
+     * @return
+     * */
     public boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
@@ -161,12 +169,8 @@ class SqlDatabase {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
-
             prepStatement.setString(1,userName);
             prepStatement.setString(2,userPass);
             //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
@@ -187,6 +191,10 @@ class SqlDatabase {
         return canLogin;
     }
     //needs testing too...
+    /**
+     * @param userId
+     * @return
+     * */
     public String getPlayerName(int userId)
     {
         String player_Name = "";
@@ -194,10 +202,7 @@ class SqlDatabase {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Name FROM users WHERE user_Id = ?");
             prepStatement.setInt(1,userId);
 
@@ -220,6 +225,10 @@ class SqlDatabase {
         return player_Name;
     }
     //haven't tested yet...
+    /**
+     * @param userName
+     * @return
+     * */
     public int getUserId(String userName)
     {
         int userId = 0;
@@ -228,8 +237,6 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id FROM users WHERE user_Name = ?");
             prepStatement.setString(1,userName);
 
@@ -253,6 +260,11 @@ class SqlDatabase {
     }
 
     //check username,and email
+    /**
+     * @param userName
+     * @param email
+     * @return
+     * */
     public int checkNameEmail(String userName, String email)
     {
         int checker = 0;
@@ -262,8 +274,6 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,email);
@@ -292,6 +302,10 @@ class SqlDatabase {
         return checker;
     }
     //is party full method
+    /**
+     * @param partyId
+     * @return
+     * */
     public boolean isPartyFull(int partyId)
     {
         try {
@@ -299,23 +313,17 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
             prepStatement.setInt(1, partyId);
-
-            //prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
             while (res.next())
             {
                 if (res.wasNull()) {
-
                     return false;
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -332,6 +340,10 @@ class SqlDatabase {
         return true;
     }
 
+    /**
+     * @param userId
+     * @return
+     * */
     public ArrayList<Integer> getFriendsList(int userId)
     {
         ArrayList<Integer> friendsList = new ArrayList<>();
@@ -341,8 +353,6 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
             prepStatement.setInt(1,userId);
 
@@ -353,8 +363,6 @@ class SqlDatabase {
                 friendsList.add(res.getInt(iterator));
                 iterator++;
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -371,6 +379,10 @@ class SqlDatabase {
         return friendsList;
     }
 
+    /**
+     * @param playerId
+     * @return
+     * */
     public ArrayList<Integer []> getInvites(int playerId)
     {
         ArrayList<Integer []> invitesList = new ArrayList<>();
@@ -380,8 +392,6 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             Integer [] user_invites = new Integer[100];
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
             prepStatement.setInt(1,playerId);
 
@@ -390,7 +400,6 @@ class SqlDatabase {
             while(res.next())
             {
                 user_invites[iterator] = res.getInt(iterator);
-
                 iterator++;
             }
             invitesList.add(user_invites);
@@ -411,25 +420,25 @@ class SqlDatabase {
         return invitesList;
     }
     //takes in party creator user_Id and sets it as leader_Id in the table :)
+    /**
+     * @param leaderId
+     * @return
+     * */
     public int createParty(int leaderId)
     {
         int party_Id = 0;
         System.out.println("Inserting records into the table...");
         try {
-
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (leader_Id) VALUES(?)");
             prepStatement.setInt(1,leaderId);
             prepStatement.executeUpdate();
             prepStatement.close();
             party_Id = 1;
             return party_Id;
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -437,7 +446,6 @@ class SqlDatabase {
             e.getException();
         } finally {
             try {
-
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
@@ -447,16 +455,17 @@ class SqlDatabase {
         return party_Id;
     }
     //hacked a fix
+    /**
+     * @param playerID
+     * @param partyID
+     * */
     public void addPlayerToParty(int playerID, int partyID)
     {
         try {
             Class.forName(jdbcDriver);
 
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             int colId = findNullFromParties(partyID);
             String sqlCol = "";
             switch(colId)
@@ -476,10 +485,8 @@ class SqlDatabase {
             prepStatement.setInt(1,playerID);
             prepStatement.setString(2,sqlCol);
             prepStatement.setInt(3,partyID);
-
             prepStatement.executeUpdate();
             prepStatement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -495,16 +502,16 @@ class SqlDatabase {
         }
     }
     //sorted
+    /**
+     * @param partyID
+     * @return
+     * */
     public boolean doesPartyExist(int partyID)
     {
-
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_Id = ?");
             prepStatement.setInt(1, partyID);
 
@@ -529,6 +536,10 @@ class SqlDatabase {
         return true;
     }
     //should work
+    /**
+     * @param username
+     * @return
+     * */
     public int doesPlayerExist(String username)
     {
         int checker = 0;
@@ -538,11 +549,8 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
-
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
             if(!res.next())
@@ -567,6 +575,10 @@ class SqlDatabase {
         return checker;
     }
     //the above mentioned hacked fix
+    /**
+     * @param partyId
+     * @return
+     * */
     private int findNullFromParties(int partyId)
     {
         int counter = 0;
@@ -574,10 +586,7 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             counter = 1;
-
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
@@ -590,7 +599,6 @@ class SqlDatabase {
                     }else {
                         counter++;
                     }
-
                 }
             counter = 0;
     } catch (SQLException e) {
@@ -609,6 +617,10 @@ class SqlDatabase {
         return counter;
     }
 
+    /**
+     * @param playerId
+     * @return
+     * */
     public boolean isInParty(int playerId)
     {
         try {
@@ -616,20 +628,15 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
             prepStatement.setInt(1, playerId);
             prepStatement.setInt(2, playerId);
-
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
             if (res.next())
             {
                 return true;
             }
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -645,18 +652,19 @@ class SqlDatabase {
         }
         return false;
     }
-//int typeID,String invite_content,
+    //int typeID,String invite_content,
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param partyId
+     * */
     public void addInvite(int senderID, int receiverID, int partyId)
     {
         try {
             Class.forName(jdbcDriver);
-
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
-
             PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,typeId,party_Id)  VALUES( ?, ?, ?, ?, ?)");
             prepStatement.setInt(1,senderID);
             prepStatement.setString(2,"this is content");
@@ -666,7 +674,6 @@ class SqlDatabase {
 
             prepStatement.executeQuery();
             prepStatement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -682,6 +689,11 @@ class SqlDatabase {
         }
     }
 
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param inviteId
+     * */
     public void removeInvite(int senderID, int receiverID, int inviteId)
     {
         try {
@@ -689,8 +701,6 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            //stupid mfking sql stuff
-            //creating the prepared statement.
             PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND invite_Id = ?)");
             prepStatement.setInt(1, senderID);
             prepStatement.setInt(2,receiverID);
@@ -713,12 +723,15 @@ class SqlDatabase {
         }
     }
 
+    /**
+     * @param partyID
+     * @param playerID
+     * */
     public void removePlayerFromParty(int partyID, int playerID)
     {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
             int colId = findUserInParty(playerID,partyID);
             String sqlCol = "";
@@ -736,7 +749,6 @@ class SqlDatabase {
                     break;
             }
             PreparedStatement prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
-
             prepStatement.setString(1,sqlCol);
             prepStatement.setInt(2,playerID);
             prepStatement.setInt(3,partyID);
@@ -757,6 +769,11 @@ class SqlDatabase {
         }
     }
 
+    /**
+     * @param userId
+     * @param partyId
+     * @return
+     * */
     public int findUserInParty(int userId, int partyId)
     {
         int counter = 0;
@@ -764,10 +781,8 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             counter = 0;
-
             statement = connection.createStatement();
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
-
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
@@ -778,7 +793,6 @@ class SqlDatabase {
                 {
                     return counter;
                 }
-
             }
             counter = 0;
         } catch (SQLException e) {
@@ -797,13 +811,17 @@ class SqlDatabase {
         return counter;
     }
 
+    /**
+     * @param partyID
+     * @param playerID
+     * @return
+     * */
     public ArrayList<Integer> getPartyDetails(int partyID, int playerID) {
         ArrayList<Integer> partyList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
             int iterator = 0;
             connection = DriverManager.getConnection(dbUrl, user, pass);
-
             statement = connection.createStatement();
             PreparedStatement prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_Id = ?");
             prepStatement.setInt(1, partyID);
