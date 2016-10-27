@@ -187,7 +187,7 @@ public class DatabaseAccess implements DatabaseInterface {
         file = new File(PARTY_DETAILS_FILE);
         fileReader = new Scanner(file);
         while (fileReader.hasNextLine()) {
-            String lineFromFile[] = fileReader.nextLine().split(",");
+            String[] lineFromFile = fileReader.nextLine().split(",");
             if (partyID == Integer.parseInt(lineFromFile[0]) && lineFromFile.length < 6) {
                 partyFull = false;
                 break;
