@@ -194,7 +194,7 @@ class SqlDatabase {
      * */
     public String getPlayerName(int userId)
     {
-        String player_Name = "";
+        String playerName = "";
         logger.logInfo("checking player details...");
         try {
             Class.forName(jdbcDriver);
@@ -205,7 +205,7 @@ class SqlDatabase {
 
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
-            player_Name = res.getString("user_Name");
+            playerName = res.getString("user_Name");
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
@@ -216,7 +216,7 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return player_Name;
+        return playerName;
     }
     //haven't tested yet...
     /**
@@ -372,7 +372,7 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             int iterator = 0;
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            Integer [] user_invites = new Integer[100];
+            Integer [] userInvites = new Integer[100];
             statement = connection.createStatement();
             PreparedStatement prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
             prepStatement.setInt(1,playerId);
@@ -381,10 +381,10 @@ class SqlDatabase {
             prepStatement.close();
             while(res.next())
             {
-                user_invites[iterator] = res.getInt(iterator);
+                userInvites[iterator] = res.getInt(iterator);
                 iterator++;
             }
-            invitesList.add(user_invites);
+            invitesList.add(userInvites);
 
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -405,7 +405,7 @@ class SqlDatabase {
      * */
     public int createParty(int leaderId)
     {
-        int party_Id = 0;
+        int partyId = 0;
         logger.logInfo("Inserting records into the table...");
         try {
             Class.forName(jdbcDriver);
@@ -416,8 +416,8 @@ class SqlDatabase {
             prepStatement.setInt(1,leaderId);
             prepStatement.executeUpdate();
             prepStatement.close();
-            party_Id = 1;
-            return party_Id;
+            partyId = 1;
+            return partyId;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
@@ -428,7 +428,7 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return party_Id;
+        return partyId;
     }
     //hacked a fix
     /**
