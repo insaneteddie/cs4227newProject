@@ -34,7 +34,7 @@ public class Log {
     }
 
     public void logWarning(Exception e, String desc){
-        logger.log(Level.WARNING, e.getMessage());
+        logger.log(Level.WARNING, desc + "\n" + e.getMessage());
     }
     public void logWarning(Exception e){
         logWarning(e, "");

@@ -22,7 +22,7 @@ public class InviteRemoveCommand implements ICommand {
     }
 
     /**
-     * @param userId 
+     * @param userId
      * */
     public void execute(int userId){
         this.userId = userId;
