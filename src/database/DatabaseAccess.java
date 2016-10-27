@@ -165,7 +165,7 @@ public class DatabaseAccess implements DatabaseInterface {
         fileReader = new Scanner(file);
         ArrayList<Integer> partyDetails = new ArrayList<>();
         while (fileReader.hasNextLine()) {
-            String lineFromFile[] = fileReader.nextLine().split(",");
+            String[] lineFromFile = fileReader.nextLine().split(",");
             if (partyID == Integer.parseInt(lineFromFile[0])) {
                 for (String x : lineFromFile) {
                     partyDetails.add(Integer.parseInt(x));
