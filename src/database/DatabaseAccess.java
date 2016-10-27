@@ -8,6 +8,8 @@
 **/
 package database;
 
+import core.utils.Log;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -25,8 +27,10 @@ public class DatabaseAccess implements DatabaseInterface {
     private final String PARTY_DETAILS_FILE = "Resources/PartyDetails.txt";
     private final String INVITE_DETAILS_FILE = "Resources/InviteDetails.txt";
 
-    public DatabaseAccess() throws Exception {
+    private Log logger;
 
+    public DatabaseAccess() throws Exception {
+        logger = new Log(getClass().getName());
     }
 
     @Override
