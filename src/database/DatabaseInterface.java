@@ -6,45 +6,120 @@
 *   Adapted file: Serenity_Gaming/DatabaseInterface.java
 *   Approximate use: 30%
 **/
-
 package database;
 
-import java.util.ArrayList;
-
+import java.sql.SQLException;
+import java.util.List;
+/** classs that defines the interface for the database*/
 public interface DatabaseInterface {
 
-    boolean canLogin(String username, String password) throws Exception;
+    /**
+     * @param username
+     * @param password
+     * @return
+     * */
+    boolean canLogin(String username, String password) throws SQLException;
 
     /* References the local Player class */
-    String getPlayerDetails(String username) throws Exception;
+    /**
+     * @param username
+     * @return
+     * */
+    String getPlayerDetails(String username) throws SQLException;
 
-    ArrayList<Integer> getPlayerFriendList(int playerID) throws Exception;
+    /**
+     * @param playerID
+     * @return
+     * */
+    List<Integer> getPlayerFriendList(int playerID) throws SQLException;
 
-    ArrayList<Integer[]> getPlayerInvites(int playerID) throws Exception;
+    /**
+     * @param playerID
+     * @return
+     * */
+    List<Integer[]> getPlayerInvites(int playerID) throws SQLException;
 
-    void createPlayer(String username, String password, String email) throws Exception;
+    /**
+     * @param username
+     * @param password
+     * @param email
+     * */
+    void createPlayer(String username, String password, String email) throws SQLException;
 
-    int createParty(int partyLeaderID) throws Exception;
+    /**
+     * @param partyLeaderID
+     * @return
+     * */
+    int createParty(int partyLeaderID) throws SQLException;
 
-    ArrayList<Integer> getPartyDetails(int partyID, int playerID) throws Exception;
+    /**
+     * @param partyID
+     * @param playerID
+     * @return
+     * */
+    List<Integer> getPartyDetails(int partyID, int playerID) throws SQLException;
 
-    boolean isPartyFull(int partyID) throws Exception;
+    /**
+     * @param partyID
+     * @return
+     * */
+    boolean isPartyFull(int partyID) throws SQLException;
 
-    void addPlayerToParty(int playerID, int partyID) throws Exception;
+    /**
+     * @param playerID
+     * @param partyID
+     * */
+    void addPlayerToParty(int playerID, int partyID) throws SQLException;
 
-    void removePlayerFromParty(int partyID, int playerID) throws Exception;
+    /**
+     * @param partyID
+     * @param playerID
+     * */
+    void removePlayerFromParty(int partyID, int playerID) throws SQLException;
 
-    int checkUserNameAndEmail(String username, String email) throws Exception;
+    /**
+     * @param username
+     * @param email
+     * @return
+     * */
+    int checkUserNameAndEmail(String username, String email) throws SQLException;
 
-    boolean doesPartyExist(int partyID) throws Exception;
+    /**
+     * @param partyID
+     * @return
+     * */
+    boolean doesPartyExist(int partyID) throws SQLException;
 
-    int doesPlayerExist(String username) throws Exception;
+    /**
+     * @param username
+     * @return
+     * */
+    int doesPlayerExist(String username) throws SQLException;
 
-    boolean isPlayerInParty(int playerID) throws Exception;
+    /**
+     * @param playerID
+     * @return
+     * */
+    boolean isPlayerInParty(int playerID) throws SQLException;
+
     //String content, int type
-    void addInvite(int senderID, int receiverID, int partyID) throws Exception;
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param partyID
+     * */
+    void addInvite(int senderID, int receiverID, int partyID) throws SQLException;
 
-    void removeInvite(int senderID, int receiverID, int partyID) throws Exception;
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param partyID
+     * */
+    void removeInvite(int senderID, int receiverID, int partyID) throws SQLException;
 
-    void add_Friend(int user_Id, int friend_Id);
+    /**
+     * @param userId
+     * @param friendId
+     * */
+    void addFriend(int userId, int friendId);
 }

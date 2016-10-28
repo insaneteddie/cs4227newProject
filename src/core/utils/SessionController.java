@@ -1,7 +1,5 @@
 package core.utils;
 
-import core.session.SessionInformation;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +33,17 @@ public class SessionController {
         return sessionController;
     }
 
+    /**
+     * @param commandName
+     * */
     public void executeCommand(String commandName){
         getCommand(commandName).execute();
     }
 
-    public void executeCommand(String commandName, int id){
-        getCommand(commandName).execute();
-    }
-
+    /**
+     * @param commandName
+     * @return
+     * */
     private ICommand getCommand(String commandName){
         for(Object c : commands){
             if(((ICommand)c).getCommandName().matches(commandName)){
@@ -52,12 +53,18 @@ public class SessionController {
         return null;
     }
 
+    /**
+     * @param command
+     * */
     public void addCommand(ICommand command){
         if(commands != null){
             commands.add(command);
         }
     }
 
+    /**
+     * @param commandName
+     * */
     public void removeCommand(String commandName){
         for(Object c : commands){
             if(((ICommand)c).getCommandName().matches(commandName)){

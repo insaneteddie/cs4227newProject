@@ -7,19 +7,25 @@ import core.session.SessionInformation;
  */
 public class FriendInviteSendCommand implements ICommand {
     private final String name;
-    private int player_id;
+    private int playerId;
 
+    /**
+     * @param name
+     * */
     public FriendInviteSendCommand(String name){
         this.name = name;
     }
     @Override
     public void execute() {
-        SessionInformation.getInstance().sendInvite(player_id);
-        player_id = 0;
+        SessionInformation.getInstance().sendInvite(playerId);
+        playerId = 0;
     }
 
-    public void execute(int player_id){
-        this.player_id = player_id;
+    /**
+     * @param playerId
+     * */
+    public void execute(int playerId){
+        this.playerId = playerId;
         execute();
     }
     @Override

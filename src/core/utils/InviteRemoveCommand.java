@@ -9,6 +9,9 @@ public class InviteRemoveCommand implements ICommand {
     private final String name;
     private int userId;
 
+    /**
+     * @param name
+     * */
     public InviteRemoveCommand(String name){
         this.name = name;
     }
@@ -18,6 +21,9 @@ public class InviteRemoveCommand implements ICommand {
         userId = 0;
     }
 
+    /**
+     * @param userId
+     * */
     public void execute(int userId){
         this.userId = userId;
         execute();

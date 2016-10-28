@@ -7,8 +7,10 @@ import core.session.SessionInformation;
  */
 public class PlayerLogOutCommand implements ICommand{
     private final String name;
-    private SessionInformation sessionInformation;
 
+    /**
+     * @param name
+     * */
     public PlayerLogOutCommand(String name){
         this.name = name;
     }
@@ -18,6 +20,9 @@ public class PlayerLogOutCommand implements ICommand{
         SessionInformation.getInstance().logPlayerOut();
     }
 
+    /**
+     * @return
+     * */
     @Override
     public String getCommandName() {
         return name;

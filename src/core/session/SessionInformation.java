@@ -164,7 +164,7 @@ public class SessionInformation {
 
     public void getPlayerFriendList() {
         try {
-            ArrayList<Integer> friends = database.getPlayerFriendList(player.getId());
+            List<Integer> friends = database.getPlayerFriendList(player.getId());
             if (!friends.isEmpty()) {
                 for (int i = 0; i < friends.size(); i++) {
                     player.addFriend(friends.get(i));
@@ -177,7 +177,7 @@ public class SessionInformation {
 
     public void getPlayerInvites() {
         try {
-            ArrayList<Integer[]> invites = database.getPlayerInvites(player.getId());
+            List<Integer[]> invites = database.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
                     Message newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
@@ -191,7 +191,7 @@ public class SessionInformation {
 
     public void getPartyDetails() {
         try {
-            ArrayList<Integer> partyDetails = database.getPartyDetails(party.getId(), player.getId());
+            List<Integer> partyDetails = database.getPartyDetails(party.getId(), player.getId());
             
             player.clearPartyInformation();
             player.updatePartyInformation(partyDetails);

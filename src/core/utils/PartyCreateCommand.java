@@ -8,6 +8,9 @@ import core.session.SessionInformation;
 public class PartyCreateCommand implements ICommand {
     private final String name;
 
+    /**
+     * @param name
+     * */
     public PartyCreateCommand(String name){
         this.name = name;
     }
@@ -17,6 +20,9 @@ public class PartyCreateCommand implements ICommand {
         SessionInformation.getInstance().createParty();
     }
 
+    /**
+     * @return
+     * */
     @Override
     public String getCommandName() {
         return name;

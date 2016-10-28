@@ -7,22 +7,31 @@ import core.session.SessionInformation;
  */
 public class PartyMemberRemoveCommand implements ICommand{
     private final String name;
-    private int member_id;
+    private int memberId;
 
+    /**
+     * @param name
+     * */
     public PartyMemberRemoveCommand(String name){
         this.name = name;
     }
     @Override
     public void execute() {
-        SessionInformation.getInstance().removePlayerFromParty(member_id);
-        member_id = 0;
+        SessionInformation.getInstance().removePlayerFromParty(memberId);
+        memberId = 0;
     }
 
-    public void execute(int member_id){
-        this.member_id = member_id;
+    /**
+     * @param memberId
+     * */
+    public void execute(int memberId){
+        this.memberId = memberId;
         execute();
     }
 
+    /**
+     * @return
+     * */
     @Override
     public String getCommandName() {
         return name;

@@ -5,12 +5,23 @@ package message;
  */
 public class FriendMessageFactory extends MessageFactory
 {
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param message
+     * @return
+     * */
     public Message createMessage(int senderID, int receiverID, String message)
     {
         return new FriendMessage(senderID, receiverID, message);
     }
 
-
+    /**
+     * @param senderID
+     * @param receiverID
+     * @param partyID
+     * @return
+     * */
     public Message createInvite(int senderID, int receiverID, int partyID) {
         return null;
     }
