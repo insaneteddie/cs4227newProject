@@ -1,7 +1,6 @@
 package core.interceptor;
 
-import database.DatabaseMarshalRequest;
-import database.DatabaseUnmarshalRequest;
+import database.DatabaseRequest;
 
 /**
  * Created by David on 22/10/2016
@@ -14,6 +13,5 @@ import database.DatabaseUnmarshalRequest;
 
 public interface DatabaseRequestInterceptor {
 
-    void onDatabaseMarshalRequest(DatabaseMarshalRequest context);
-    void onDatabaseUnmarshalRequest(DatabaseUnmarshalRequest context);
+    void onDatabaseRequestReceived(DatabaseRequest context);
 }

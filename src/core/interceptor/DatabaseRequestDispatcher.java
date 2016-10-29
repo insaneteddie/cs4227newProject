@@ -1,7 +1,6 @@
 package core.interceptor;
 
-import database.DatabaseMarshalRequest;
-import database.DatabaseUnmarshalRequest;
+import database.DatabaseRequest;
 
 import java.util.ArrayList;
 
@@ -43,27 +42,15 @@ public class DatabaseRequestDispatcher implements DatabaseRequestInterceptor {
         interceptors.remove(i);
     }
 
+
     @Override
-    public void onDatabaseMarshalRequest(DatabaseMarshalRequest context) {
+    public void onDatabaseRequestReceived(DatabaseRequest context) {
         ArrayList interceptorList;
         synchronized(this){
             interceptorList = (ArrayList) this.interceptors.clone();
         }
         for(Object i : interceptorList){
-            ((DatabaseRequestInterceptor)i).onDatabaseMarshalRequest(context);
+            ((DatabaseRequestInterceptor)i).onDatabaseRequestReceived(context);
         }
-
-    }
-
-    @Override
-    public void onDatabaseUnmarshalRequest(DatabaseUnmarshalRequest context) {
-        ArrayList interceptorsList;
-        synchronized(this){
-            interceptorsList = (ArrayList) this.interceptors.clone();
-        }
-        for(Object i : interceptorsList){
-            ((DatabaseRequestInterceptor)i).onDatabaseUnmarshalRequest(context);
-        }
-
     }
 }
