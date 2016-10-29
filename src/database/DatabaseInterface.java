@@ -18,89 +18,89 @@ public interface DatabaseInterface {
      * @param password
      * @return
      * */
-    boolean canLogin(String username, String password) throws SQLException;
+    boolean canLogin(String username, String password);
 
     /* References the local Player class */
     /**
      * @param username
      * @return
      * */
-    String getPlayerDetails(String username) throws SQLException;
+    String getPlayerDetails(String username);
 
     /**
      * @param playerID
      * @return
      * */
-    List<Integer> getPlayerFriendList(int playerID) throws SQLException;
+    List<Integer> getPlayerFriendList(int playerID);
 
     /**
      * @param playerID
      * @return
      * */
-    List<Integer[]> getPlayerInvites(int playerID) throws SQLException;
+    List<Integer[]> getPlayerInvites(int playerID);
 
     /**
      * @param username
      * @param password
      * @param email
      * */
-    void createPlayer(String username, String password, String email) throws SQLException;
+    void createPlayer(String username, String password, String email);
 
     /**
      * @param partyLeaderID
      * @return
      * */
-    int createParty(int partyLeaderID) throws SQLException;
+    int createParty(int partyLeaderID);
 
     /**
      * @param partyID
      * @param playerID
      * @return
      * */
-    List<Integer> getPartyDetails(int partyID, int playerID) throws SQLException;
+    List<Integer> getPartyDetails(int partyID, int playerID);
 
     /**
      * @param partyID
      * @return
      * */
-    boolean isPartyFull(int partyID) throws SQLException;
+    boolean isPartyFull(int partyID);
 
     /**
      * @param playerID
      * @param partyID
      * */
-    void addPlayerToParty(int playerID, int partyID) throws SQLException;
+    void addPlayerToParty(int playerID, int partyID);
 
     /**
      * @param partyID
      * @param playerID
      * */
-    void removePlayerFromParty(int partyID, int playerID) throws SQLException;
+    void removePlayerFromParty(int partyID, int playerID);
 
     /**
      * @param username
      * @param email
      * @return
      * */
-    int checkUserNameAndEmail(String username, String email) throws SQLException;
+    int checkUserNameAndEmail(String username, String email);
 
     /**
      * @param partyID
      * @return
      * */
-    boolean doesPartyExist(int partyID) throws SQLException;
+    boolean doesPartyExist(int partyID);
 
     /**
      * @param username
      * @return
      * */
-    int doesPlayerExist(String username) throws SQLException;
+    int doesPlayerExist(String username);
 
     /**
      * @param playerID
      * @return
      * */
-    boolean isPlayerInParty(int playerID) throws SQLException;
+    boolean isPlayerInParty(int playerID);
 
     //String content, int type
     /**
@@ -108,14 +108,14 @@ public interface DatabaseInterface {
      * @param receiverID
      * @param partyID
      * */
-    void addInvite(int senderID, int receiverID, int partyID) throws SQLException;
+    void addInvite(int senderID, int receiverID, int partyID);
 
     /**
      * @param senderID
      * @param receiverID
      * @param partyID
      * */
-    void removeInvite(int senderID, int receiverID, int partyID) throws SQLException;
+    void removeInvite(int senderID, int receiverID, int partyID);
 
     /**
      * @param userId
