@@ -28,12 +28,12 @@ class SqlDatabase {
     /** no-args constructor */
     public SqlDatabase()
     {
+        logger = new Log(getClass().getName());
         jdbcDriver = "com.mysql.jdbc.Driver";
         dbUrl = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
         user = "admin";
         pass = "teamawesome";
         connectToDb();
-        logger = new Log(getClass().getName());
     }
 
     /**
@@ -66,11 +66,9 @@ class SqlDatabase {
             //connection
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException|SQLException e) {
             logger.logWarning(e);
-        } catch (SQLException se) {
-            logger.logWarning(se);
-        } finally {
+        }  finally {
             try {
                 if (connection != null)
                     connection.close();
