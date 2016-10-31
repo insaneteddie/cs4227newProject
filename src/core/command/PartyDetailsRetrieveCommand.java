@@ -1,23 +1,24 @@
-package core.utils;
+package core.command;
 
+import core.command.ICommand;
 import core.session.SessionInformation;
 
 /**
  * Created by David on 23/10/2016.
  */
-public class PartyLeaveCommand implements ICommand {
+public class PartyDetailsRetrieveCommand implements ICommand {
     private final String name;
 
     /**
      * @param name
      * */
-    public PartyLeaveCommand(String name){
-        this.name  = name;
+    public PartyDetailsRetrieveCommand(String name){
+        this.name = name;
     }
 
     @Override
     public void execute() {
-        SessionInformation.getInstance().leaveParty();
+        SessionInformation.getInstance().getPartyDetails();
     }
 
     /**

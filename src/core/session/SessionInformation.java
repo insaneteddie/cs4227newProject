@@ -8,6 +8,7 @@
 **/
 package core.session;
 
+import core.command.*;
 import core.user.Player;
 import core.utils.*;
 import database.DatabaseAdapter;
