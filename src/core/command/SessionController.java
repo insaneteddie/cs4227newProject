@@ -1,4 +1,4 @@
-package core.utils;
+package core.command;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package core.utils;
+package core.command;
 
 /**
  * Created by David on 22/10/2016.

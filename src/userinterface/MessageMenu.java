@@ -9,7 +9,7 @@
 package userinterface;
 
 import core.utils.Log;
-import core.utils.SessionController;
+import core.command.SessionController;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
