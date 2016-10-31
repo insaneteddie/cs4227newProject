@@ -41,7 +41,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean canLogin(String username, String password) throws SQLException {
+    public boolean canLogin(String username, String password) {
         try {
             file = new File(USER_DETAILS_FILE);
             if (file.exists()) {
@@ -70,7 +70,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public String getPlayerDetails(String username) throws SQLException {
+    public String getPlayerDetails(String username) {
         try {
             file = new File(USER_DETAILS_FILE);
             fileReader = new Scanner(file);
@@ -97,7 +97,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer> getPlayerFriendList(int playerID) throws SQLException {
+    public List<Integer> getPlayerFriendList(int playerID) {
         try {
             String pidStr = Integer.toString(playerID);
             List<Integer> friendIDs = new ArrayList<>();
@@ -126,7 +126,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer[]> getPlayerInvites(int playerID) throws SQLException {
+    public List<Integer[]> getPlayerInvites(int playerID) {
         try {
             ArrayList<Integer[]> idList = new ArrayList<>();
             Integer[] ids = new Integer[2];
@@ -157,7 +157,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param email
      * */
     @Override
-    public void createPlayer(String username, String password, String email) throws SQLException {
+    public void createPlayer(String username, String password, String email) {
         file = new File(USER_DETAILS_FILE);
         List<String> userDetails = fileToList();
         String playerDetails = "";
@@ -186,7 +186,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int createParty(int partyLeaderID) throws SQLException {
+    public int createParty(int partyLeaderID) {
         file = new File(PARTY_DETAILS_FILE);
         List<String> parties = fileToList();
         String newParty = "";
@@ -219,7 +219,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public List<Integer> getPartyDetails(int partyID, int playerID) throws SQLException {
+    public List<Integer> getPartyDetails(int partyID, int playerID){
         try {
             file = new File(PARTY_DETAILS_FILE);
             fileReader = new Scanner(file);
@@ -249,7 +249,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean isPartyFull(int partyID) throws SQLException {
+    public boolean isPartyFull(int partyID) {
         try {
             boolean partyFull = true;
             file = new File(PARTY_DETAILS_FILE);
@@ -275,7 +275,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param playerID
      * */
     @Override
-    public void addPlayerToParty(int playerID, int partyID) throws SQLException {
+    public void addPlayerToParty(int playerID, int partyID) {
         file = new File(PARTY_DETAILS_FILE);
         List<String> parties = fileToList();
     
@@ -298,7 +298,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param playerID
      * */
     @Override
-    public void removePlayerFromParty(int partyID, int playerID) throws SQLException {
+    public void removePlayerFromParty(int partyID, int playerID) {
         file = new File(PARTY_DETAILS_FILE);
         List<String> parties = fileToList();
 
@@ -329,7 +329,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int checkUserNameAndEmail(String username, String email) throws SQLException {
+    public int checkUserNameAndEmail(String username, String email) {
         try {
             file = new File(USER_DETAILS_FILE);
             fileReader = new Scanner(file);
@@ -360,7 +360,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean doesPartyExist(int partyID) throws SQLException {
+    public boolean doesPartyExist(int partyID) {
         file = new File(PARTY_DETAILS_FILE);
         try {
             fileReader = new Scanner(file);
@@ -385,7 +385,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public int doesPlayerExist(String username) throws SQLException {
+    public int doesPlayerExist(String username) {
         try {
             file = new File(USER_DETAILS_FILE);
             fileReader = new Scanner(file);
@@ -411,7 +411,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @return
      * */
     @Override
-    public boolean isPlayerInParty(int playerID) throws SQLException {
+    public boolean isPlayerInParty(int playerID) {
         try {
             boolean isInParty = false;
             file = new File(PARTY_DETAILS_FILE);
@@ -441,7 +441,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param partyID
      * */
     @Override  //,String content, int type
-    public void addInvite(int senderID, int receiverID, int partyID) throws SQLException {
+    public void addInvite(int senderID, int receiverID, int partyID) {
         try {
             file = new File(INVITE_DETAILS_FILE);
             String newInvite = Integer.toString(senderID) + "," + receiverID + "," + partyID;
@@ -463,7 +463,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param partyID
      * */
     @Override
-    public void removeInvite(int senderID, int receiverID, int partyID) throws SQLException {
+    public void removeInvite(int senderID, int receiverID, int partyID) {
         file = new File(INVITE_DETAILS_FILE);
         List<String> invites = fileToList();
     
