@@ -10,7 +10,7 @@ package core.session;
 
 import core.command.*;
 import core.user.Player;
-import core.utils.*;
+import core.utils.Log;
 import database.DatabaseAdapter;
 import database.DatabaseInterface;
 import message.Invite;
