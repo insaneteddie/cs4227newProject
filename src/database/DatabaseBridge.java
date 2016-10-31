@@ -6,13 +6,13 @@ import java.util.List;
 /**
  * Created by s_harte CS4227 Awesome Gaming  on 10/20/2016.
  */
-public class DatabaseAdapter implements DatabaseInterface {
+public class DatabaseBridge implements DatabaseInterface {
 
 
     private final SqlDatabase sqlDB;
 
     /** k im not sure about this....*/
-    public DatabaseAdapter()
+    public DatabaseBridge()
     {
         sqlDB = new SqlDatabase();
 
@@ -25,7 +25,7 @@ public class DatabaseAdapter implements DatabaseInterface {
      * @param jdbcDriver
      * */
     @SuppressWarnings("unused")
-    public DatabaseAdapter(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
+    public DatabaseBridge(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
         sqlDB = new SqlDatabase(databaseURL,dbUser,dbPass,jdbcDriver);
     }
@@ -41,17 +41,17 @@ public class DatabaseAdapter implements DatabaseInterface {
     }
     //this needs to be edited... seems a bit pointless to pass in the username to get the username
     /**
-     * @param username
-     * @return
+     * @param username Looks up user table with user_Name
+     * @return String with user_Id,user_Email,user_Bio
      * */
     @Override
     public String getPlayerDetails(String username) {
-        return sqlDB.getPlayerName(sqlDB.getUserId(username));
+        return sqlDB.get_Player_Details(username);
     }
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID int identifier to use for lookup
+     * @return Integer List containing user_Ids for friends
      * */
     @Override
     public List<Integer> getPlayerFriendList(int playerID) {
@@ -59,28 +59,28 @@ public class DatabaseAdapter implements DatabaseInterface {
     }
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID uses playerId to look up invites table
+     * @return Integer List of invite ID's
      * */
     @Override
     public List<Integer[]> getPlayerInvites(int playerID){
         return sqlDB.getInvites(playerID);
     }
 
-    /**
-     * @param username
-     * @param password
-     * @param email
+    /**Creates a new user in the userTable
+     * @param username String Name to add to table
+     * @param password String pass to add to table
+     * @param email String email to add to table
      * */
     @Override
     public void createPlayer(String username, String password, String email){
             sqlDB.addUser(username,password,email);
     }
 
-    //returns party_Id or 0
+
     /**
-     * @param partyLeaderID
-     * @return
+     * @param partyLeaderID takes party creator Id as Leader
+     * @return Int of partyId
      * */
     @Override
     public int createParty(int partyLeaderID) {
@@ -88,9 +88,9 @@ public class DatabaseAdapter implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @param playerID
-     * @return
+     * @param partyID Used to lookup parties Table
+     * @param playerID used to lookup parties table
+     * @return Integer List of party member Id's
      * */
     @Override
     public List<Integer> getPartyDetails(int partyID, int playerID) {
@@ -99,7 +99,7 @@ public class DatabaseAdapter implements DatabaseInterface {
 
     /**
      * @param partyID
-     * @return
+     * @return boolean true if full false if not
      * */
     @Override
     public boolean isPartyFull(int partyID) {

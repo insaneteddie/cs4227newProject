@@ -10,7 +10,7 @@ package core.session;
 
 import core.user.Player;
 import core.utils.*;
-import database.DatabaseAdapter;
+import database.DatabaseBridge;
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;
@@ -31,7 +31,8 @@ public class SessionInformation {
     private Player player = null;
     private Party party;
     private final Log log = new Log(getClass().getName());
-    
+    private DatabaseBridge sqlDB = new DatabaseBridge();
+
     private SessionInformation() {
         setUpController();
         setPlayer();
@@ -82,9 +83,9 @@ public class SessionInformation {
      * */
     public boolean canUserLogin(String username, String password) {
         boolean canLogin = false;
-        DatabaseAdapter dbA = new DatabaseAdapter();
+
         try {
-            canLogin = dbA.canLogin(username,password);
+            canLogin = sqlDB.canLogin(username,password);
             if (canLogin) {
                 getPlayerDetails(username);
                 getPlayerFriendList();
@@ -105,7 +106,7 @@ public class SessionInformation {
         boolean exists = false;
 
         try {
-            if (database.doesPlayerExist(username) != 0) {
+            if (sqlDB.doesPlayerExist(username) != 0) {
                 exists = true;
             }
         } catch (Exception e) {
@@ -124,7 +125,7 @@ public class SessionInformation {
         int existsType = -1;
 
         try {
-            existsType = database.checkUserNameAndEmail(username, email);
+            existsType = sqlDB.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
             log.logWarning(e, "Error validating username/email: ");
         }
@@ -139,9 +140,7 @@ public class SessionInformation {
      * */
     public void createPlayer(String username, String password, String email) {
         try {
-
-            DatabaseAdapter dbA = new DatabaseAdapter();
-            dbA.createPlayer(username,password,email);
+            sqlDB.createPlayer(username,password,email);
         } catch (Exception e) {
             log.logWarning(e, "Error creating player: ");
         }
@@ -152,19 +151,21 @@ public class SessionInformation {
      * */
     public void getPlayerDetails(String username) {
         try {
-            String[] details = database.getPlayerDetails(username).split(",");
+
+            String[] details = sqlDB.getPlayerDetails(username).split(",");
 
             this.player.setId(Integer.parseInt(details[0]));
-            this.player.setName(details[1]);
-            this.player.setEmail(details[2]);
+            this.player.setName(username);
+            this.player.setEmail(details[1]);
+            //this.player.setEmail(details[2]);
         } catch (Exception e) {
-            log.logWarning(e, "Error getting player details: ");
+            log.logWarning(e, "Error getting player details: "+e.getMessage());
         }
     }
 
     public void getPlayerFriendList() {
-        try {
-            List<Integer> friends = database.getPlayerFriendList(player.getId());
+        try {//database.getPlayerFriendList
+            List<Integer> friends = sqlDB.getPlayerFriendList(player.getId());
             if (!friends.isEmpty()) {
                 for (int i = 0; i < friends.size(); i++) {
                     player.addFriend(friends.get(i));
@@ -176,8 +177,8 @@ public class SessionInformation {
     }
 
     public void getPlayerInvites() {
-        try {
-            List<Integer[]> invites = database.getPlayerInvites(player.getId());
+        try {//database
+            List<Integer[]> invites = sqlDB.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
                     Message newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
@@ -191,7 +192,7 @@ public class SessionInformation {
 
     public void getPartyDetails() {
         try {
-            List<Integer> partyDetails = database.getPartyDetails(party.getId(), player.getId());
+            List<Integer> partyDetails = sqlDB.getPartyDetails(party.getId(), player.getId());
             
             player.clearPartyInformation();
             player.updatePartyInformation(partyDetails);
