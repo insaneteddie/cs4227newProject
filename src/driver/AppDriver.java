@@ -1,5 +1,8 @@
 package driver;
 
+import core.interceptor.DatabaseRequestDispatcher;
+import core.interceptor.DatabaseRequestInterceptor;
+import database.DatabaseRequest;
 import userinterface.StartUpUI;
 
 /**
@@ -21,5 +24,14 @@ public class AppDriver {
         /* Main: Boots User Interface */
         StartUpUI startUp = new StartUpUI();
         startUp.run();
+
+        DatabaseRequestInterceptor interceptor = new DatabaseRequestInterceptor() {
+            @Override
+            public void onDatabaseRequestReceived(DatabaseRequest context) {
+                context.getRequest();
+            }
+        };
+
+        DatabaseRequestDispatcher.getInstance().registerDatabaseRequestInterceptor(interceptor);
     }
 }

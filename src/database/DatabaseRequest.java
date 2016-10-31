@@ -5,5 +5,5 @@ package database;
  */
 public interface DatabaseRequest {
 
-    void writeMessage(String message);
+    String getRequest();
 }
