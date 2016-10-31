@@ -25,6 +25,9 @@ public class AppDriver {
         StartUpUI startUp = new StartUpUI();
         startUp.run();
 
+        /*
+            creation of the interceptor and registration of the interceptor to the dispatcher (prob go somewhere else)
+         */
         DatabaseRequestInterceptor interceptor = new DatabaseRequestInterceptor() {
             @Override
             public void onDatabaseRequestReceived(DatabaseRequest context) {

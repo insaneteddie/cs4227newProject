@@ -7,7 +7,7 @@ import database.DatabaseRequest;
  *
  * Modified by Cian Bolster on 29/10/2016.
  *
- * Interface for the DatabaseRequestDispatcher class that defines the takeAction method
+ * Interface for the DatabaseRequestDispatcher class that defines the onDatabaseRequestReceived() method
  */
 
 

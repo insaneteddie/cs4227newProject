@@ -21,6 +21,9 @@ public class DatabaseRequestDispatcher implements DatabaseRequestInterceptor {
         interceptors = new ArrayList();
     }
 
+
+        /*method that returns the current instance of the dispatcher and creates one if none exist.*/
+
     public static DatabaseRequestDispatcher getInstance(){
         if(dispatcher == null){
             dispatcher = new DatabaseRequestDispatcher();
