@@ -8,6 +8,8 @@
 **/
 package database;
 
+import core.interceptor.ConcreteLoggingRequest;
+import core.interceptor.LogDispatcher;
 import core.utils.Log;
 
 import java.io.*;
@@ -348,7 +350,8 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return 2;
         }catch (FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteLoggingRequest("WARNING", e));
         }
         return 2;
     }

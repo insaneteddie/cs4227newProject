@@ -7,5 +7,7 @@ package core.interceptor;
  */
 public interface LoggingRequest {
 
-    String getRequest();
+    String getLevel();
+    Exception getException();
+    String getStringMessage();
 }

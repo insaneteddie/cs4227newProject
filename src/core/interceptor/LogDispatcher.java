@@ -32,14 +32,14 @@ public class LogDispatcher implements LogInterceptor {
     /**
      * @param i
      * */
-    public synchronized void registerDatabaseRequestInterceptor(LogInterceptor i){
+    public synchronized void registerLogRequestInterceptor(LogInterceptor i){
         interceptors.add(i);
     }
 
     /**
      * @param i
      * */
-    public synchronized void removeDatabaseRequestInterceptor(LogInterceptor i){
+    public synchronized void removeLogRequestInterceptor(LogInterceptor i){
         interceptors.remove(i);
     }
 

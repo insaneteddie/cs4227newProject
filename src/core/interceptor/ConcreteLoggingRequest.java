@@ -16,7 +16,7 @@ public class ConcreteLoggingRequest implements LoggingRequest {
     }
 
     public ConcreteLoggingRequest(String level, Exception exception) {
-        this(level, exception, null);
+        this(level, exception, "");
     }
 
     public ConcreteLoggingRequest(String level, String message) {
