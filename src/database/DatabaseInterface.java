@@ -52,73 +52,73 @@ public interface DatabaseInterface {
     int createParty(int partyLeaderID);
 
     /**
-     * @param partyID
-     * @param playerID
-     * @return
+     * @param partyID int partyID to get details for
+     * @param playerID int player_Id to check narrow search criteria
+     * @return Integer list of friends user_Id's
      * */
     List<Integer> getPartyDetails(int partyID, int playerID);
 
     /**
-     * @param partyID
-     * @return
+     * @param partyID int party_ID to check is full
+     * @return boolean return if full true/false
      * */
     boolean isPartyFull(int partyID);
 
     /**
-     * @param playerID
-     * @param partyID
+     * @param playerID int player id to add to party
+     * @param partyID int party_ID to add user to
      * */
     void addPlayerToParty(int playerID, int partyID);
 
     /**
-     * @param partyID
-     * @param playerID
+     * @param partyID int party_Id to remove user from
+     * @param playerID int player_Id to remove from party
      * */
     void removePlayerFromParty(int partyID, int playerID);
 
     /**
-     * @param username
-     * @param email
-     * @return
+     * @param username string username to check
+     * @param email string email to check
+     * @return return int 0/1
      * */
     int checkUserNameAndEmail(String username, String email);
 
     /**
-     * @param partyID
-     * @return
+     * @param partyID party_Id to check if it exists
+     * @return return boolean if it does
      * */
     boolean doesPartyExist(int partyID);
 
     /**
-     * @param username
-     * @return
+     * @param username string username to check
+     * @return return in 0/1 if it exists
      * */
     int doesPlayerExist(String username);
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID int player_Id to check if in party
+     * @return boolean if in party/ or not
      * */
     boolean isPlayerInParty(int playerID);
 
     //String content, int type
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyID
+     * @param senderID int sender_Id too add to user_invites
+     * @param receiverID int receiver_Id to add to user_invites
+     * @param partyID int party_Id to add if party invite
      * */
     void addInvite(int senderID, int receiverID, int partyID);
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyID
+     * @param senderID int sender_Id to remove invite from
+     * @param receiverID int receiver_Id to remove invite
+     * @param partyID int party_Id to remove if party invite
      * */
     void removeInvite(int senderID, int receiverID, int partyID);
 
     /**
-     * @param userId
-     * @param friendId
+     * @param userId int userID to add friend for
+     * @param friendId int friend_Id to add as friend
      * */
     void addFriend(int userId, int friendId);
 }
