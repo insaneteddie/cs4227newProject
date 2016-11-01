@@ -1,23 +1,23 @@
-package core.utils;
+package core.command;
 
+import core.command.ICommand;
 import core.session.SessionInformation;
 
 /**
  * Created by David on 23/10/2016.
  */
-public class PartyDetailsRetrieveCommand implements ICommand {
+public class PlayerInvitesRetrieveCommand implements ICommand {
     private final String name;
 
     /**
      * @param name
      * */
-    public PartyDetailsRetrieveCommand(String name){
+    public PlayerInvitesRetrieveCommand(String name){
         this.name = name;
     }
-
     @Override
     public void execute() {
-        SessionInformation.getInstance().getPartyDetails();
+        SessionInformation.getInstance().getPlayerInvites();
     }
 
     /**

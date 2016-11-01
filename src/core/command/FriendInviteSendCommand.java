@@ -1,5 +1,6 @@
-package core.utils;
+package core.command;
 
+import core.command.ICommand;
 import core.session.SessionInformation;
 
 /**
