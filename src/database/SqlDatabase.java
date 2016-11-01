@@ -26,14 +26,14 @@ class SqlDatabase {
     private Log logger;
 
     /** no-args constructor */
-    public SqlDatabase()
+    SqlDatabase()
     {
         logger = new Log(getClass().getName());
         jdbcDriver = "com.mysql.jdbc.Driver";
         dbUrl = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
         user = "admin";
         pass = "teamawesome";
-        //connectToDb();
+
     }
 
     /**
@@ -42,13 +42,13 @@ class SqlDatabase {
      * @param dbPass pass for database
      * @param jdbcDriver jdbc driver
      * */
-    public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
+    SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
         this.jdbcDriver = jdbcDriver;
         dbUrl = databaseURL;
         user = dbUser;
         pass = dbPass;
-        //connectToDb();
+
     }
 
         //table name,columns *string is varchar, int is int.
@@ -65,7 +65,7 @@ class SqlDatabase {
      * @param userPass String pass to add
      * @param email String email address to add to table
      * */
-    public void addUser(String userName, String userPass, String email)
+    void addUser(String userName, String userPass, String email)
     {
         logger.logInfo("Attempting to Connect");
         logger.logInfo("Inserting records into the table....");
@@ -98,10 +98,10 @@ class SqlDatabase {
     }
     //method to add a friend we need to add this to the interface
     /**
-     * @param userId
-     * @param friendId
+     * @param userId int userID of person who is adding friend
+     * @param friendId int friend to be added's id
      * */
-    public void addFriend(int userId, int friendId)
+    void addFriend(int userId, int friendId)
     {
         logger.logInfo("Inserting records into the table...");
         try {
@@ -127,11 +127,11 @@ class SqlDatabase {
     }
     //checks the username and password from the users database
     /**
-     * @param userName
-     * @param userPass
+     * @param userName String username to check
+     * @param userPass String pass to check
      * @return boolean to allow/fail login
      * */
-    public boolean canLogin(String userName, String userPass)
+    boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
         logger.logInfo("Checking login details");
@@ -162,10 +162,10 @@ class SqlDatabase {
     }
     //needs testing too...
     /**
-     * @param userId
-     * @return
+     * @param userId userId to get username
+     * @return String username of user_Id
      * */
-    public String getPlayerName(int userId)
+    String getPlayerName(int userId)
     {
         String playerName = "";
         logger.logInfo("checking player details...");
@@ -177,7 +177,6 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
             playerName = res.getString("user_Name");
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
@@ -193,10 +192,10 @@ class SqlDatabase {
     }
     //haven't tested yet...
     /**
-     * @param userName
-     * @return
+     * @param userName String username to get userID of
+     * @return return user's user_ID
      * */
-    public int getUserId(String userName)
+    int getUserId(String userName)
     {
         int userId = 0;
         try {
@@ -208,8 +207,8 @@ class SqlDatabase {
             prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
             userId = res.getInt("user_Id");
+            System.out.println(userId);
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -225,11 +224,11 @@ class SqlDatabase {
 
     //check username,and email
     /**
-     * @param userName
-     * @param email
-     * @return
+     * @param userName string username to check
+     * @param email string email to check
+     * @return int 0/1 true/false
      * */
-    public int checkNameEmail(String userName, String email)
+    int checkNameEmail(String userName, String email)
     {
         int checker = 0;
         logger.logInfo("checking player details.");
@@ -241,20 +240,18 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,email);
-
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
+            prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         }finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -264,10 +261,10 @@ class SqlDatabase {
     }
     //is party full method
     /**
-     * @param partyId
-     * @return
+     * @param partyId int partyId to lookup
+     * @return boolean if full or not
      * */
-    public boolean isPartyFull(int partyId)
+    boolean isPartyFull(int partyId)
     {
         int toCheck = 0;
         try {
@@ -302,10 +299,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param userId
-     * @return
+     * @param userId userId to get friend of
+     * @return Integer list of friends Id
      * */
-    public List<Integer> getFriendsList(int userId)
+    List<Integer> getFriendsList(int userId)
     {
         List<Integer> friendsList = new ArrayList<>();
         try {
@@ -318,7 +315,6 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
             while(res.next())
             {
                 friendsList.add(res.getInt(iterator));
@@ -339,10 +335,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param playerId
-     * @return
+     * @param playerId takes in int player/userId to select from table
+     * @return Integer list of friends user_IDs
      * */
-    public List<Integer []> getInvites(int playerId)
+    List<Integer []> getInvites(int playerId)
     {
         List<Integer []> invitesList = new ArrayList<>();
         try {
@@ -377,12 +373,12 @@ class SqlDatabase {
     }
     //takes in party creator user_Id and sets it as leader_Id in the table :)
     /**
-     * @param leaderId
-     * @return
+     * @param leaderId takes in user_Id and sets it as leader of party
+     * @return int of partyId
      * */
-    public int createParty(int leaderId)
+    int createParty(int leaderId)
     {
-        int partyId = 0;
+        int partyId;
         logger.logInfo("Inserting records into the table...");
         try {
             Class.forName(jdbcDriver);
@@ -393,7 +389,12 @@ class SqlDatabase {
             prepStatement.setInt(1,leaderId);
             prepStatement.executeUpdate();
             prepStatement.close();
-            //partyId = 1;
+            prepStatement = connection.prepareStatement("SELECT party_Id from user_parties where leader_Id = ?");
+            prepStatement.setInt(1,leaderId);
+            ResultSet res = prepStatement.executeQuery();
+            partyId = res.getInt("party_Id");
+            prepStatement.close();
+
             return partyId;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -405,14 +406,14 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return partyId;
+        return 1;
     }
     //hacked a fix
     /**
-     * @param playerID
-     * @param partyID
+     * @param playerID int user_Id to lookup parties table
+     * @param partyID int party_Id narrow down lookup criteria
      * */
-    public void addPlayerToParty(int playerID, int partyID)
+    void addPlayerToParty(int playerID, int partyID)
     {
         try {
             Class.forName(jdbcDriver);
@@ -454,10 +455,10 @@ class SqlDatabase {
     }
     //sorted
     /**
-     * @param partyID
-     * @return
+     * @param partyID int party to check if exists
+     * @return return boolean if so
      * */
-    public boolean doesPartyExist(int partyID)
+    boolean doesPartyExist(int partyID)
     {
         try {
             Class.forName(jdbcDriver);
@@ -485,10 +486,10 @@ class SqlDatabase {
     }
     //should work
     /**
-     * @param username
-     * @return
+     * @param username username to check
+     * @return int 0/1 (true or false)
      * */
-    public int doesPlayerExist(String username)
+    int doesPlayerExist(String username)
     {
         int checker = 0;
         logger.logInfo("Checking player details");
@@ -500,18 +501,17 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
             ResultSet res = prepStatement.executeQuery();
-
+            prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -521,8 +521,8 @@ class SqlDatabase {
     }
     //the above mentioned hacked fix
     /**
-     * @param partyId
-     * @return
+     * @param partyId int partyId to check
+     * @return int null for check
      * */
     private int findNullFromParties(int partyId)
     {
@@ -560,10 +560,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param playerId
-     * @return
+     * @param playerId int user-ID to check if in party
+     * @return boolean returned / if or not
      * */
-    public boolean isInParty(int playerId)
+    boolean isInParty(int playerId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -593,11 +593,11 @@ class SqlDatabase {
     }
     //int typeID,String invite_content,
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyId
+     * @param senderID int sender_ID to add to table
+     * @param receiverID int user_ID to add to table
+     * @param partyId int party_Id to add to table
      * */
-    public void addInvite(int senderID, int receiverID, int partyId)
+    void addInvite(int senderID, int receiverID, int partyId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -626,11 +626,11 @@ class SqlDatabase {
     }
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param inviteId
+     * @param senderID int sender_Id to remove invite from
+     * @param receiverID int receiver_ID to remove from table
+     * @param inviteId int invite_id to remove from
      * */
-    public void removeInvite(int senderID, int receiverID, int inviteId)
+    void removeInvite(int senderID, int receiverID, int inviteId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -657,10 +657,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param partyID
-     * @param playerID
+     * @param partyID party_Id to remove from
+     * @param playerID player_ID to remove from
      * */
-    public void removePlayerFromParty(int partyID, int playerID)
+    void removePlayerFromParty(int partyID, int playerID)
     {
         try {
             Class.forName(jdbcDriver);
@@ -701,11 +701,11 @@ class SqlDatabase {
     }
 
     /**
-     * @param userId
-     * @param partyId
-     * @return
+     * @param userId int user_Id to check for
+     * @param partyId int party id to check
+     * @return int counter returned
      * */
-    public int findUserInParty(int userId, int partyId)
+    int findUserInParty(int userId, int partyId)
     {
         int counter = 0;
         try {
@@ -716,7 +716,7 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-
+            prepStatement.close();
             while(res.next())
             {
                 counter++;
@@ -725,7 +725,7 @@ class SqlDatabase {
                     return counter;
                 }
             }
-            prepStatement.close();
+
             counter = 0;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -745,7 +745,7 @@ class SqlDatabase {
      * @param playerID int for table lookup - use both to cut down on false positives
      * @return integer list of user_Ids in party
      * */
-    public List<Integer> getPartyDetails(int partyID, int playerID) {
+    List<Integer> getPartyDetails(int partyID, int playerID) {
         List<Integer> partyList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
@@ -756,17 +756,17 @@ class SqlDatabase {
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             while (res.next()) {
-                if(res.getInt(iterator)!= playerID)
+                if(res.getInt(iterator)!= playerID){
                 partyList.add(res.getInt(iterator));
-                iterator++;
+                iterator++;}
             }
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -779,9 +779,9 @@ class SqlDatabase {
      * @param userName String username to check on table
      * @return String with user_Id,user_Email,user_Bio
      */
-    public String get_Player_Details(String userName)
+    String getPlayerDetails(String userName)
     {
-        String user_details = "";
+        String userdetails = "";
 
         try {
             Class.forName(jdbcDriver);
@@ -794,12 +794,13 @@ class SqlDatabase {
 
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
-            String email,bio;
+            String email;
+            String bio;
             int id;
             email = res.getString("user_Email");
             bio = res.getString("user_Bio");
             id = res.getInt("user_Id");
-            user_details = id + "," + email + "," +bio;
+            userdetails = id + "," + email + "," +bio;
 
 
         } catch (SQLException|ClassNotFoundException e) {
@@ -811,6 +812,6 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return user_details;
+        return userdetails;
     }
 }
