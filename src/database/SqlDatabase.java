@@ -65,7 +65,7 @@ class SqlDatabase {
      * @param userPass String pass to add
      * @param email String email address to add to table
      * */
-    void addUser(String userName, String userPass, String email)
+    public void addUser(String userName, String userPass, String email)
     {
         logger.logInfo("Attempting to Connect");
         logger.logInfo("Inserting records into the table....");
@@ -88,7 +88,6 @@ class SqlDatabase {
             ce.getException();
         } finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -231,7 +230,7 @@ class SqlDatabase {
     int checkNameEmail(String userName, String email)
     {
         int checker = 0;
-        logger.logInfo("checking player details.");
+        logger.logInfo("checking player details...");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -241,18 +240,18 @@ class SqlDatabase {
             prepStatement.setString(1,userName);
             prepStatement.setString(2,email);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         }finally {
             try {
-                    connection.close();
+                connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
             }
@@ -492,7 +491,7 @@ class SqlDatabase {
     int doesPlayerExist(String username)
     {
         int checker = 0;
-        logger.logInfo("Checking player details");
+        logger.logInfo("Checking player details***");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -501,13 +500,13 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
@@ -793,17 +792,19 @@ class SqlDatabase {
             prepStatement.setString(1, userName);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             String email;
             String bio;
             int id;
+            id = res.getInt("user_Id");
             email = res.getString("user_Email");
             bio = res.getString("user_Bio");
-            id = res.getInt("user_Id");
+
             userdetails = id + "," + email + "," +bio;
 
-
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
+            logger.logInfo("testing is it here?");
             logger.logWarning(e);
         } finally {
             try {
