@@ -45,13 +45,13 @@ public class LogDispatcher implements LogInterceptor {
 
 
     @Override
-    public void onDatabaseRequestReceived(LoggingRequest context) {
+    public void onLogRequestReceived(LoggingRequest context) {
         ArrayList interceptorList;
         synchronized(this){
             interceptorList = (ArrayList) this.interceptors.clone();
         }
         for(Object i : interceptorList){
-            ((LogInterceptor)i).onDatabaseRequestReceived(context);
+            ((LogInterceptor)i).onLogRequestReceived(context);
         }
     }
 }

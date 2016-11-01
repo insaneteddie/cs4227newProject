@@ -30,7 +30,7 @@ public class AppDriver {
          */
         LogInterceptor interceptor = new LogInterceptor() {
             @Override
-            public void onDatabaseRequestReceived(LoggingRequest context) {
+            public void onLogRequestReceived(LoggingRequest context) {
                 context.getRequest();
             }
         };

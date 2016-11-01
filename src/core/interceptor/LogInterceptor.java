@@ -5,11 +5,11 @@ package core.interceptor;
  *
  * Modified by Cian Bolster on 29/10/2016.
  *
- * Interface for the LogDispatcher class that defines the onDatabaseRequestReceived() method
+ * Interface for the LogDispatcher class that defines the onLogRequestReceived() method
  */
 
 
 public interface LogInterceptor {
 
-    void onDatabaseRequestReceived(LoggingRequest context);
+    void onLogRequestReceived(LoggingRequest context);
 }
