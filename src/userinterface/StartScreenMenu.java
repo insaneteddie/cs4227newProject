@@ -175,7 +175,7 @@ public class StartScreenMenu extends Menu {
                             /* Checks if username and email are free to use */
                             int checkUsernameEmail = sessionInfo.checkUsernameEmail(username, email);
                             /* Username and email are free */
-                            if (checkUsernameEmail == 2) {
+                            if (checkUsernameEmail == 1) {
                                 sessionInfo.createPlayer(username, password, email);
                                 JOptionPane.showMessageDialog(null, "User created!");
                                 registerPanel.setVisible(false);
