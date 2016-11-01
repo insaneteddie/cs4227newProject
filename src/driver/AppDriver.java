@@ -1,8 +1,8 @@
 package driver;
 
-import core.interceptor.DatabaseRequestDispatcher;
-import core.interceptor.DatabaseRequestInterceptor;
-import database.DatabaseRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LogInterceptor;
+import core.interceptor.LoggingRequest;
 import userinterface.StartUpUI;
 
 /**
@@ -28,13 +28,13 @@ public class AppDriver {
         /*
             creation of the interceptor and registration of the interceptor to the dispatcher (prob go somewhere else)
          */
-        DatabaseRequestInterceptor interceptor = new DatabaseRequestInterceptor() {
+        LogInterceptor interceptor = new LogInterceptor() {
             @Override
-            public void onDatabaseRequestReceived(DatabaseRequest context) {
+            public void onDatabaseRequestReceived(LoggingRequest context) {
                 context.getRequest();
             }
         };
 
-        DatabaseRequestDispatcher.getInstance().registerDatabaseRequestInterceptor(interceptor);
+        LogDispatcher.getInstance().registerDatabaseRequestInterceptor(interceptor);
     }
 }
