@@ -10,13 +10,11 @@ package core.session;
 
 import core.command.*;
 import core.user.Player;
-<<<<<<< HEAD
+
 import core.utils.Log;
-import database.DatabaseAdapter;
-=======
-import core.utils.*;
+
 import database.DatabaseBridge;
->>>>>>> dbAdapter
+
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;
