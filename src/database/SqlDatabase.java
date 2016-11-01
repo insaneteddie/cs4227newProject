@@ -33,14 +33,14 @@ class SqlDatabase {
         dbUrl = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
         user = "admin";
         pass = "teamawesome";
-        connectToDb();
+        //connectToDb();
     }
 
     /**
-     * @param databaseURL
-     * @param dbUser
-     * @param dbPass
-     * @param jdbcDriver
+     * @param databaseURL Url of database to connect to
+     * @param dbUser username for database
+     * @param dbPass pass for database
+     * @param jdbcDriver jdbc driver
      * */
     public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
@@ -48,39 +48,11 @@ class SqlDatabase {
         dbUrl = databaseURL;
         user = dbUser;
         pass = dbPass;
-        connectToDb();
+        //connectToDb();
     }
 
-    //String user,String pass - don't think its needed
-    private void connectToDb()
-    {
-        //initialise to null
-        connection = null;
-        statement = null;
-
-        try {
-            //Register JDBC driver
-            Class.forName(jdbcDriver);
-
-            logger.logInfo("Attempting to Connect");
-            //connection
-            connection = DriverManager.getConnection(dbUrl, user, pass);
-
-        } catch (ClassNotFoundException|SQLException e) {
-            logger.logWarning(e);
-        }  finally {
-            try {
-                if (connection != null)
-                    connection.close();
-            } catch (SQLException se) {
-                logger.logWarning(se);
-            }
-        }//end finally
-
-    }//end of connection method
-
         //table name,columns *string is varchar, int is int.
-        // users, String table name,String user_Name, String user_Pass, String email.
+        // users,String user_Name, String user_Pass, String email,String user_Bio.
         // user_friends,int user_Id (from users table),int friend_Id from users.
         // user_messages.
         // user_games.
@@ -89,9 +61,9 @@ class SqlDatabase {
 
     //add a user to the user table should look at hash tables.
     /**
-     * @param userName
-     * @param userPass
-     * @param email
+     * @param userName String username to add
+     * @param userPass String pass to add
+     * @param email String email address to add to table
      * */
     public void addUser(String userName, String userPass, String email)
     {
@@ -136,7 +108,7 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends (id, user_Id, friend_Id) VALUES( ?, ?)");
+            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends ( user_Id, friend_Id) VALUES( ?, ?)");
             prepStatement.setInt(1,userId);
             prepStatement.setInt(2,friendId);
 
@@ -157,12 +129,12 @@ class SqlDatabase {
     /**
      * @param userName
      * @param userPass
-     * @return
+     * @return boolean to allow/fail login
      * */
     public boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
-        logger.logInfo("checking login details");
+        logger.logInfo("Checking login details");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -171,7 +143,10 @@ class SqlDatabase {
             prepStatement.setString(1,userName);
             prepStatement.setString(2,userPass);
             //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
-            canLogin = prepStatement.execute();
+
+            ResultSet res = prepStatement.executeQuery();
+            if(res.isBeforeFirst())
+                canLogin = true;
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -202,14 +177,14 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+            //prepStatement.close();
             playerName = res.getString("user_Name");
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
             }
@@ -233,14 +208,14 @@ class SqlDatabase {
             prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+            //prepStatement.close();
             userId = res.getInt("user_Id");
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
             }
@@ -268,13 +243,13 @@ class SqlDatabase {
             prepStatement.setString(2,email);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+            //prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         }finally {
@@ -294,6 +269,7 @@ class SqlDatabase {
      * */
     public boolean isPartyFull(int partyId)
     {
+        int toCheck = 0;
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -303,13 +279,15 @@ class SqlDatabase {
             prepStatement.setInt(1, partyId);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             while (res.next())
             {
+                int temp = res.getInt(toCheck);
                 if (res.wasNull()) {
-                    return false;
+                    toCheck++;
                 }
             }
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
@@ -320,7 +298,7 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return true;
+        return toCheck <= 0;
     }
 
     /**
@@ -340,12 +318,13 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+            //prepStatement.close();
             while(res.next())
             {
                 friendsList.add(res.getInt(iterator));
                 iterator++;
             }
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
@@ -414,7 +393,7 @@ class SqlDatabase {
             prepStatement.setInt(1,leaderId);
             prepStatement.executeUpdate();
             prepStatement.close();
-            partyId = 1;
+            //partyId = 1;
             return partyId;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -521,13 +500,13 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
@@ -737,7 +716,7 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             while(res.next())
             {
                 counter++;
@@ -746,6 +725,7 @@ class SqlDatabase {
                     return counter;
                 }
             }
+            prepStatement.close();
             counter = 0;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -761,9 +741,9 @@ class SqlDatabase {
     }
 
     /**
-     * @param partyID
-     * @param playerID
-     * @return
+     * @param partyID int for looking up table - use both to cut down on false positives
+     * @param playerID int for table lookup - use both to cut down on false positives
+     * @return integer list of user_Ids in party
      * */
     public List<Integer> getPartyDetails(int partyID, int playerID) {
         List<Integer> partyList = new ArrayList<>();
@@ -793,5 +773,44 @@ class SqlDatabase {
             }
         }
         return partyList;
+    }
+
+    /**
+     * @param userName String username to check on table
+     * @return String with user_Id,user_Email,user_Bio
+     */
+    public String get_Player_Details(String userName)
+    {
+        String user_details = "";
+
+        try {
+            Class.forName(jdbcDriver);
+
+            connection = DriverManager.getConnection(dbUrl, user, pass);
+
+            statement = connection.createStatement();
+            PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id,user_Email,user_Bio FROM users WHERE user_Name = ?");
+            prepStatement.setString(1, userName);
+
+            ResultSet res = prepStatement.executeQuery();
+            prepStatement.close();
+            String email,bio;
+            int id;
+            email = res.getString("user_Email");
+            bio = res.getString("user_Bio");
+            id = res.getInt("user_Id");
+            user_details = id + "," + email + "," +bio;
+
+
+        } catch (SQLException|ClassNotFoundException e) {
+            logger.logWarning(e);
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException se) {
+                logger.logWarning(se);
+            }
+        }
+        return user_details;
     }
 }
