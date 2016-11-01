@@ -339,8 +339,8 @@ class SqlDatabase {
     }
 
     /**
-     * @param playerId
-     * @return
+     * @param playerId takes in int player/userId to select from table
+     * @return Integer list of friends user_IDs
      * */
     public List<Integer []> getInvites(int playerId)
     {
@@ -377,12 +377,12 @@ class SqlDatabase {
     }
     //takes in party creator user_Id and sets it as leader_Id in the table :)
     /**
-     * @param leaderId
-     * @return
+     * @param leaderId takes in user_Id and sets it as leader of party
+     * @return int of partyId
      * */
     public int createParty(int leaderId)
     {
-        int partyId = 0;
+        int partyId;
         logger.logInfo("Inserting records into the table...");
         try {
             Class.forName(jdbcDriver);
@@ -393,7 +393,12 @@ class SqlDatabase {
             prepStatement.setInt(1,leaderId);
             prepStatement.executeUpdate();
             prepStatement.close();
-            //partyId = 1;
+            prepStatement = connection.prepareStatement("SELECT party_Id from user_parties where leader_Id = ?");
+            prepStatement.setInt(1,leaderId);
+            ResultSet res = prepStatement.executeQuery();
+            partyId = res.getInt("party_Id");
+            prepStatement.close();
+
             return partyId;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -405,12 +410,12 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return partyId;
+        return 1;
     }
     //hacked a fix
     /**
-     * @param playerID
-     * @param partyID
+     * @param playerID int user_Id to lookup parties table
+     * @param partyID int party_Id narrow down lookup criteria
      * */
     public void addPlayerToParty(int playerID, int partyID)
     {

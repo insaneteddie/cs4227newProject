@@ -1,10 +1,10 @@
 package database;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 /**
- * Created by s_harte CS4227 Awesome Gaming  on 10/20/2016.
+ * Created by s_harte CS4227 Awesome Gaming ,awesome_gaming : CS4227 Project on 10/20/2016.
  */
 public class DatabaseBridge implements DatabaseInterface {
 
@@ -19,10 +19,10 @@ public class DatabaseBridge implements DatabaseInterface {
     }
     //overloaded to allow connection to own database
     /**
-     * @param databaseURL
-     * @param dbUser
-     * @param dbPass
-     * @param jdbcDriver
+     * @param databaseURL string url
+     * @param dbUser string user
+     * @param dbPass string pass
+     * @param jdbcDriver string driver
      * */
     @SuppressWarnings("unused")
     public DatabaseBridge(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
@@ -31,9 +31,9 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @param password
-     * @return
+     * @param username string username to check
+     * @param password string pass to check
+     * @return boolean if details found on db
      * */
     @Override
     public boolean canLogin(String username, String password) {
@@ -98,7 +98,7 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
+     * @param partyID int party_id to lookup if full
      * @return boolean true if full false if not
      * */
     @Override
@@ -107,8 +107,8 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param playerID
-     * @param partyID
+     * @param playerID int player to add user_Id
+     * @param partyID int party_Id to add user_Id to
      * */
     @Override
     public void addPlayerToParty(int playerID, int partyID) {
@@ -117,8 +117,8 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @param playerID
+     * @param partyID int party_Id to remove user from
+     * @param playerID int player_ID to remove from party
      * */
     @Override
     public void removePlayerFromParty(int partyID, int playerID) {
@@ -126,9 +126,9 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @param email
-     * @return
+     * @param username String username to check
+     * @param email string email to check
+     * @return int returned 0/1 - true/false respectively
      * */
     @Override
     public int checkUserNameAndEmail(String username, String email) {
@@ -136,8 +136,8 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @return
+     * @param partyID int party id to check
+     * @return boolean if exists or not
      * */
     @Override
     public boolean doesPartyExist(int partyID) {
@@ -145,8 +145,8 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @return
+     * @param username string username to check exists
+     * @return returns int if does
      * */
     @Override
     public int doesPlayerExist(String username) {
@@ -154,8 +154,8 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID int player id to check
+     * @return boolean if in party
      * */
     @Override
     public boolean isPlayerInParty(int playerID) {
@@ -163,9 +163,9 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyId
+     * @param senderID int sender id
+     * @param receiverID int receiver id
+     * @param partyId int party id to add to party if that type of invite
      * */
     @Override// String content,int type
     public void addInvite(int senderID, int receiverID, int partyId) {
@@ -173,9 +173,9 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param inviteId
+     * @param senderID int sender's id
+     * @param receiverID int receiver id
+     * @param inviteId int invite id of invite to be removed
      * */
     @Override
     public void removeInvite(int senderID, int receiverID, int inviteId) {
@@ -183,8 +183,8 @@ public class DatabaseBridge implements DatabaseInterface {
     }
 
     /**
-     * @param userId
-     * @param friendId
+     * @param userId int userId to add a friend
+     * @param friendId int friends userId to add to user_friends table
      * */
     @Override
     public void addFriend(int userId, int friendId)
@@ -192,5 +192,22 @@ public class DatabaseBridge implements DatabaseInterface {
         sqlDB.addFriend(userId,friendId);
     }
 
+    /**
+     *
+     * @param username String of username to return the user_Id
+     * @return int user_ID
+     */
+    public int get_User_Id(String username)
+    {
+        return sqlDB.getUserId(username);
+    }
 
+    /**
+     * @param user_ID int user_Id of user's name to return
+     * @return String username of user_ID
+     */
+    public String get_User_name(int user_ID)
+    {
+        return sqlDB.getPlayerName(user_ID);
+    }
 }
