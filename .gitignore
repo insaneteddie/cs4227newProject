@@ -2,6 +2,7 @@
 .sonar/
 cs4227newProject.iml
 out/
+bin/
 sonar-project.properties
 Resources/
 
