@@ -26,7 +26,7 @@ class SqlDatabase {
     private Log logger;
 
     /** no-args constructor */
-    public SqlDatabase()
+    SqlDatabase()
     {
         logger = new Log(getClass().getName());
         jdbcDriver = "com.mysql.jdbc.Driver";
@@ -42,7 +42,7 @@ class SqlDatabase {
      * @param dbPass pass for database
      * @param jdbcDriver jdbc driver
      * */
-    public SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
+    SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
         this.jdbcDriver = jdbcDriver;
         dbUrl = databaseURL;
@@ -65,7 +65,7 @@ class SqlDatabase {
      * @param userPass String pass to add
      * @param email String email address to add to table
      * */
-    public void addUser(String userName, String userPass, String email)
+    void addUser(String userName, String userPass, String email)
     {
         logger.logInfo("Attempting to Connect");
         logger.logInfo("Inserting records into the table....");
@@ -98,10 +98,10 @@ class SqlDatabase {
     }
     //method to add a friend we need to add this to the interface
     /**
-     * @param userId
-     * @param friendId
+     * @param userId int userID of person who is adding friend
+     * @param friendId int friend to be added's id
      * */
-    public void addFriend(int userId, int friendId)
+    void addFriend(int userId, int friendId)
     {
         logger.logInfo("Inserting records into the table...");
         try {
@@ -127,11 +127,11 @@ class SqlDatabase {
     }
     //checks the username and password from the users database
     /**
-     * @param userName
-     * @param userPass
+     * @param userName String username to check
+     * @param userPass String pass to check
      * @return boolean to allow/fail login
      * */
-    public boolean canLogin(String userName, String userPass)
+    boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
         logger.logInfo("Checking login details");
@@ -162,10 +162,10 @@ class SqlDatabase {
     }
     //needs testing too...
     /**
-     * @param userId
-     * @return
+     * @param userId userId to get username
+     * @return String username of user_Id
      * */
-    public String getPlayerName(int userId)
+    String getPlayerName(int userId)
     {
         String playerName = "";
         logger.logInfo("checking player details...");
@@ -193,10 +193,10 @@ class SqlDatabase {
     }
     //haven't tested yet...
     /**
-     * @param userName
-     * @return
+     * @param userName String username to get userID of
+     * @return return user's user_ID
      * */
-    public int getUserId(String userName)
+    int getUserId(String userName)
     {
         int userId = 0;
         try {
@@ -225,11 +225,11 @@ class SqlDatabase {
 
     //check username,and email
     /**
-     * @param userName
-     * @param email
-     * @return
+     * @param userName string username to check
+     * @param email string email to check
+     * @return int 0/1 true/false
      * */
-    public int checkNameEmail(String userName, String email)
+    int checkNameEmail(String userName, String email)
     {
         int checker = 0;
         logger.logInfo("checking player details.");
@@ -264,10 +264,10 @@ class SqlDatabase {
     }
     //is party full method
     /**
-     * @param partyId
-     * @return
+     * @param partyId int partyId to lookup
+     * @return boolean if full or not
      * */
-    public boolean isPartyFull(int partyId)
+    boolean isPartyFull(int partyId)
     {
         int toCheck = 0;
         try {
@@ -302,10 +302,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param userId
-     * @return
+     * @param userId userId to get friend of
+     * @return Integer list of friends Id
      * */
-    public List<Integer> getFriendsList(int userId)
+    List<Integer> getFriendsList(int userId)
     {
         List<Integer> friendsList = new ArrayList<>();
         try {
@@ -342,7 +342,7 @@ class SqlDatabase {
      * @param playerId takes in int player/userId to select from table
      * @return Integer list of friends user_IDs
      * */
-    public List<Integer []> getInvites(int playerId)
+    List<Integer []> getInvites(int playerId)
     {
         List<Integer []> invitesList = new ArrayList<>();
         try {
@@ -380,7 +380,7 @@ class SqlDatabase {
      * @param leaderId takes in user_Id and sets it as leader of party
      * @return int of partyId
      * */
-    public int createParty(int leaderId)
+    int createParty(int leaderId)
     {
         int partyId;
         logger.logInfo("Inserting records into the table...");
@@ -417,7 +417,7 @@ class SqlDatabase {
      * @param playerID int user_Id to lookup parties table
      * @param partyID int party_Id narrow down lookup criteria
      * */
-    public void addPlayerToParty(int playerID, int partyID)
+    void addPlayerToParty(int playerID, int partyID)
     {
         try {
             Class.forName(jdbcDriver);
@@ -459,10 +459,10 @@ class SqlDatabase {
     }
     //sorted
     /**
-     * @param partyID
-     * @return
+     * @param partyID int party to check if exists
+     * @return return boolean if so
      * */
-    public boolean doesPartyExist(int partyID)
+    boolean doesPartyExist(int partyID)
     {
         try {
             Class.forName(jdbcDriver);
@@ -490,10 +490,10 @@ class SqlDatabase {
     }
     //should work
     /**
-     * @param username
-     * @return
+     * @param username username to check
+     * @return int 0/1 (true or false)
      * */
-    public int doesPlayerExist(String username)
+    int doesPlayerExist(String username)
     {
         int checker = 0;
         logger.logInfo("Checking player details");
@@ -526,8 +526,8 @@ class SqlDatabase {
     }
     //the above mentioned hacked fix
     /**
-     * @param partyId
-     * @return
+     * @param partyId int partyId to check
+     * @return int null for check
      * */
     private int findNullFromParties(int partyId)
     {
@@ -565,10 +565,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param playerId
-     * @return
+     * @param playerId int user-ID to check if in party
+     * @return boolean returned / if or not
      * */
-    public boolean isInParty(int playerId)
+    boolean isInParty(int playerId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -598,11 +598,11 @@ class SqlDatabase {
     }
     //int typeID,String invite_content,
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyId
+     * @param senderID int sender_ID to add to table
+     * @param receiverID int user_ID to add to table
+     * @param partyId int party_Id to add to table
      * */
-    public void addInvite(int senderID, int receiverID, int partyId)
+    void addInvite(int senderID, int receiverID, int partyId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -631,11 +631,11 @@ class SqlDatabase {
     }
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param inviteId
+     * @param senderID int sender_Id to remove invite from
+     * @param receiverID int receiver_ID to remove from table
+     * @param inviteId int invite_id to remove from
      * */
-    public void removeInvite(int senderID, int receiverID, int inviteId)
+    void removeInvite(int senderID, int receiverID, int inviteId)
     {
         try {
             Class.forName(jdbcDriver);
@@ -662,10 +662,10 @@ class SqlDatabase {
     }
 
     /**
-     * @param partyID
-     * @param playerID
+     * @param partyID party_Id to remove from
+     * @param playerID player_ID to remove from
      * */
-    public void removePlayerFromParty(int partyID, int playerID)
+    void removePlayerFromParty(int partyID, int playerID)
     {
         try {
             Class.forName(jdbcDriver);
@@ -706,11 +706,11 @@ class SqlDatabase {
     }
 
     /**
-     * @param userId
-     * @param partyId
-     * @return
+     * @param userId int user_Id to check for
+     * @param partyId int party id to check
+     * @return int counter returned
      * */
-    public int findUserInParty(int userId, int partyId)
+    int findUserInParty(int userId, int partyId)
     {
         int counter = 0;
         try {
@@ -750,7 +750,7 @@ class SqlDatabase {
      * @param playerID int for table lookup - use both to cut down on false positives
      * @return integer list of user_Ids in party
      * */
-    public List<Integer> getPartyDetails(int partyID, int playerID) {
+    List<Integer> getPartyDetails(int partyID, int playerID) {
         List<Integer> partyList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
@@ -784,7 +784,7 @@ class SqlDatabase {
      * @param userName String username to check on table
      * @return String with user_Id,user_Email,user_Bio
      */
-    public String get_Player_Details(String userName)
+    String get_Player_Details(String userName)
     {
         String user_details = "";
 
