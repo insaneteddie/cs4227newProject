@@ -298,10 +298,7 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        if(toCheck > 0 )
-            return false;
-        else
-            return true;
+        return toCheck <= 0;
     }
 
     /**
