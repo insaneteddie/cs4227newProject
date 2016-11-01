@@ -157,9 +157,9 @@ public class SessionInformation {
      * */
     public void getPlayerDetails(String username) {
         try {
-
+            System.out.print("Testing player details method");
             String[] details = sqlDB.getPlayerDetails(username).split(",");
-
+            System.out.print("After DB call");
             this.player.setId(Integer.parseInt(details[0]));
             this.player.setName(username);
             this.player.setEmail(details[1]);
