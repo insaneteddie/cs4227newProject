@@ -1,5 +1,6 @@
 package driver;
 
+import core.interceptor.ConcreteLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LogInterceptor;
 import core.interceptor.LoggingRequest;
@@ -39,16 +40,16 @@ public class AppDriver {
             @Override
             public void onLogRequestReceived(LoggingRequest context) {
                 switch(context.getLevel()) {
-                    case "WARNING":
+                    case WARNING:
                             if(context.getStringMessage().matches("")) {
                                 log.logWarning(context.getException());
                             } else {
                                 log.logWarning(context.getException(), context.getStringMessage());
                             }
                         break;
-                    case "INFO": log.logInfo(context.getStringMessage());
+                    case INFO: log.logInfo(context.getStringMessage());
                         break;
-                    case "SEVERE":
+                    case SEVERE:
                             if(context.getStringMessage().matches("")) {
                                 log.logSevere(context.getException());
                             } else {

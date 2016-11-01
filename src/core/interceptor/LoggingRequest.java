@@ -6,8 +6,9 @@ package core.interceptor;
  * Interface for context object for interceptor.
  */
 public interface LoggingRequest {
+    enum Severity{INFO, WARNING, SEVERE}
 
-    String getLevel();
+    Severity getLevel();
     Exception getException();
     String getStringMessage();
 }
