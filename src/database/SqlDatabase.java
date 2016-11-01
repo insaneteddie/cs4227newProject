@@ -210,6 +210,7 @@ class SqlDatabase {
             ResultSet res = prepStatement.executeQuery();
             //prepStatement.close();
             userId = res.getInt("user_Id");
+            System.out.println(userId);
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);

@@ -8,7 +8,6 @@
 **/
 package database;
 
-import java.sql.SQLException;
 import java.util.List;
 /** classs that defines the interface for the database*/
 public interface DatabaseInterface {
