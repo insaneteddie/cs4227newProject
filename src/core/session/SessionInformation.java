@@ -10,8 +10,11 @@ package core.session;
 
 import core.command.*;
 import core.user.Player;
+
 import core.utils.Log;
+
 import database.DatabaseBridge;
+
 import database.DatabaseInterface;
 import message.Invite;
 import message.InviteFactory;
@@ -52,7 +55,7 @@ public class SessionInformation {
 
     /**
      * instantiate a SessionController object and add default commands */
-    private void setUpController(){
+    public void setUpController(){
         SessionController.getInstance().addCommand(new FriendInviteSendCommand("FRIEND_INVITE_SEND"));
         SessionController.getInstance().addCommand(new InviteRemoveCommand("INVITE_REMOVE"));
         SessionController.getInstance().addCommand(new PartyCreateCommand("PARTY_CREATE"));
@@ -69,7 +72,7 @@ public class SessionInformation {
     /**
      *  stores the Player instance in player
      * */
-    private void setPlayer() {
+    public void setPlayer() {
         player = Player.getInstance();
     }
 

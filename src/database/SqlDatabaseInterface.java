@@ -1,16 +1,27 @@
 package database;
 
-import java.sql.*;
 /**
  * Created by funka,awesome_gameing : CS4227 Project on 28/10/2016.
  */
  interface SqlDatabaseInterface {
+    /**
+     * setup the database
+     */
+     void setUpDatabaseDetails();
 
-     void set_Up_Database_Details();
+    /**
+     * overloaded database setup
+     * @param databaseURL string database url
+     * @param dbUser string database user
+     * @param dbPass string database pass
+     * @param jdbcDriver string jdbc driver
+     */
+     void setUpDatabaseDetails(String databaseURL, String dbUser, String dbPass, String jdbcDriver);
 
-     void set_Up_New_Database(String databaseURL, String dbUser, String dbPass, String jdbcDriver);
-
-     void connect_To_Database();
+    /**
+     * connection method
+     */
+     void connectToDatabase();
 
 
 

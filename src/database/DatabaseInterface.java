@@ -13,41 +13,41 @@ import java.util.List;
 public interface DatabaseInterface {
 
     /**
-     * @param username
-     * @param password
-     * @return
+     * @param username string username to check for login
+     * @param password string pass to check for login
+     * @return boolean if able to login
      * */
     boolean canLogin(String username, String password);
 
     /* References the local Player class */
     /**
-     * @param username
-     * @return
+     * @param username string username to get details of
+     * @return returns a csv string of user_ID,email,bio
      * */
     String getPlayerDetails(String username);
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID int user_Id of user requesting friends
+     * @return Integer list of friends user_ID's
      * */
     List<Integer> getPlayerFriendList(int playerID);
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID playerID to check for invites
+     * @return Integer list of inviteId's
      * */
     List<Integer[]> getPlayerInvites(int playerID);
 
     /**
-     * @param username
-     * @param password
-     * @param email
+     * @param username string username to create user in table
+     * @param password string pass to create user in table
+     * @param email string email to create user in table
      * */
     void createPlayer(String username, String password, String email);
 
     /**
-     * @param partyLeaderID
-     * @return
+     * @param partyLeaderID userID to set as leader on party creation
+     * @return int partyID
      * */
     int createParty(int partyLeaderID);
 
