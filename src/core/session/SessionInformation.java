@@ -12,7 +12,9 @@ import core.command.*;
 import core.user.Player;
 
 import core.utils.Log;
+import database.DatabaseBridge;
 
+import core.utils.Log;
 import database.DatabaseBridge;
 
 import database.DatabaseInterface;
@@ -37,7 +39,7 @@ public class SessionInformation {
     private final Log log = new Log(getClass().getName());
     private DatabaseBridge sqlDB = new DatabaseBridge();
 
-    SessionInformation() {
+    private SessionInformation() {
         setUpController();
         setPlayer();
         party = new Party();
@@ -45,7 +47,7 @@ public class SessionInformation {
         inviteFactory = new PartyInviteFactory();
     }
 
-    static SessionInformation getInstance() {
+    public static SessionInformation getInstance() {
         if (sessionInfo == null) {
             sessionInfo = new SessionInformation();
         }
@@ -55,7 +57,7 @@ public class SessionInformation {
 
     /**
      * instantiate a SessionController object and add default commands */
-     void setUpController(){
+    private void setUpController(){
         SessionController.getInstance().addCommand(new FriendInviteSendCommand("FRIEND_INVITE_SEND"));
         SessionController.getInstance().addCommand(new InviteRemoveCommand("INVITE_REMOVE"));
         SessionController.getInstance().addCommand(new PartyCreateCommand("PARTY_CREATE"));
@@ -72,11 +74,11 @@ public class SessionInformation {
     /**
      *  stores the Player instance in player
      * */
-     void setPlayer() {
+    private void setPlayer() {
         player = Player.getInstance();
     }
 
-     void setDbConnection(DatabaseInterface database) {
+    public void setDbConnection(DatabaseInterface database) {
         this.database = database;
     }
 
@@ -85,7 +87,7 @@ public class SessionInformation {
      * @param password
      * @return
      * */
-     boolean canUserLogin(String username, String password) {
+    public boolean canUserLogin(String username, String password) {
         boolean canLogin = false;
 
         try {
@@ -106,7 +108,7 @@ public class SessionInformation {
      *  @param username
      *  @return
      * */
-    boolean doesPlayerExist(String username) {
+    public boolean doesPlayerExist(String username) {
         boolean exists = false;
 
         try {
@@ -125,7 +127,7 @@ public class SessionInformation {
      * @param email
      * @return
      * */
-    int checkUsernameEmail(String username, String email) {
+    public int checkUsernameEmail(String username, String email) {
         int existsType = -1;
 
         try {
@@ -142,7 +144,7 @@ public class SessionInformation {
      * @param password
      * @param email
      * */
-    void createPlayer(String username, String password, String email) {
+    public void createPlayer(String username, String password, String email) {
         try {
             sqlDB.createPlayer(username,password,email);
         } catch (Exception e) {
@@ -153,7 +155,7 @@ public class SessionInformation {
     /**
      * @param username
      * */
-    void getPlayerDetails(String username) {
+    public void getPlayerDetails(String username) {
         try {
 
             String[] details = sqlDB.getPlayerDetails(username).split(",");
@@ -167,7 +169,7 @@ public class SessionInformation {
         }
     }
 
-    void getPlayerFriendList() {
+    public void getPlayerFriendList() {
         try {//database.getPlayerFriendList
             List<Integer> friends = sqlDB.getPlayerFriendList(player.getId());
             if (!friends.isEmpty()) {
@@ -180,7 +182,7 @@ public class SessionInformation {
         }
     }
 
-    void getPlayerInvites() {
+    public void getPlayerInvites() {
         try {//database
             List<Integer[]> invites = sqlDB.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
@@ -194,7 +196,7 @@ public class SessionInformation {
         }
     }
 
-    void getPartyDetails() {
+    public void getPartyDetails() {
         try {
             List<Integer> partyDetails = sqlDB.getPartyDetails(party.getId(), player.getId());
             
@@ -206,7 +208,7 @@ public class SessionInformation {
         }
     }
 
-    boolean isPlayerInParty() {
+    public boolean isPlayerInParty() {
         return party.doesPartyExist();
     }
 
@@ -214,7 +216,7 @@ public class SessionInformation {
      * @param id
      * @return
      * */
-    boolean isMemberOfParty(int id) {
+    public boolean isMemberOfParty(int id) {
         return party.isMember(id);
     }
 
@@ -222,14 +224,14 @@ public class SessionInformation {
      * @param id
      * @return
      * */
-    boolean isFriend(int id) {
+    public boolean isFriend(int id) {
         return player.isFriend(id);
     }
 
     /**
      *  Creates a party
      * */
-    void createParty() {
+    public void createParty() {
         try {
             int partyID = database.createParty(player.getId());
             player.addToPartyInformation(partyID);
@@ -243,7 +245,7 @@ public class SessionInformation {
     /**
      *  Leaves current party
      * */
-    void leaveParty() {
+    public void leaveParty() {
         try {
             int partyID = party.getId();
             database.removePlayerFromParty(partyID, player.getId());
@@ -254,14 +256,14 @@ public class SessionInformation {
         }
     }
 
-    String getPlayerName() {
+    public String getPlayerName() {
         return player.getName();
     }
 
     /**
      *  log off the player
      * */
-    void logPlayerOut() {
+    public void logPlayerOut() {
         if (party.doesPartyExist()) {
             leaveParty();
         }
@@ -269,18 +271,18 @@ public class SessionInformation {
         player.resetValues();
     }
 
-    boolean isPartyLeader() {
+    public boolean isPartyLeader() {
         return party.isPartyLeader(player.getId());
     }
 
-    int getPartySize() {
+    public int getPartySize() {
         return party.getPartySize();
     }
 
     /**
      *  @param partyID
      * */
-    void addPlayerToParty(int partyID) {
+    public void addPlayerToParty(int partyID) {
         try {
             player.clearPartyInformation();
             player.addToPartyInformation(partyID);
@@ -297,7 +299,7 @@ public class SessionInformation {
     /**
      *  @param playerID
      * */
-    void removePlayerFromParty(int playerID) {
+    public void removePlayerFromParty(int playerID) {
         try {
             database.removePlayerFromParty(party.getId(), playerID);
         } catch (Exception e) {
@@ -308,7 +310,7 @@ public class SessionInformation {
     /**
      *  @return
      * */
-    List<String> getInviteMessages() {
+    public List<String> getInviteMessages() {
         List<String> invMsg = new ArrayList<>();
         List<Invite> invites = player.getInvites();
         for (int i = 0; i < invites.size(); i++) {
@@ -321,14 +323,14 @@ public class SessionInformation {
     /**
      *  @return
      * */
-    List<Integer> getPartyMembers() {
+    public List<Integer> getPartyMembers() {
         return party.getPartyMembers();
     }
 
     /**
      *  @param friendToInvite
      * *///,String content, int type
-    void sendInvite(int friendToInvite) {
+    public void sendInvite(int friendToInvite) {
         try {
             database.addInvite(player.getId(), friendToInvite, party.getId() );
         } catch (Exception ex) {
@@ -340,7 +342,7 @@ public class SessionInformation {
      *  @param playerID
      *  @return
      * */
-    int getPartyIDFromSenderInvite(int playerID)
+    public int getPartyIDFromSenderInvite(int playerID)
     {
         List<Invite> myInvites = player.getInvites();
         int partyID = 0;
@@ -356,7 +358,7 @@ public class SessionInformation {
     /**
      *  @param playerID
      * */
-    void removeInvite(int playerID) {
+    public void removeInvite(int playerID) {
         int partyID = getPartyIDFromSenderInvite(playerID);
         player.removeInvite(playerID, partyID);
         try {
@@ -369,7 +371,7 @@ public class SessionInformation {
     /**
      *  @return
      * */
-    int getPlayerId()
+    public int getPlayerId()
     {
         return player.getId();
     }
