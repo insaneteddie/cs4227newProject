@@ -33,7 +33,7 @@ class SqlDatabase {
         dbUrl = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
         user = "admin";
         pass = "teamawesome";
-        //connectToDb();
+
     }
 
     /**
@@ -48,7 +48,7 @@ class SqlDatabase {
         dbUrl = databaseURL;
         user = dbUser;
         pass = dbPass;
-        //connectToDb();
+
     }
 
         //table name,columns *string is varchar, int is int.
@@ -177,7 +177,6 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
             playerName = res.getString("user_Name");
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
@@ -208,7 +207,6 @@ class SqlDatabase {
             prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
             userId = res.getInt("user_Id");
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
@@ -241,20 +239,18 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,email);
-
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
+            prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         }finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -318,7 +314,6 @@ class SqlDatabase {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
-            //prepStatement.close();
             while(res.next())
             {
                 friendsList.add(res.getInt(iterator));
@@ -505,18 +500,17 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
             ResultSet res = prepStatement.executeQuery();
-
+            prepStatement.close();
             if(!res.next())
             {
                 checker = 1;
                 return checker;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -721,7 +715,7 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-
+            prepStatement.close();
             while(res.next())
             {
                 counter++;
@@ -730,7 +724,7 @@ class SqlDatabase {
                     return counter;
                 }
             }
-            prepStatement.close();
+
             counter = 0;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
@@ -761,17 +755,17 @@ class SqlDatabase {
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             while (res.next()) {
-                if(res.getInt(iterator)!= playerID)
+                if(res.getInt(iterator)!= playerID){
                 partyList.add(res.getInt(iterator));
-                iterator++;
+                iterator++;}
             }
+            prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             logger.logWarning(e);
         } finally {
             try {
-                if (statement != null)
                     connection.close();
             } catch (SQLException se) {
                 logger.logWarning(se);
@@ -784,9 +778,9 @@ class SqlDatabase {
      * @param userName String username to check on table
      * @return String with user_Id,user_Email,user_Bio
      */
-    String get_Player_Details(String userName)
+    String getPlayerDetails(String userName)
     {
-        String user_details = "";
+        String userdetails = "";
 
         try {
             Class.forName(jdbcDriver);
@@ -799,12 +793,13 @@ class SqlDatabase {
 
             ResultSet res = prepStatement.executeQuery();
             prepStatement.close();
-            String email,bio;
+            String email;
+            String bio;
             int id;
             email = res.getString("user_Email");
             bio = res.getString("user_Bio");
             id = res.getInt("user_Id");
-            user_details = id + "," + email + "," +bio;
+            userdetails = id + "," + email + "," +bio;
 
 
         } catch (SQLException|ClassNotFoundException e) {
@@ -816,6 +811,6 @@ class SqlDatabase {
                 logger.logWarning(se);
             }
         }
-        return user_details;
+        return userdetails;
     }
 }

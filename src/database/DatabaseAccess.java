@@ -11,7 +11,6 @@ package database;
 import core.utils.Log;
 
 import java.io.*;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -31,14 +30,15 @@ public class DatabaseAccess implements DatabaseInterface {
     private Log logger;
 
     /** public constructor */
-    public DatabaseAccess() throws Exception {
+    public DatabaseAccess()
+    {
         logger = new Log(getClass().getName());
     }
 
     /**
-     * @param username
-     * @param password
-     * @return
+     * @param username string username to check
+     * @param password string pass to check
+     * @return boolean true/false if possible
      * */
     @Override
     public boolean canLogin(String username, String password) {
@@ -66,8 +66,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @return
+     * @param username string username to get details
+     * @return comma separated string with userId,userEmail,userBio
      * */
     @Override
     public String getPlayerDetails(String username) {
@@ -78,9 +78,9 @@ public class DatabaseAccess implements DatabaseInterface {
             while (fileReader.hasNextLine()) {
                 String[] lineFromFile = (fileReader.nextLine()).split(",");
                 if (lineFromFile[1].equals(username)) {
-                    playerDetails.append(lineFromFile[0] + ",");
-                    playerDetails.append(lineFromFile[1] + ",");
-                    playerDetails.append(lineFromFile[3] + ",");
+                    playerDetails.append(lineFromFile[0]).append(",");
+                    playerDetails.append(lineFromFile[1]).append(",");
+                    playerDetails.append(lineFromFile[3]).append(",");
                 }
             }
             fileReader.close();
@@ -93,8 +93,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID int playerID of user to returns friends
+     * @return Integer list of friend id's
      * */
     @Override
     public List<Integer> getPlayerFriendList(int playerID) {
@@ -122,8 +122,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID user id to get invites of
+     * @return Integer list of invite id's
      * */
     @Override
     public List<Integer[]> getPlayerInvites(int playerID) {
@@ -152,9 +152,9 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @param password
-     * @param email
+     * @param username string username
+     * @param password string pass
+     * @param email string email address
      * */
     @Override
     public void createPlayer(String username, String password, String email) {
@@ -182,8 +182,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param partyLeaderID
-     * @return
+     * @param partyLeaderID int userId to make leader in party creation
+     * @return int partyId of created party
      * */
     @Override
     public int createParty(int partyLeaderID) {
@@ -214,9 +214,9 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @param playerID
-     * @return
+     * @param partyID partyID of party to get details
+     * @param playerID userId of a party member to narrow search
+     * @return Integer List of party member id's
      * */
     @Override
     public List<Integer> getPartyDetails(int partyID, int playerID){
@@ -245,8 +245,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @return
+     * @param partyID int partyID to check
+     * @return boolean if full or not
      * */
     @Override
     public boolean isPartyFull(int partyID) {
@@ -271,8 +271,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @param playerID
+     * @param partyID partyId to add user to
+     * @param playerID user to add to party
      * */
     @Override
     public void addPlayerToParty(int playerID, int partyID) {
@@ -282,10 +282,8 @@ public class DatabaseAccess implements DatabaseInterface {
         for (int i = 0; i < parties.size(); i++) {
             String[] lineFromFile = parties.get(i).split(",");
             if (partyID == Integer.parseInt(lineFromFile[0])) {
-                StringBuilder amendedParty = new StringBuilder(parties.get(i));
-                amendedParty.append("," + playerID);
                 parties.remove(i);
-                parties.add(i, amendedParty.toString());
+                parties.add(i, parties.get(i) + "," + playerID);
                 break;
             }
         }
@@ -294,8 +292,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @param playerID
+     * @param partyID partyId to remove user from
+     * @param playerID user to remove from party
      * */
     @Override
     public void removePlayerFromParty(int partyID, int playerID) {
@@ -309,7 +307,7 @@ public class DatabaseAccess implements DatabaseInterface {
                 amendedParty.append(partyInfo[0]);
                 for (int j = 1; j < partyInfo.length; j++) {
                     if (playerID != Integer.parseInt(partyInfo[j])) {
-                        amendedParty.append("," + partyInfo[j]);
+                        amendedParty.append(",").append(partyInfo[j]);
                     }
                 }
                 parties.remove(i);
@@ -324,9 +322,9 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @param email
-     * @return
+     * @param username username to check
+     * @param email string email to check
+     * @return return int 0/1 if successful
      * */
     @Override
     public int checkUserNameAndEmail(String username, String email) {
@@ -356,8 +354,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param partyID
-     * @return
+     * @param partyID partyId to check exists
+     * @return boolean if it does/doesn't
      * */
     @Override
     public boolean doesPartyExist(int partyID) {
@@ -381,8 +379,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param username
-     * @return
+     * @param username string username to check exists
+     * @return boolean if does/doesn't
      * */
     @Override
     public int doesPlayerExist(String username) {
@@ -407,8 +405,8 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param playerID
-     * @return
+     * @param playerID user_Id to check if in party
+     * @return boolean if in party/not in party
      * */
     @Override
     public boolean isPlayerInParty(int playerID) {
@@ -436,9 +434,9 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyID
+     * @param senderID int senders id
+     * @param receiverID int receiver id
+     * @param partyID int party id if party invite
      * */
     @Override  //,String content, int type
     public void addInvite(int senderID, int receiverID, int partyID) {
@@ -458,9 +456,9 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param senderID
-     * @param receiverID
-     * @param partyID
+     * @param senderID int senders id
+     * @param receiverID int receiver id
+     * @param partyID int party id to remove invite from if is one
      * */
     @Override
     public void removeInvite(int senderID, int receiverID, int partyID) {
@@ -480,16 +478,16 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param userId
-     * @param friendId
+     * @param userId int user to add friend
+     * @param friendId int user to add as friend
      * */
     @Override
     public void addFriend(int userId, int friendId) {
-        /** insert implementation here*/
+        /* insert implementation here*/
     }
 
     /**
-     * @return
+     * @return list of string after reading from file
      * */
     private List<String> fileToList() {
         List<String> list = new ArrayList<>();
@@ -506,15 +504,14 @@ public class DatabaseAccess implements DatabaseInterface {
     }
 
     /**
-     * @param list
-     * @param amended
+     * @param list writes string list to file
+     * @param amended boolean if amending or not
      * */
     private void writeToFile(List<String> list, boolean amended) {
         try {
             fWriter = new FileWriter(file, amended);
             pWriter = new PrintWriter(fWriter);
-            for (int i = 0; i < list.size(); i++) {
-                String aList = list.get(i);
+            for (String aList : list) {
                 pWriter.println(aList);
             }
 
