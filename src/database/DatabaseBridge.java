@@ -46,7 +46,7 @@ public class DatabaseBridge implements DatabaseInterface {
      * */
     @Override
     public String getPlayerDetails(String username) {
-        return sqlDB.get_Player_Details(username);
+        return sqlDB.getPlayerDetails(username);
     }
 
     /**
@@ -197,17 +197,17 @@ public class DatabaseBridge implements DatabaseInterface {
      * @param username String of username to return the user_Id
      * @return int user_ID
      */
-    public int get_User_Id(String username)
+    public int getUserId(String username)
     {
         return sqlDB.getUserId(username);
     }
 
     /**
-     * @param user_ID int user_Id of user's name to return
+     * @param userID int user_Id of user's name to return
      * @return String username of user_ID
      */
-    public String get_User_name(int user_ID)
+    public String getUsername(int userID)
     {
-        return sqlDB.getPlayerName(user_ID);
+        return sqlDB.getPlayerName(userID);
     }
 }
