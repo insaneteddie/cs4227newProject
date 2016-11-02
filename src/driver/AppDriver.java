@@ -1,13 +1,10 @@
 package driver;
 
-import core.interceptor.ConcreteLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LogInterceptor;
 import core.interceptor.LoggingRequest;
 import core.utils.Log;
 import userinterface.StartUpUI;
-
-import java.util.logging.Level;
 
 /**
  *  Class containing main method

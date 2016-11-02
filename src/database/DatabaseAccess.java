@@ -8,7 +8,6 @@
 **/
 package database;
 
-import core.interceptor.ConcreteLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
 import core.utils.Log;
