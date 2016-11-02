@@ -18,21 +18,20 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
 
     protected AbstractLoggingRequest nextInChain;
 
-    public AbstractLoggingRequest() {
-        this(Severity.INFO, null, "");
-    }
-
-    public AbstractLoggingRequest(Severity level, Exception exception, String message) {
-        this.level = level;
-        this.exception = exception;
-        this.message = message;
-    }
-
     public void setNextInChain(AbstractLoggingRequest loggingRequest){
         this.nextInChain = loggingRequest;
     }
 
-    public abstract String getDetails();
+    public void getDetails(int type, Severity severity, Exception exception, String message){
+        if(this.type == type){
+            messageThingy(severity, exception, message);
+        }
+        if(nextInChain != null){
+            nextInChain.getDetails(type, severity, exception, message);
+        }
+    }
+
+    public abstract String messageThingy(Severity severity, Exception exception, String message);
 
     public Severity getLevel() {
         return level;

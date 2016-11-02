@@ -10,7 +10,7 @@ public class ConcreteSevereRequest extends AbstractLoggingRequest {
     }
 
     @Override
-    public String getDetails() {
+    public String messageThingy(Severity severity, Exception exception, String message) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(getLevel());
