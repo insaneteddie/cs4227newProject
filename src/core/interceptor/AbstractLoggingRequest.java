@@ -3,7 +3,7 @@ package core.interceptor;
 /**
  * Created by Cian Bolster on 01/11/2016.
  */
-public abstract class AbstractLoggingRequest implements LoggingRequest {
+public abstract class AbstractLoggingRequest{
     public static final int SIMPLELOG = 1;
     public static final int COMPLEXLOG = 2;
 
@@ -27,7 +27,7 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
      * @param message String
      * @return String
      * */
-    public void getDetails(int type, Severity severity, Exception exception, String message){
+    public void getDetails(int type, LoggingRequest.Severity severity, Exception exception, String message){
         if(this.type == type){
             fullMessage = messageCreation(severity, exception, message);
         }
@@ -42,19 +42,13 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
      * @param message String
      * @return String
      * */
-    public abstract String messageCreation(Severity severity, Exception exception, String message);
+    public abstract String messageCreation(LoggingRequest.Severity severity, Exception exception, String message);
 
-    /**
-     * @return String
-     * */
-    @Override
-    public String getStringMessage() {
-        return fullMessage;
+    public int getType(){
+        return type;
     }
 
-    /**
-     * @return int
-     * */
-    @Override
-    public int getType() { return type;}
+    public String getFullMessage(){
+        return fullMessage;
+    }
 }
