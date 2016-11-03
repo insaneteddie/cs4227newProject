@@ -46,18 +46,12 @@ public class LogDispatcher implements LogInterceptor {
     }
 
     public static AbstractLoggingRequest getChain(){
-        AbstractLoggingRequest logInfo = new ConcreteInfoRequest(AbstractLoggingRequest.INFO);
-        AbstractLoggingRequest logWarning = new ConcreteWarningRequest(AbstractLoggingRequest.WARNING);
-        AbstractLoggingRequest logSevere = new ConcreteSevereRequest(AbstractLoggingRequest.SEVERE);
-        AbstractLoggingRequest logWarningMes = new ConcreteWarningRequest(AbstractLoggingRequest.WARNINGMES);
-        AbstractLoggingRequest logSevereMes = new ConcreteSevereRequest(AbstractLoggingRequest.SEVEREMES);
+        AbstractLoggingRequest logSimple = new SimpleLog(AbstractLoggingRequest.SIMPLELOG);
+        AbstractLoggingRequest logComplex = new ComplexLog(AbstractLoggingRequest.COMPLEXLOG);
 
-        logInfo.setNextInChain(logWarning);
-        logWarning.setNextInChain(logSevere);
-        logSevere.setNextInChain(logWarningMes);
-        logWarningMes.setNextInChain(logSevereMes);
+        logSimple.setNextInChain(logComplex);
 
-        return logInfo;
+        return logSimple;
     }
 
     /**
@@ -71,7 +65,8 @@ public class LogDispatcher implements LogInterceptor {
             interceptorList = (ArrayList) this.interceptors.clone();
         }
         for(Object i : interceptorList){
-            //loggingChain;
+            loggingChain.getDetails(context.getType(), context.getLevel(), context.getException(), context.getStringMessage());
+            context.setFinalMessage(loggingChain.getFullMessage());
             ((LogInterceptor)i).onLogRequestReceived(context);
         }
     }
