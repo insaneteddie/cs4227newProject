@@ -159,7 +159,7 @@ public class SessionInformation {
         try {
             System.out.print("Testing player details method");
             String[] details = sqlDB.getPlayerDetails(username).split(",");
-            System.out.print("After DB call");
+            System.out.print("Testing After DB call");
             this.player.setId(Integer.parseInt(details[0]));
             this.player.setName(username);
             this.player.setEmail(details[1]);
@@ -233,7 +233,8 @@ public class SessionInformation {
      * */
     public void createParty() {
         try {
-            int partyID = database.createParty(player.getId());
+            int partyID = sqlDB.createParty(player.getId());
+            //int partyID = database.createParty(player.getId());
             player.addToPartyInformation(partyID);
             player.addToPartyInformation(player.getId());
             player.update();

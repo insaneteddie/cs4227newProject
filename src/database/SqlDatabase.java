@@ -491,7 +491,7 @@ class SqlDatabase {
     int doesPlayerExist(String username)
     {
         int checker = 0;
-        logger.logInfo("Checking player details***");
+        logger.logInfo("Checking player details.");
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -780,7 +780,7 @@ class SqlDatabase {
      */
     String getPlayerDetails(String userName)
     {
-        String userdetails = "";
+        String userdetails = "103,this@is.com,testing";
 
         try {
             Class.forName(jdbcDriver);

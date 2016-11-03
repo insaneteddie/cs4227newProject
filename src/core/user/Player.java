@@ -9,6 +9,7 @@
 package core.user;
 
 import core.session.SessionObserver;
+import database.DatabaseBridge;
 import message.*;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Player extends User implements SessionSubject {
     ArrayList<Integer> partyInformation;
     ArrayList<SessionObserver> observers;
     Collection inviteCollection;
+    DatabaseBridge dBB = new DatabaseBridge();
     private String email;
 
     private Player() {
@@ -71,7 +73,7 @@ public class Player extends User implements SessionSubject {
         return id;
     }
 
-    @Override
+    @Override//id
     public void setId(int id) {
         this.id = id;
     }

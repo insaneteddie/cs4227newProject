@@ -5,7 +5,7 @@ package database;
  */
  interface SqlDatabaseInterface {
     /**
-     * setup the database
+     * setup the database default to ours
      */
      void setUpDatabaseDetails();
 
