@@ -4,19 +4,14 @@ package core.interceptor;
  * Created by Cian Bolster on 01/11/2016.
  */
 public abstract class AbstractLoggingRequest implements LoggingRequest {
-    public static final int INFO = 1;
-    public static final int WARNING = 2;
-    public static final int SEVERE = 3;
-    public static final int WARNINGMES = 4;
-    public static final int SEVEREMES = 5;
+    public static final int SIMPLELOG = 1;
+    public static final int COMPLEXLOG = 2;
 
     protected int type;
 
-    protected Severity level;
-    protected Exception exception;
-    protected String message;
-
     protected AbstractLoggingRequest nextInChain;
+
+    protected String fullMessage;
 
     /**
      * @param loggingRequest AbstractLoggingRequest
@@ -32,17 +27,13 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
      * @param message String
      * @return String
      * */
-    public String getDetails(int type, Severity severity, Exception exception, String message){
-        String details = "";
-
+    public void getDetails(int type, Severity severity, Exception exception, String message){
         if(this.type == type){
-            details = messageThingy(severity, exception, message);
+            fullMessage = messageCreation(severity, exception, message);
         }
         else if(nextInChain != null){
-            details = nextInChain.getDetails(type, severity, exception, message);
+            nextInChain.getDetails(type, severity, exception, message);
         }
-
-        return details;
     }
 
     /**
@@ -51,31 +42,19 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
      * @param message String
      * @return String
      * */
-    public abstract String messageThingy(Severity severity, Exception exception, String message);
-
-    /**
-     * @return Severity
-     * */
-    public Severity getLevel() {
-        return level;
-    }
-
-    /**
-     * @return Exception
-     * */
-    public Exception getException() {
-        return exception;
-    }
+    public abstract String messageCreation(Severity severity, Exception exception, String message);
 
     /**
      * @return String
      * */
+    @Override
     public String getStringMessage() {
-        return message;
+        return fullMessage;
     }
 
     /**
      * @return int
      * */
+    @Override
     public int getType() { return type;}
 }
