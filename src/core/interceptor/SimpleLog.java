@@ -19,7 +19,7 @@ public class SimpleLog extends AbstractLoggingRequest {
      * @return String
      * */
     @Override
-    public String messageCreation(Severity severity, Exception exception, String message) {
+    public String messageCreation(LoggingRequest.Severity severity, Exception exception, String message) {
         StringBuilder sb = new StringBuilder();
 
         sb.append(severity);
