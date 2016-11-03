@@ -30,7 +30,7 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
      * @param severity Severity
      * @param exception Exception
      * @param message String
-     * @return
+     * @return String
      * */
     public String getDetails(int type, Severity severity, Exception exception, String message){
         String details = "";
@@ -77,6 +77,5 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
     /**
      * @return int
      * */
-    @Override
     public int getType() { return type;}
 }
