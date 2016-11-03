@@ -18,10 +18,20 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
 
     protected AbstractLoggingRequest nextInChain;
 
+    /**
+     * @param loggingRequest AbstractLoggingRequest
+     * */
     public void setNextInChain(AbstractLoggingRequest loggingRequest){
         this.nextInChain = loggingRequest;
     }
 
+    /**
+     * @param type int
+     * @param severity Severity
+     * @param exception Exception
+     * @param message String
+     * @return
+     * */
     public String getDetails(int type, Severity severity, Exception exception, String message){
         String details = "";
 
@@ -35,20 +45,38 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
         return details;
     }
 
+    /**
+     * @param severity Severity
+     * @param exception Exception
+     * @param message String
+     * @return String
+     * */
     public abstract String messageThingy(Severity severity, Exception exception, String message);
 
+    /**
+     * @return Severity
+     * */
     public Severity getLevel() {
         return level;
     }
 
+    /**
+     * @return Exception
+     * */
     public Exception getException() {
         return exception;
     }
 
+    /**
+     * @return String
+     * */
     public String getStringMessage() {
         return message;
     }
 
+    /**
+     * @return int
+     * */
     @Override
     public int getType() { return type;}
 }
