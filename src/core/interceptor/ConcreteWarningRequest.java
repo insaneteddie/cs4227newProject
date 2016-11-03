@@ -5,10 +5,18 @@ package core.interceptor;
  */
 public class ConcreteWarningRequest extends AbstractLoggingRequest {
 
+    /**public constructor
+     * @param type int
+     * */
     public ConcreteWarningRequest(int type) {
         this.type = type;
     }
 
+    /**
+     * @param severity Severity
+     * @param exception Exception
+     * @param message String
+     * @return String*/
     @Override
     public String messageThingy(Severity severity, Exception exception, String message) {
         StringBuilder sb = new StringBuilder();
@@ -20,16 +28,25 @@ public class ConcreteWarningRequest extends AbstractLoggingRequest {
         return sb.toString();
     }
 
+    /**
+     * @return Severity
+     * */
     @Override
     public Severity getLevel() {
         return level;
     }
 
+    /**
+     * @return Exception
+     * */
     @Override
     public Exception getException() {
         return exception;
     }
 
+    /**
+     * @return String
+     * */
     @Override
     public String getStringMessage() {
         return message;

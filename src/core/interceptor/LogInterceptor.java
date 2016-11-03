@@ -8,8 +8,10 @@ package core.interceptor;
  * Interface for the LogDispatcher class that defines the onLogRequestReceived() method
  */
 
-
+@FunctionalInterface
 public interface LogInterceptor {
-
+    /**
+     * @param context LoggingRequest
+     * */
     void onLogRequestReceived(LoggingRequest context);
 }

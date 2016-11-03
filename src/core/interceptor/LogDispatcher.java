@@ -15,13 +15,15 @@ public class LogDispatcher implements LogInterceptor {
     private static LogDispatcher dispatcher;
     ArrayList interceptors;
 
+    /** private constructor*/
     private LogDispatcher(){
         interceptors = new ArrayList();
     }
 
 
-        /*method that returns the current instance of the dispatcher and creates one if none exist.*/
-
+    /**method that returns the current instance of the dispatcher and creates one if none exist.
+    * @return LogDispatcher
+     * */
     public static LogDispatcher getInstance(){
         if(dispatcher == null){
             dispatcher = new LogDispatcher();
@@ -30,14 +32,14 @@ public class LogDispatcher implements LogInterceptor {
     }
 
     /**
-     * @param i
+     * @param i LogInterceptor
      * */
     public synchronized void registerLogRequestInterceptor(LogInterceptor i){
         interceptors.add(i);
     }
 
     /**
-     * @param i
+     * @param i LogInterceptor
      * */
     public synchronized void removeLogRequestInterceptor(LogInterceptor i){
         interceptors.remove(i);
@@ -48,7 +50,7 @@ public class LogDispatcher implements LogInterceptor {
         AbstractLoggingRequest logWarning = new ConcreteWarningRequest(AbstractLoggingRequest.WARNING);
         AbstractLoggingRequest logSevere = new ConcreteSevereRequest(AbstractLoggingRequest.SEVERE);
         AbstractLoggingRequest logWarningMes = new ConcreteWarningRequest(AbstractLoggingRequest.WARNINGMES);
-        AbstractLoggingRequest logSevereMes = new ConcreteSevereRequest(AbstractLoggingRequest.SEVERMES);
+        AbstractLoggingRequest logSevereMes = new ConcreteSevereRequest(AbstractLoggingRequest.SEVEREMES);
 
         logInfo.setNextInChain(logWarning);
         logWarning.setNextInChain(logSevere);
@@ -58,7 +60,9 @@ public class LogDispatcher implements LogInterceptor {
         return logInfo;
     }
 
-
+    /**
+     * @param context LoggingRequest
+     * */
     @Override
     public void onLogRequestReceived(LoggingRequest context) {
         ArrayList interceptorList;
