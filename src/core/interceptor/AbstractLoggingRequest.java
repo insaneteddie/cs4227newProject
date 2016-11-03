@@ -4,11 +4,11 @@ package core.interceptor;
  * Created by Cian Bolster on 01/11/2016.
  */
 public abstract class AbstractLoggingRequest implements LoggingRequest {
-    public static int INFO = 1;
-    public static int WARNING = 2;
-    public static int SEVERE = 3;
-    public static int WARNINGMES = 4;
-    public static int SEVERMES = 5;
+    public static final int INFO = 1;
+    public static final int WARNING = 2;
+    public static final int SEVERE = 3;
+    public static final int WARNINGMES = 4;
+    public static final int SEVEREMES = 5;
 
     protected int type;
 
@@ -22,13 +22,17 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
         this.nextInChain = loggingRequest;
     }
 
-    public void getDetails(int type, Severity severity, Exception exception, String message){
+    public String getDetails(int type, Severity severity, Exception exception, String message){
+        String details = "";
+
         if(this.type == type){
-            messageThingy(severity, exception, message);
+            details = messageThingy(severity, exception, message);
         }
-        if(nextInChain != null){
-            nextInChain.getDetails(type, severity, exception, message);
+        else if(nextInChain != null){
+            details = nextInChain.getDetails(type, severity, exception, message);
         }
+
+        return details;
     }
 
     public abstract String messageThingy(Severity severity, Exception exception, String message);
@@ -44,4 +48,7 @@ public abstract class AbstractLoggingRequest implements LoggingRequest {
     public String getStringMessage() {
         return message;
     }
+
+    @Override
+    public int getType() { return type;}
 }
