@@ -23,7 +23,9 @@ public class SimpleLog extends AbstractLoggingRequest {
         StringBuilder sb = new StringBuilder();
 
         sb.append(severity);
+        sb.append(":\t");
         sb.append(exception);
+        sb.append(":\t");
         sb.append(message);
 
         return sb.toString();
