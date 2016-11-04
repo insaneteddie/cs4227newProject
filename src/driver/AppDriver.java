@@ -36,25 +36,7 @@ public class AppDriver {
 
             @Override
             public void onLogRequestReceived(LoggingRequest context) {
-                switch(context.getLevel()) {
-                    case WARNING:
-                            if(context.getStringMessage().matches("")) {
-                                log.logWarning(context.getException());
-                            } else {
-                                log.logWarning(context.getException(), context.getStringMessage());
-                            }
-                        break;
-                    case INFO: log.logInfo(context.getStringMessage());
-                        break;
-                    case SEVERE:
-                            if(context.getStringMessage().matches("")) {
-                                log.logSevere(context.getException());
-                            } else {
-                                log.logSevere(context.getException(), context.getStringMessage());
-                            }
-                        break;
-                    default:
-                }
+                log.logMessage(context.getFinalMessage());
             }
         };
 
