@@ -8,6 +8,9 @@
 **/
 package userinterface;
 
+import core.interceptor.ConcreteSimpleLoggingRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LoggingRequest;
 import core.utils.Log;
 import core.command.SessionController;
 
@@ -99,7 +102,9 @@ public class MessageMenu extends Menu {
                         }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                        logger.logWarning(ex, "Input invalid.");
+                        //logger.logWarning(ex, "Input invalid.");
+                        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
+
                     }
                 }
         });
@@ -119,7 +124,8 @@ public class MessageMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                    logger.logWarning(ex, "Input invalid.");
+                    //logger.logWarning(ex, "Input invalid.");
+                    LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
                 }
         });
         inviteOptionPanel.add(declineInviteButton);
