@@ -18,7 +18,8 @@ public class InviteRemoveCommand implements ICommand {
     }
     @Override
     public void execute() {
-        SessionInformation.getInstance().removeInvite(userId);
+        // SessionInformation.getInstance().removeInvite(userId);
+        // see user/Player.java line 118
         userId = 0;
     }
 
