@@ -9,6 +9,9 @@
 package core.session;
 
 import core.command.*;
+import core.interceptor.ConcreteSimpleLoggingRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LoggingRequest;
 import core.user.Player;
 
 import core.utils.Log;
@@ -98,7 +101,8 @@ public class SessionInformation {
                 getPlayerInvites();
             }
         } catch (Exception e) {
-            log.logWarning(e, "Error logging in: ");
+            //log.logWarning(e, "Error logging in: ");
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, "Error logging in: "));
         }
 
         return canLogin;
@@ -116,7 +120,8 @@ public class SessionInformation {
                 exists = true;
             }
         } catch (Exception e) {
-            log.logWarning(e, "doesPlayerExist Error: ");
+            //log.logWarning(e, "doesPlayerExist Error: ");
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, "doesPlayerExist Error: "));
         }
 
         return exists;
@@ -133,7 +138,8 @@ public class SessionInformation {
         try {
             existsType = sqlDB.checkUserNameAndEmail(username, email);
         } catch (Exception e) {
-            log.logWarning(e, "Error validating username/email: ");
+            //log.logWarning(e, "Error validating username/email: ");
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, "Error validating username/email: "));
         }
 
         return existsType;
@@ -148,7 +154,8 @@ public class SessionInformation {
         try {
             sqlDB.createPlayer(username,password,email);
         } catch (Exception e) {
-            log.logWarning(e, "Error creating player: ");
+            //log.logWarning(e, "Error creating player: ");
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, "Error creating player: "));
         }
     }
 
@@ -165,7 +172,8 @@ public class SessionInformation {
             this.player.setEmail(details[1]);
             //this.player.setEmail(details[2]);
         } catch (Exception e) {
-            log.logWarning(e, "Error getting player details: "+e.getMessage());
+            //log.logWarning(e, "Error getting player details: "+e.getMessage());
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, "Error getting player details: "+e.getMessage()));
         }
     }
 
@@ -178,7 +186,8 @@ public class SessionInformation {
                 }
             }
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -192,7 +201,8 @@ public class SessionInformation {
                 }
             }
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -204,7 +214,8 @@ public class SessionInformation {
             player.updatePartyInformation(partyDetails);
             player.update();
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -238,7 +249,8 @@ public class SessionInformation {
             player.addToPartyInformation(player.getId());
             player.update();
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -252,7 +264,8 @@ public class SessionInformation {
             player.clearPartyInformation();
             player.update();
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -267,7 +280,8 @@ public class SessionInformation {
         if (party.doesPartyExist()) {
             leaveParty();
         }
-        log.logInfo("Logged out");
+        //log.logInfo("Logged out");
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Logged out"));
         player.resetValues();
     }
 
@@ -292,7 +306,8 @@ public class SessionInformation {
 
             getPartyDetails();
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -303,7 +318,8 @@ public class SessionInformation {
         try {
             database.removePlayerFromParty(party.getId(), playerID);
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -334,7 +350,8 @@ public class SessionInformation {
         try {
             database.addInvite(player.getId(), friendToInvite, party.getId() );
         } catch (Exception ex) {
-            log.logWarning(ex);
+            //log.logWarning(ex);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
         }
     }
 
@@ -352,7 +369,8 @@ public class SessionInformation {
                 break;
             }
         }
-        log.logInfo("Party ID: " + partyID);
+        //log.logInfo("Party ID: " + partyID);
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Party ID: " + partyID));
         return partyID;
     }
     /**
@@ -364,7 +382,8 @@ public class SessionInformation {
         try {
             database.removeInvite(playerID, player.getId(), partyID);
         } catch (Exception e) {
-            log.logWarning(e);
+            //log.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
