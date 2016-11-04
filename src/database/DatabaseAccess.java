@@ -8,6 +8,7 @@
 **/
 package database;
 
+import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
 import core.utils.Log;
@@ -62,7 +63,7 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return false;
         }catch (FileNotFoundException e){
-            logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return false;
     }
@@ -89,7 +90,8 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return playerDetails.toString();
         }catch(FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return null;
     }
@@ -118,7 +120,8 @@ public class DatabaseAccess implements DatabaseInterface {
 
             return friendIDs;
         }catch (FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return new ArrayList<>();
     }
@@ -148,7 +151,8 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return idList;
         }catch (FileNotFoundException e){
-            logger.logWarning(e);
+           //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return new ArrayList<>();
     }
@@ -178,7 +182,8 @@ public class DatabaseAccess implements DatabaseInterface {
             pWriter.close();
             fWriter.close();
         }catch (IOException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         file = null;
     }
@@ -208,7 +213,8 @@ public class DatabaseAccess implements DatabaseInterface {
             pWriter.close();
             fWriter.close();
         }catch(IOException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         file = null;
 
@@ -241,7 +247,7 @@ public class DatabaseAccess implements DatabaseInterface {
             }
             return partyDetails;
         }catch(FileNotFoundException e){
-            logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return new ArrayList<>();
     }
@@ -267,7 +273,8 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return partyFull;
         }catch(FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return true;
     }
@@ -351,7 +358,7 @@ public class DatabaseAccess implements DatabaseInterface {
             return 2;
         }catch (FileNotFoundException e){
             //logger.logWarning(e);
-            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteLoggingRequest(LoggingRequest.Severity.WARNING, e));
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return 2;
     }
@@ -376,7 +383,8 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return partyExists;
         }catch(FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return false;
     }
@@ -402,7 +410,8 @@ public class DatabaseAccess implements DatabaseInterface {
             file = null;
             return 0;
         }catch(FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return 0;
     }
@@ -431,7 +440,8 @@ public class DatabaseAccess implements DatabaseInterface {
 
             return isInParty;
         }catch (FileNotFoundException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return false;
     }
@@ -454,7 +464,8 @@ public class DatabaseAccess implements DatabaseInterface {
             fWriter.close();
             file = null;
         }catch (IOException e){
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 
@@ -501,7 +512,8 @@ public class DatabaseAccess implements DatabaseInterface {
             }
             fileReader.close();
         } catch (Exception e) {
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
         return list;
     }
@@ -521,7 +533,8 @@ public class DatabaseAccess implements DatabaseInterface {
             pWriter.close();
             fWriter.close();
         } catch (Exception e) {
-            logger.logWarning(e);
+            //logger.logWarning(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }
     }
 }
