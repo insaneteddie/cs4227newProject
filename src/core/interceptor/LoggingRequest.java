@@ -30,4 +30,8 @@ public interface LoggingRequest {
      */
     void setFinalMessage(String finalMessage);
 
+    /**
+     * params: String final message
+     */
+    String getFinalMessage();
 }
