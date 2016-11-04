@@ -9,7 +9,7 @@
 package core.user;
 
 import core.session.SessionObserver;
-import message.*;
+import messaging.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class Player extends User implements SessionSubject {
         observers = new ArrayList<>();
         friends = new ArrayList<>();
         partyInformation = new ArrayList<>();
-        inviteCollection = new MessageCollection();
+        inviteCollection = new InviteCollection();
     }
 
     public static Player getInstance() {
@@ -104,7 +104,7 @@ public class Player extends User implements SessionSubject {
     /**
      * @param invite
      * */
-    public void addInvite(Message invite) {
+    public void addInvite(Invite invite) {
         inviteCollection.add(invite);
     }
 
@@ -112,9 +112,11 @@ public class Player extends User implements SessionSubject {
      * @param senderID
      * @param partyID
      * */
-    public void removeInvite(int senderID, int partyID) {
-        inviteCollection.remove(senderID, partyID);
-    }
+//    public void removeInvite(int senderID, int partyID) {
+//        inviteCollection.remove(senderID, partyID);
+//    }
+    //need to look at getting the message ID and using that instead so distinctive invites can be removed
+
 
     public List<Invite> getInvites() {
         return inviteCollection.getAll();
