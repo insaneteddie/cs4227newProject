@@ -1,5 +1,9 @@
 package core.utils;
 
+import core.interceptor.ConcreteSimpleLoggingRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LoggingRequest;
+
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -34,45 +38,13 @@ public class Log {
                     logger.setUseParentHandlers(false);
                 }
             } catch (IOException e) {
-                logSevere(e, CLASSNAME);
+                LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
             }
         }
     }
 
     /**
-     * @param e
-     * @param desc
+     * @param message
      * */
-    public void logWarning(Exception e, String desc){
-        logger.log(Level.WARNING, desc + "\n" + e.getMessage());
-    }
-
-    /**
-     * @param e
-     * */
-    public void logWarning(Exception e){
-        logWarning(e, "");
-    }
-
-    /**
-     * @param desc
-     * */
-    public void logInfo(String desc){
-        logger.log(Level.INFO, desc);
-    }
-
-    /**
-     * @param e
-     * */
-    public void logSevere(Exception e){
-        logSevere(e, "");
-    }
-
-    /**
-     * @param e
-     * @param desc
-     * */
-    public void logSevere(Exception e, String desc){
-        logger.log(Level.SEVERE, desc + "\n" + e.getMessage());
-    }
+    public void logMessage(String message){ logger.log(Level.ALL, message);}
 }
