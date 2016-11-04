@@ -42,4 +42,9 @@ public class ConcreteSimpleLoggingRequest implements LoggingRequest {
         this.finalMessage = finalMessage;
     }
 
+    @Override
+    public String getFinalMessage() {
+        return finalMessage;
+    }
+
 }
