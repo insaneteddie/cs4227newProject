@@ -780,7 +780,7 @@ class SqlDatabase {
      */
     String getPlayerDetails(String userName)
     {
-        String userdetails = "103,this@is.com,testing";
+        String userdetails = "101,this@is.com,testing";
 
         try {
             Class.forName(jdbcDriver);
@@ -803,6 +803,7 @@ class SqlDatabase {
             userdetails = id + "," + email + "," +bio;
 
             prepStatement.close();
+            return userdetails;
         } catch (SQLException|ClassNotFoundException e) {
             logger.logInfo("testing is it here?");
             logger.logWarning(e);
