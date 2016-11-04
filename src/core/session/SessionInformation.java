@@ -14,14 +14,13 @@ import core.user.Player;
 import core.utils.Log;
 import database.DatabaseBridge;
 
-import core.utils.Log;
-import database.DatabaseBridge;
-
 import database.DatabaseInterface;
-import message.Invite;
-import message.InviteFactory;
-import message.Message;
-import message.PartyInviteFactory;
+import messaging.*;
+//import message.Invite;
+//import message.InviteFactory;
+//import message.Message;
+//import messaging.AbstractMessagingFactory;
+//import messaging.MessagingProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class SessionInformation {
 
     private static SessionInformation sessionInfo = null;
     private DatabaseInterface database;
-    private InviteFactory inviteFactory;
+    private AbstractMessagingFactory abstractMessagingFactory;
     private Player player = null;
     private Party party;
     private final Log log = new Log(getClass().getName());
@@ -44,7 +43,7 @@ public class SessionInformation {
         setPlayer();
         party = new Party();
         player.attach(party);
-        inviteFactory = new PartyInviteFactory();
+        abstractMessagingFactory = MessagingProvider.getFactory("Invite");
     }
 
     public static SessionInformation getInstance() {
@@ -183,11 +182,13 @@ public class SessionInformation {
     }
 
     public void getPlayerInvites() {
+        // refactor with new messaging code
         try {//database
             List<Integer[]> invites = sqlDB.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
-                    Message newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
+                    // is index 2 the party id?
+                    Invite newInvite = abstractMessagingFactory.createInvite("Party", player.getId(), invites.get(i)[1], invites.get(i)[2]);
                     player.addInvite(newInvite);
                 }
             }
@@ -331,11 +332,8 @@ public class SessionInformation {
      *  @param friendToInvite
      * *///,String content, int type
     public void sendInvite(int friendToInvite) {
-        try {
-            database.addInvite(player.getId(), friendToInvite, party.getId() );
-        } catch (Exception ex) {
-            log.logWarning(ex);
-        }
+        messaging.Invite x = abstractMessagingFactory.createInvite("Party", player.getId(), friendToInvite, party.getId());
+        x.sendInvite(database);
     }
 
     /**
@@ -358,15 +356,16 @@ public class SessionInformation {
     /**
      *  @param playerID
      * */
-    public void removeInvite(int playerID) {
-        int partyID = getPartyIDFromSenderInvite(playerID);
-        player.removeInvite(playerID, partyID);
-        try {
-            database.removeInvite(playerID, player.getId(), partyID);
-        } catch (Exception e) {
-            log.logWarning(e);
-        }
-    }
+//    public void removeInvite(int playerID) {
+//        int partyID = getPartyIDFromSenderInvite(playerID);
+//        player.removeInvite(playerID, partyID);
+//        try {
+//            database.removeInvite(playerID, player.getId(), partyID);
+//        } catch (Exception e) {
+//            log.logWarning(e);
+//        }
+//    }
+    // see user/Player.java line 118
 
     /**
      *  @return
