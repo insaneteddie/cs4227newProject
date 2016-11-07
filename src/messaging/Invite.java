@@ -1,15 +1,15 @@
 package messaging;
 
-import database.DatabaseInterface;
+import java.util.UUID;
 
 /**
  * Created by Christian on 03/11/2016.
  */
 public interface Invite {
 
-    void sendInvite(DatabaseInterface database);
+    void sendInvite();
 
-    int getID();
+    UUID getID();
 
     int getSenderID();
 
@@ -18,4 +18,6 @@ public interface Invite {
     int getPartyID();
 
     String getMessage();
+
+    void deleteInvite();
 }
