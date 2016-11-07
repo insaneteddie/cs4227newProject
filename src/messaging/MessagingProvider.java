@@ -5,13 +5,17 @@ package messaging;
  */
 public class MessagingProvider
 {
+    /**
+     * @param messageType string messageType
+     * @return new instance of a concrete factory
+     */
     public static AbstractMessagingFactory getFactory(String messageType)
     {
         switch (messageType) {
-            case "Message":
+            case "MESSAGE":
                 return new MessageFactory();
 
-            case "Invite":
+            case "INVITE":
                 return new InviteFactory();
             default:
                 //will log
