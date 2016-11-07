@@ -16,11 +16,6 @@ import database.DatabaseBridge;
 
 import database.DatabaseInterface;
 import messaging.*;
-//import message.Invite;
-//import message.InviteFactory;
-//import message.Message;
-//import messaging.AbstractMessagingFactory;
-//import messaging.MessagingProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +38,7 @@ public class SessionInformation {
         setPlayer();
         party = new Party();
         player.attach(party);
-        abstractMessagingFactory = MessagingProvider.getFactory("Invite");
+        abstractMessagingFactory = MessagingProvider.getFactory("INVITE");
     }
 
     public static SessionInformation getInstance() {
@@ -188,7 +183,7 @@ public class SessionInformation {
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
                     // is index 2 the party id?
-                    Invite newInvite = abstractMessagingFactory.createInvite("Party", player.getId(), invites.get(i)[1], invites.get(i)[2]);
+                    Invite newInvite = abstractMessagingFactory.createInvite("PARTY_INVITE", player.getId(), invites.get(i)[1], invites.get(i)[2]);
                     player.addInvite(newInvite);
                 }
             }
@@ -329,11 +324,11 @@ public class SessionInformation {
     }
 
     /**
-     *  @param friendToInvite
+     *  @param friendToInvite int friendToInvite or receiverID
      * *///,String content, int type
     public void sendInvite(int friendToInvite) {
-        messaging.Invite x = abstractMessagingFactory.createInvite("Party", player.getId(), friendToInvite, party.getId());
-        x.sendInvite(database);
+        messaging.Invite x = abstractMessagingFactory.createInvite("PARTY_INVITE", player.getId(), friendToInvite, party.getId());
+        x.sendInvite();
     }
 
     /**
@@ -354,18 +349,12 @@ public class SessionInformation {
         return partyID;
     }
     /**
-     *  @param playerID
+     *  @param playerID int playerID
      * */
-//    public void removeInvite(int playerID) {
-//        int partyID = getPartyIDFromSenderInvite(playerID);
-//        player.removeInvite(playerID, partyID);
-//        try {
-//            database.removeInvite(playerID, player.getId(), partyID);
-//        } catch (Exception e) {
-//            log.logWarning(e);
-//        }
-//    }
-    // see user/Player.java line 118
+    public void removeInvite(int playerID) {
+        int partyID = getPartyIDFromSenderInvite(playerID);
+        player.removeInvite(playerID, partyID);
+    }
 
     /**
      *  @return
