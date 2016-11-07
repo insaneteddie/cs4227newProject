@@ -629,17 +629,49 @@ class SqlDatabase {
      * @param receiverID int receiver_ID to remove from table
      * @param inviteId int invite_id to remove from
      * */
-    void removeInvite(int senderID, int receiverID, int inviteId)
+//    void removeInvite(int senderID, int receiverID, int inviteId)
+//    {
+//        try {
+//            Class.forName(jdbcDriver);
+//            connection = DriverManager.getConnection(dbUrl, user, pass);
+//
+//            statement = connection.createStatement();
+//            PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND invite_Id = ?)");
+//            prepStatement.setInt(1, senderID);
+//            prepStatement.setInt(2,receiverID);
+//            prepStatement.setInt(3,inviteId);
+//
+//            prepStatement.executeUpdate();
+//            prepStatement.close();
+//        } catch (SQLException|ClassNotFoundException e) {
+//            logger.logWarning(e);
+//        } finally {
+//            try {
+//                if (statement != null)
+//                    connection.close();
+//            } catch (SQLException se) {
+//                logger.logWarning(se);
+//            }
+//        }
+//    }
+
+
+    /**
+     * @param senderID int sender_Id to remove invite from
+     * @param receiverID int receiver_ID to remove from table
+     * @param partyID int party_id of party to who's invite is to be deletes
+     * */
+    void removeInvite(int senderID, int receiverID, int partyID)
     {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND invite_Id = ?)");
+            PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND party_Id = ?)");
             prepStatement.setInt(1, senderID);
-            prepStatement.setInt(2,receiverID);
-            prepStatement.setInt(3,inviteId);
+            prepStatement.setInt(2, receiverID);
+            prepStatement.setInt(3, partyID);
 
             prepStatement.executeUpdate();
             prepStatement.close();

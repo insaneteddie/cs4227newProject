@@ -11,7 +11,7 @@ public class InviteRemoveCommand implements ICommand {
     private int userId;
 
     /**
-     * @param name
+     * @param name String name
      * */
     public InviteRemoveCommand(String name){
         this.name = name;
@@ -23,13 +23,16 @@ public class InviteRemoveCommand implements ICommand {
     }
 
     /**
-     * @param userId
+     * @param userId int userID
      * */
     public void execute(int userId){
         this.userId = userId;
         execute();
     }
 
+    /**
+     * @return name
+     */
     @Override
     public String getCommandName() {
         return name;

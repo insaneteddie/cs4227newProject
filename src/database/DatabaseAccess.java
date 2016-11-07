@@ -125,6 +125,7 @@ public class DatabaseAccess implements DatabaseInterface {
      * @param playerID user id to get invites of
      * @return Integer list of invite id's
      * */
+    // should return invite objects - Christian 3/11/16
     @Override
     public List<Integer[]> getPlayerInvites(int playerID) {
         try {

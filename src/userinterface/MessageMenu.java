@@ -91,7 +91,8 @@ public class MessageMenu extends Menu {
                                 + "\ninvite you would like to accept."));
                         if (sessionInfo.isFriend(userid)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
-                            sessionInfo.removeInvite(userid);
+                            //sessionInfo.removeInvite(userid);
+                            // see user/Player.java line 118
                             SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                             menuMgr.getMenuFromFactory(4);
                         } else {
@@ -110,7 +111,8 @@ public class MessageMenu extends Menu {
                     int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
                             + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
-                        sessionInfo.removeInvite(userid);
+                        //sessionInfo.removeInvite(userid);
+                        // see user/Player.java line 118
                         SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                         menuMgr.getMenuFromFactory(4);
                     }
