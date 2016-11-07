@@ -63,7 +63,7 @@ class PartyMessage implements Message {
     }
 
     /**
-     * @return message
+     * @return the message in the Message object
      */
     @Override
     public String getMessage()
