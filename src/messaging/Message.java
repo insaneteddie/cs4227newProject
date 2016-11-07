@@ -15,4 +15,6 @@ public interface Message {
     int getReceiverID();
 
     int getPartyID();
+
+    String getMessage();
 }
