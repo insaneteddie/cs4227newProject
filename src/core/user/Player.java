@@ -102,20 +102,19 @@ public class Player extends User implements SessionSubject {
     }
 
     /**
-     * @param invite
+     * @param invite Invite invite
      * */
     public void addInvite(Invite invite) {
         inviteCollection.add(invite);
     }
 
     /**
-     * @param senderID
-     * @param partyID
+     * @param senderID int senderID
+     * @param partyID int partyID
      * */
-//    public void removeInvite(int senderID, int partyID) {
-//        inviteCollection.remove(senderID, partyID);
-//    }
-    //need to look at getting the message ID and using that instead so distinctive invites can be removed
+    public void removeInvite(int senderID, int partyID) {
+        inviteCollection.remove(senderID, partyID);
+    }
 
 
     public List<Invite> getInvites() {
