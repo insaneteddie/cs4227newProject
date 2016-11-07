@@ -27,11 +27,11 @@ class InviteFactory extends AbstractMessagingFactory {
 
     /**
      * @param messageType String messageType
-     * @param senderId int senderID
+     * @param senderID int senderID
      * @param receiverID int receiverID
      * @param message String Message
      * @return new Message
      */
     @Override
-    public Message createMessage(String messageType, int senderId, int receiverID, String message) {return null;}
+    public Message createMessage(String messageType, int senderID, int receiverID, String message) {return null;}
 }
