@@ -11,26 +11,28 @@ public class InviteRemoveCommand implements ICommand {
     private int userId;
 
     /**
-     * @param name
+     * @param name String name
      * */
     public InviteRemoveCommand(String name){
         this.name = name;
     }
     @Override
     public void execute() {
-        // SessionInformation.getInstance().removeInvite(userId);
-        // see user/Player.java line 118
+        SessionInformation.getInstance().removeInvite(userId);
         userId = 0;
     }
 
     /**
-     * @param userId
+     * @param userId int userID
      * */
     public void execute(int userId){
         this.userId = userId;
         execute();
     }
 
+    /**
+     * @return name
+     */
     @Override
     public String getCommandName() {
         return name;
