@@ -177,9 +177,19 @@ public class DatabaseBridge implements DatabaseInterface {
      * @param receiverID int receiver id
      * @param inviteId int invite id of invite to be removed
      * */
+//    @Override
+//    public void removeInvite(int senderID, int receiverID, int inviteId) {
+//        sqlDB.removeInvite(senderID,receiverID,inviteId);
+//    }
+
+    /**
+     * @param senderID int sender's id
+     * @param receiverID int receiver id
+     * @param partyID int partyID of party to which the invite pertains to
+     * */
     @Override
-    public void removeInvite(int senderID, int receiverID, int inviteId) {
-        sqlDB.removeInvite(senderID,receiverID,inviteId);
+    public void removeInvite(int senderID, int receiverID, int partyID) {
+        sqlDB.removeInvite(senderID,receiverID,partyID);
     }
 
     /**
