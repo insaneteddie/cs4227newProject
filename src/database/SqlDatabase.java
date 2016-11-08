@@ -18,7 +18,7 @@ class SqlDatabase {
     private final String jdbcDriver;
     //set up to connect to an rds instance on my aws account
     private final String dbUrl;
-
+    PreparedStatement prepStatement;
     //  Database credentials
     private final  String user;
     private final  String pass;
@@ -70,9 +70,8 @@ class SqlDatabase {
      * */
     public void addUser(String userName, String userPass, String email)
     {
-        //logger.logInfo("Attempting to Connect");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Attempting to Connect"));
-        //logger.logInfo("Inserting records into the table....");
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Inserting records into the table...."));
         try {
             Class.forName(jdbcDriver);
@@ -257,7 +256,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
+            prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Email = ?");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,email);
             ResultSet res = prepStatement.executeQuery();
@@ -267,12 +266,15 @@ class SqlDatabase {
                 checker = 1;
                 return checker;
             }
-            prepStatement.close();
+            //prepStatement.close();
+            //connection.close();
         } catch (SQLException|ClassNotFoundException e) {
             //logger.logWarning(e);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }finally {
+
             try {
+                prepStatement.close();
                 connection.close();
             } catch (SQLException se) {
                 //logger.logWarning(se);
@@ -534,7 +536,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
+            prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
             ResultSet res = prepStatement.executeQuery();
 
@@ -543,12 +545,13 @@ class SqlDatabase {
                 checker = 1;
                 return checker;
             }
-            prepStatement.close();
+            //prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
             //logger.logWarning(e);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
+                    prepStatement.close();
                     connection.close();
             } catch (SQLException se) {
                 //logger.logWarning(se);
@@ -875,12 +878,12 @@ class SqlDatabase {
             statement = connection.createStatement();
             PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id,user_Email,user_Bio FROM users WHERE user_Name = ?");
             prepStatement.setString(1, userName);
-
             ResultSet res = prepStatement.executeQuery();
 
             String email;
             String bio;
             int id;
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "" + res.absolute(1)));
             id = res.getInt("user_Id");
             email = res.getString("user_Email");
             bio = res.getString("user_Bio");

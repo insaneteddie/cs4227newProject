@@ -30,10 +30,10 @@ public class StartUpUI {
             /* Observer to PanelManager */
             Screen screen = new Screen();
             /* Starts database connection */
-            DatabaseInterface database = new DatabaseAccess();
+            //DatabaseInterface database = new DatabaseAccess();
             /* Will process input taken from client GUI */
             SessionInformation sessionInfo = SessionInformation.getInstance();
-            sessionInfo.setDbConnection(database);
+            //sessionInfo.setDbConnection(database);
             /* Panel factory to display panels on window */
             MenuFactory menuFac = new MenuFactory(sessionInfo);
             /* Subject in observer pattern */
