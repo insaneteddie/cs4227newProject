@@ -86,7 +86,7 @@ class SqlDatabase {
 
             prepStatement.close();
         } catch (SQLException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
 
         } catch (ClassNotFoundException ce) {
@@ -97,7 +97,7 @@ class SqlDatabase {
             try {
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -123,14 +123,14 @@ class SqlDatabase {
             prepStatement.executeUpdate();
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -160,14 +160,14 @@ class SqlDatabase {
                 canLogin = true;
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -194,13 +194,13 @@ class SqlDatabase {
             playerName = res.getString("user_Name");
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -227,13 +227,13 @@ class SqlDatabase {
             System.out.println(userId);
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -269,7 +269,7 @@ class SqlDatabase {
             //prepStatement.close();
             //connection.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }finally {
 
@@ -277,7 +277,7 @@ class SqlDatabase {
                 prepStatement.close();
                 connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -310,14 +310,14 @@ class SqlDatabase {
             }
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -348,14 +348,14 @@ class SqlDatabase {
             }
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -388,14 +388,14 @@ class SqlDatabase {
             invitesList.add(userInvites);
 
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -428,14 +428,14 @@ class SqlDatabase {
 
             return partyId;
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -476,14 +476,14 @@ class SqlDatabase {
             prepStatement.executeUpdate();
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -508,14 +508,14 @@ class SqlDatabase {
                 return false;
             }
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -547,14 +547,14 @@ class SqlDatabase {
             }
             //prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                     prepStatement.close();
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -588,14 +588,14 @@ class SqlDatabase {
                 }
             counter = 0;
     } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
     } finally {
         try {
             if (statement != null)
                 connection.close();
         } catch (SQLException se) {
-            //logger.logWarning(se);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
         }
     }
@@ -623,14 +623,14 @@ class SqlDatabase {
                 return true;
             }
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -659,14 +659,14 @@ class SqlDatabase {
             prepStatement.executeQuery();
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -724,14 +724,14 @@ class SqlDatabase {
             prepStatement.executeUpdate();
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -770,14 +770,14 @@ class SqlDatabase {
             prepStatement.executeUpdate();
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -811,14 +811,14 @@ class SqlDatabase {
 
             counter = 0;
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 if (statement != null)
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -849,13 +849,13 @@ class SqlDatabase {
             }
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                     connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
@@ -892,13 +892,13 @@ class SqlDatabase {
 
             prepStatement.close();
         } catch (SQLException|ClassNotFoundException e) {
-            //logger.logWarning(e);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
                 connection.close();
             } catch (SQLException se) {
-                //logger.logWarning(se);
+
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }

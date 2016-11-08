@@ -17,7 +17,7 @@ public class DatabaseBridge implements DatabaseInterface {
         sqlDB = new SqlDatabase();
 
     }
-    //overloaded to allow connection to own database
+    /*overloaded to allow connection to own database*/
     /**
      * @param databaseURL string url
      * @param dbUser string user
@@ -39,7 +39,7 @@ public class DatabaseBridge implements DatabaseInterface {
     public boolean canLogin(String username, String password) {
         return sqlDB.canLogin(username,password);
     }
-    //this needs to be edited... seems a bit pointless to pass in the username to get the username
+
     /**
      * @param username Looks up user table with user_Name
      * @return String with user_Id,user_Email,user_Bio
@@ -167,7 +167,7 @@ public class DatabaseBridge implements DatabaseInterface {
      * @param receiverID int receiver id
      * @param partyId int party id to add to party if that type of invite
      * */
-    @Override// String content,int type
+    @Override
     public void addInvite(int senderID, int receiverID, int partyId) {
         sqlDB.addInvite(senderID,receiverID,partyId);
     }
