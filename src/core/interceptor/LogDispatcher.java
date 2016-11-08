@@ -65,7 +65,7 @@ public class LogDispatcher implements LogInterceptor {
             interceptorList = (ArrayList) this.interceptors.clone();
         }
         for(Object i : interceptorList){
-            loggingChain.getDetails(context.getType(), context.getLevel(), context.getException(), context.getStringMessage());
+            loggingChain.getDetails(context.getType(), context.getException(), context.getStringMessage());
             context.setFinalMessage(loggingChain.getFullMessage());
             ((LogInterceptor)i).onLogRequestReceived(context);
         }
