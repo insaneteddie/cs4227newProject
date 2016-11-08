@@ -3,7 +3,7 @@ package database;
 import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
-import core.interceptor.Log;
+
 
 import java.util.ArrayList;
 import java.sql.*;
