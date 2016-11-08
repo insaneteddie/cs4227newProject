@@ -26,7 +26,7 @@ class SqlDatabase {
     private Connection connection;
     private Statement statement;
 
-    private Log logger;
+    
 
     /** no-args constructor */
     SqlDatabase()
