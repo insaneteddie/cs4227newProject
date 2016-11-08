@@ -54,15 +54,15 @@ class SqlDatabase {
 
     }
 
-        //table name,columns *string is varchar, int is int.
-        // users,String user_Name, String user_Pass, String email,String user_Bio.
-        // user_friends,int user_Id (from users table),int friend_Id from users.
-        // user_messages.
-        // user_games.
-        // user_invites.
-        // user_parties.
+        /*table name,columns *string is varchar, int is int.
+         users,String user_Name, String user_Pass, String email,String user_Bio.
+         user_friends,int user_Id (from users table),int friend_Id from users.
+         user_messages.
+         user_games.
+         user_invites.
+         user_parties.*/
 
-    //add a user to the user table should look at hash tables.
+    //add a user to the user table
     /**
      * @param userName String username to add
      * @param userPass String pass to add
@@ -90,7 +90,7 @@ class SqlDatabase {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
 
         } catch (ClassNotFoundException ce) {
-            //logger.logWarning(ce);
+
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ce, ""));
             ce.getException();
         } finally {
@@ -103,14 +103,14 @@ class SqlDatabase {
         }
 
     }
-    //method to add a friend we need to add this to the interface
+
     /**
      * @param userId int userID of person who is adding friend
      * @param friendId int friend to be added's id
      * */
     void addFriend(int userId, int friendId)
     {
-        //logger.logInfo("Inserting records into the table...");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Inserting records into the table..."));
         try {
             Class.forName(jdbcDriver);
@@ -135,7 +135,7 @@ class SqlDatabase {
             }
         }
     }
-    //checks the username and password from the users database
+
     /**
      * @param userName String username to check
      * @param userPass String pass to check
@@ -144,7 +144,7 @@ class SqlDatabase {
     boolean canLogin(String userName, String userPass)
     {
         boolean canLogin = false;
-        //logger.logInfo("Checking login details");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking login details"));
         try {
             Class.forName(jdbcDriver);
@@ -153,7 +153,7 @@ class SqlDatabase {
             PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,userPass);
-            //setting the canLogin boolean to the boolean that's returned if there are results that match the query.
+
 
             ResultSet res = prepStatement.executeQuery();
             if(res.isBeforeFirst())
@@ -173,7 +173,7 @@ class SqlDatabase {
         }
         return canLogin;
     }
-    //needs testing too...
+
     /**
      * @param userId userId to get username
      * @return String username of user_Id
@@ -181,7 +181,7 @@ class SqlDatabase {
     String getPlayerName(int userId)
     {
         String playerName = "";
-        //logger.logInfo("checking player details...");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking player details..."));
         try {
             Class.forName(jdbcDriver);
@@ -206,7 +206,7 @@ class SqlDatabase {
         }
         return playerName;
     }
-    //haven't tested yet...
+
     /**
      * @param userName String username to get userID of
      * @return return user's user_ID
@@ -240,7 +240,7 @@ class SqlDatabase {
         return userId;
     }
 
-    //check username,and email
+
     /**
      * @param userName string username to check
      * @param email string email to check
@@ -249,7 +249,7 @@ class SqlDatabase {
     int checkNameEmail(String userName, String email)
     {
         int checker = 0;
-        //logger.logInfo("checking player details...");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking player details..."));
         try {
             Class.forName(jdbcDriver);
@@ -266,8 +266,7 @@ class SqlDatabase {
                 checker = 1;
                 return checker;
             }
-            //prepStatement.close();
-            //connection.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -283,7 +282,7 @@ class SqlDatabase {
         }
         return checker;
     }
-    //is party full method
+
     /**
      * @param partyId int partyId to lookup
      * @return boolean if full or not
@@ -401,7 +400,7 @@ class SqlDatabase {
         }
         return invitesList;
     }
-    //takes in party creator user_Id and sets it as leader_Id in the table :)
+
     /**
      * @param leaderId takes in user_Id and sets it as leader of party
      * @return int of partyId
@@ -409,7 +408,7 @@ class SqlDatabase {
     int createParty(int leaderId)
     {
         int partyId;
-        //logger.logInfo("Inserting records into the table...");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Inserting records into the table..."));
         try {
             Class.forName(jdbcDriver);
@@ -441,7 +440,7 @@ class SqlDatabase {
         }
         return 1;
     }
-    //hacked a fix
+
     /**
      * @param playerID int user_Id to lookup parties table
      * @param partyID int party_Id narrow down lookup criteria
@@ -488,7 +487,7 @@ class SqlDatabase {
             }
         }
     }
-    //sorted
+
     /**
      * @param partyID int party to check if exists
      * @return return boolean if so
@@ -521,7 +520,7 @@ class SqlDatabase {
         }
         return true;
     }
-    //should work
+
     /**
      * @param username username to check
      * @return int 0/1 (true or false)
@@ -529,7 +528,7 @@ class SqlDatabase {
     int doesPlayerExist(String username)
     {
         int checker = 0;
-        //logger.logInfo("Checking player details***");
+
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking player details..."));
         try {
             Class.forName(jdbcDriver);
@@ -545,7 +544,7 @@ class SqlDatabase {
                 checker = 1;
                 return checker;
             }
-            //prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -560,7 +559,7 @@ class SqlDatabase {
         }
         return checker;
     }
-    //the above mentioned hacked fix
+
     /**
      * @param partyId int partyId to check
      * @return int null for check
@@ -636,7 +635,7 @@ class SqlDatabase {
         }
         return false;
     }
-    //int typeID,String invite_content,
+
     /**
      * @param senderID int sender_ID to add to table
      * @param receiverID int user_ID to add to table
@@ -671,37 +670,6 @@ class SqlDatabase {
             }
         }
     }
-
-    /**
-     * @param senderID int sender_Id to remove invite from
-     * @param receiverID int receiver_ID to remove from table
-     * @param inviteId int invite_id to remove from
-     * */
-//    void removeInvite(int senderID, int receiverID, int inviteId)
-//    {
-//        try {
-//            Class.forName(jdbcDriver);
-//            connection = DriverManager.getConnection(dbUrl, user, pass);
-//
-//            statement = connection.createStatement();
-//            PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND invite_Id = ?)");
-//            prepStatement.setInt(1, senderID);
-//            prepStatement.setInt(2,receiverID);
-//            prepStatement.setInt(3,inviteId);
-//
-//            prepStatement.executeUpdate();
-//            prepStatement.close();
-//        } catch (SQLException|ClassNotFoundException e) {
-//            logger.logWarning(e);
-//        } finally {
-//            try {
-//                if (statement != null)
-//                    connection.close();
-//            } catch (SQLException se) {
-//                logger.logWarning(se);
-//            }
-//        }
-//    }
 
 
     /**
