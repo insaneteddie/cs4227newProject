@@ -17,15 +17,8 @@ import core.user.Player;
 import core.utils.Log;
 import database.DatabaseBridge;
 
-import core.utils.Log;
-import database.DatabaseBridge;
-
 import database.DatabaseInterface;
-import message.Invite;
-import message.InviteFactory;
-import message.Message;
-import message.PartyInviteFactory;
-
+import messaging.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +29,9 @@ public class SessionInformation {
 
     private static SessionInformation sessionInfo = null;
     private DatabaseInterface database;
-    private InviteFactory inviteFactory;
+    private AbstractMessagingFactory abstractMessagingFactory;
     private Player player = null;
     private Party party;
-    private final Log log = new Log(getClass().getName());
     private DatabaseBridge sqlDB = new DatabaseBridge();
 
     private SessionInformation() {
@@ -47,7 +39,7 @@ public class SessionInformation {
         setPlayer();
         party = new Party();
         player.attach(party);
-        inviteFactory = new PartyInviteFactory();
+        abstractMessagingFactory = MessagingProvider.getFactory("INVITE");
     }
 
     public static SessionInformation getInstance() {
@@ -196,7 +188,7 @@ public class SessionInformation {
             List<Integer[]> invites = sqlDB.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
-                    Message newInvite = inviteFactory.createInvite(invites.get(i)[0], player.getId(), invites.get(i)[1]);
+                    Invite newInvite = abstractMessagingFactory.createInvite("PARTY_INVITE", player.getId(), invites.get(i)[1], invites.get(i)[2]);
                     player.addInvite(newInvite);
                 }
             }
