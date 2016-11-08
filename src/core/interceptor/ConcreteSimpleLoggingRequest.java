@@ -7,10 +7,15 @@ public class ConcreteSimpleLoggingRequest implements LoggingRequest {
     private Severity level;
     private Exception exception;
     private String message;
-    private final int type = SimpleLog.SIMPLELOG;
+    private static final int type = SimpleLog.SIMPLELOG;
 
     private String finalMessage = "";
 
+    /**
+     * @param level Severity
+     * @param exception Exception
+     * @param message String
+     * */
     public ConcreteSimpleLoggingRequest(Severity level, Exception exception, String message) {
         this.level = level;
         this.exception = exception;

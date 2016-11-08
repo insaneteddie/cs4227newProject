@@ -40,13 +40,20 @@ public class Log {
     }
 
     /**
-     * @param message
+     * @param type LoggingRequest.Severity
+     * @param message String
      * */
     public void logMessage(LoggingRequest.Severity type, String message){
         switch(type){
-                case WARNING:  logger.log(Level.WARNING, message);    break;
-                case SEVERE:  logger.log(Level.SEVERE, message);    break;
-                case INFO:  logger.log(Level.INFO, message);    break;
+                case WARNING:
+                    logger.log(Level.WARNING, message);
+                    break;
+                case SEVERE:
+                    logger.log(Level.SEVERE, message);
+                    break;
+                case INFO:
+                    logger.log(Level.INFO, message);
+                    break;
             default:
             }
         }

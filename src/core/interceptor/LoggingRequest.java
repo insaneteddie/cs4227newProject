@@ -26,12 +26,12 @@ public interface LoggingRequest {
     int getType();
 
     /**
-     * params: String final message
+     * @param finalMessage String
      */
     void setFinalMessage(String finalMessage);
 
     /**
-     * params: String final message
+     * @return String
      */
     String getFinalMessage();
 }
