@@ -10,7 +10,7 @@ package core.user;
 
 import core.session.SessionObserver;
 import database.DatabaseBridge;
-import message.*;
+import messaging.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +106,7 @@ public class Player extends User implements SessionSubject {
     /**
      * @param invite
      * */
-    public void addInvite(Message invite) {
+    public void addInvite(Invite invite) {
         inviteCollection.add(invite);
     }
 
