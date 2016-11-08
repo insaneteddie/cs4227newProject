@@ -11,7 +11,7 @@ public abstract class AbstractLoggingRequest{
 
     protected AbstractLoggingRequest nextInChain;
 
-    protected String fullMessage;
+    protected static String fullMessage;
 
     /**
      * @param loggingRequest AbstractLoggingRequest
@@ -29,7 +29,7 @@ public abstract class AbstractLoggingRequest{
      * */
     public void getDetails(int type, LoggingRequest.Severity severity, Exception exception, String message){
         if(this.type == type){
-            fullMessage = messageCreation(severity, exception, message);
+            fullMessage = messageCreation(exception, message);
         }
         else if(nextInChain != null){
             nextInChain.getDetails(type, severity, exception, message);
@@ -37,12 +37,11 @@ public abstract class AbstractLoggingRequest{
     }
 
     /**
-     * @param severity Severity
      * @param exception Exception
      * @param message String
      * @return String
      * */
-    public abstract String messageCreation(LoggingRequest.Severity severity, Exception exception, String message);
+    public abstract String messageCreation(Exception exception, String message);
 
     public int getType(){
         return type;
