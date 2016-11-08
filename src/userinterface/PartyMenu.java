@@ -8,6 +8,9 @@
 **/
 package userinterface;
 
+import core.interceptor.ConcreteSimpleLoggingRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LoggingRequest;
 import core.utils.Log;
 import core.command.SessionController;
 
@@ -117,7 +120,8 @@ public class PartyMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                    logger.logWarning(ex, "Input invalid.");
+                    //logger.logWarning(ex, "Input invalid.");
+                    LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
                 }
 
         });
@@ -142,7 +146,8 @@ public class PartyMenu extends Menu {
                         }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Input must be an integer number", null, JOptionPane.WARNING_MESSAGE);
-                        logger.logWarning(ex, "Input must be an integer number");
+                        //logger.logWarning(ex, "Input must be an integer number");
+                        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input must be an integer number."));
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "You cannot perform this action", null, JOptionPane.WARNING_MESSAGE);

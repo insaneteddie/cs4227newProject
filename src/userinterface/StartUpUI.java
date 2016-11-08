@@ -8,6 +8,9 @@
 **/
 package userinterface;
 
+import core.interceptor.ConcreteSimpleLoggingRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LoggingRequest;
 import core.utils.Log;
 import database.DatabaseAccess;
 import database.DatabaseInterface;
@@ -37,7 +40,8 @@ public class StartUpUI {
             MenuManager menuMgr = new MenuManager(menuFac);
             menuMgr.registerObserver(screen);
         } catch (Exception e) {
-            logger.logSevere(e);
+            //logger.logSevere(e);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.SEVERE, e, ""));
         }
     }
 }
