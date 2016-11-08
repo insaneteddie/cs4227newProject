@@ -26,12 +26,11 @@ class SqlDatabase {
     private Connection connection;
     private Statement statement;
 
-    
+
 
     /** no-args constructor */
     SqlDatabase()
     {
-        logger = new Log(getClass().getName());
         jdbcDriver = "com.mysql.jdbc.Driver";
         dbUrl = "jdbc:mysql://cs4227dbserver.cx7qikfelfcm.eu-west-1.rds.amazonaws.com:3306/awesome_gaming";
         user = "admin";
