@@ -1,5 +1,8 @@
 package messaging;
 
+import core.interceptor.ConcreteSimpleLoggingRequest;
+import core.interceptor.LogDispatcher;
+import core.interceptor.LoggingRequest;
 import core.utils.Log;
 import database.DatabaseBridge;
 
@@ -43,9 +46,11 @@ class PartyInvite implements Invite {
     public void sendInvite() {
         try {
             sqlDb.addInvite(senderID, receiverID, partyID);
-            log.logInfo("Party Invite Sent");
+            //log.logInfo("Party Invite Sent");
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Party Invite Sent"));
         } catch (Exception ex) {
-            log.logWarning(ex);
+            //log.logWarning(ex);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
         }
 
     }
@@ -89,9 +94,11 @@ class PartyInvite implements Invite {
     {
         try {
             sqlDb.removeInvite(senderID, receiverID, partyID);
-            log.logInfo("Invite from " + senderID + " to " + receiverID + " for party " + partyID + " has been deleted");
+            //log.logInfo("Invite from " + senderID + " to " + receiverID + " for party " + partyID + " has been deleted");
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Invite from " + senderID + " to " + receiverID + " for party " + partyID + " has been deleted"));
         } catch (Exception ex) {
-            log.logWarning(ex);
+            //log.logWarning(ex);
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
         }
     }
 }
