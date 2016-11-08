@@ -11,7 +11,7 @@ package userinterface;
 import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
-import core.utils.Log;
+import core.interceptor.Log;
 import core.command.SessionController;
 
 import java.awt.BorderLayout;

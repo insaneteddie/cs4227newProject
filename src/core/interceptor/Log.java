@@ -1,8 +1,4 @@
-package core.utils;
-
-import core.interceptor.ConcreteSimpleLoggingRequest;
-import core.interceptor.LogDispatcher;
-import core.interceptor.LoggingRequest;
+package core.interceptor;
 
 import java.io.IOException;
 import java.util.logging.FileHandler;

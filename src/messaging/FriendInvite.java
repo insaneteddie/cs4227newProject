@@ -4,7 +4,7 @@ import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
 import database.DatabaseBridge;
-import core.utils.Log;
+import core.interceptor.Log;
 
 import java.util.UUID;
 
