@@ -13,17 +13,14 @@ public class ComplexLog extends AbstractLoggingRequest {
     }
 
     /**
-     * @param severity Severity
      * @param exception Exception
      * @param message String
      * @return String
      * */
     @Override
-    public String messageCreation(LoggingRequest.Severity severity, Exception exception, String message) {
+    public String messageCreation(Exception exception, String message) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append(severity);
-        sb.append(":\t");
         sb.append(exception);
         sb.append(":\t");
         sb.append(message);
