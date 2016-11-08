@@ -36,7 +36,7 @@ public class AppDriver {
 
             @Override
             public void onLogRequestReceived(LoggingRequest context) {
-                log.logMessage(context.getFinalMessage());
+                log.logMessage(context.getLevel(),context.getFinalMessage());
             }
         };
 
