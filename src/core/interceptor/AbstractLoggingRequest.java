@@ -22,17 +22,16 @@ public abstract class AbstractLoggingRequest{
 
     /**
      * @param type int
-     * @param severity Severity
      * @param exception Exception
      * @param message String
      * @return String
      * */
-    public void getDetails(int type, LoggingRequest.Severity severity, Exception exception, String message){
+    public void getDetails(int type, Exception exception, String message){
         if(this.type == type){
             fullMessage = messageCreation(exception, message);
         }
         else if(nextInChain != null){
-            nextInChain.getDetails(type, severity, exception, message);
+            nextInChain.getDetails(type, exception, message);
         }
     }
 
