@@ -46,5 +46,12 @@ public class Log {
     /**
      * @param message
      * */
-    public void logMessage(String message){ logger.log(Level.ALL, message);}
+    public void logMessage(LoggingRequest.Severity type, String message){
+        switch(type){
+                case WARNING:  logger.log(Level.WARNING, message);    break;
+                case SEVERE:  logger.log(Level.SEVERE, message);    break;
+                case INFO:  logger.log(Level.INFO, message);    break;
+            default:
+            }
+        }
 }
