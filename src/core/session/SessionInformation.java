@@ -14,7 +14,6 @@ import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
 import core.user.Player;
 
-import core.utils.Log;
 import database.DatabaseBridge;
 
 import database.DatabaseInterface;
