@@ -22,7 +22,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     //  Database credentials
     private final  String user;
     private final  String pass;
-    
+    private final static String logCheck = "Checking player details";
     private Connection connection;
     private Statement statement;
 
@@ -199,7 +199,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     {
         String playerName = "";
 
-        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking player details..."));
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, logCheck));
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -268,7 +268,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     {
         int checker = 0;
 
-        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking player details..."));
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, logCheck));
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -548,7 +548,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     {
         int checker = 0;
 
-        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Checking player details..."));
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, logCheck));
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
