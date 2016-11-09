@@ -7,7 +7,7 @@ package database;
     /**
      * setup the database
      */
-     void setUpDatabaseDetails();
+      void setUpDatabaseDetails();
 
     /**
      * overloaded database setup
@@ -18,10 +18,6 @@ package database;
      */
      void setUpDatabaseDetails(String databaseURL, String dbUser, String dbPass, String jdbcDriver);
 
-    /**
-     * connection method
-     */
-     void connectToDatabase();
 
 
 

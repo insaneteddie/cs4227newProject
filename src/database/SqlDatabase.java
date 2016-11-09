@@ -13,20 +13,18 @@ import java.util.List;
 /**
  * Created by s_harte Awesome Gaming  : CS4227 Project on 10/20/2016.
  */
-class SqlDatabase {
+class SqlDatabase implements SqlDatabaseInterface {
     // JDBC driver name and database URL
     private final String jdbcDriver;
     //set up to connect to an rds instance on my aws account
     private final String dbUrl;
-    PreparedStatement prepStatement;
+    private PreparedStatement prepStatement;
     //  Database credentials
     private final  String user;
     private final  String pass;
     
     private Connection connection;
     private Statement statement;
-
-
 
     /** no-args constructor */
     SqlDatabase()
@@ -37,7 +35,6 @@ class SqlDatabase {
         pass = "teamawesome";
 
     }
-
     /**
      * @param databaseURL Url of database to connect to
      * @param dbUser username for database
@@ -47,11 +44,31 @@ class SqlDatabase {
     SqlDatabase(String databaseURL, String dbUser, String dbPass, String jdbcDriver)
     {
         this.jdbcDriver = jdbcDriver;
-        dbUrl = databaseURL;
-        user = dbUser;
-        pass = dbPass;
+        this.dbUrl = databaseURL;
+        this.user = dbUser;
+        this.pass = dbPass;
 
     }
+
+    /**
+     *
+     * Calls constructor
+     */
+    @Override
+    public void setUpDatabaseDetails()
+    {
+        new SqlDatabase();
+    }
+    /**
+     * Calls to overloaded constructor
+     */
+    @Override
+    public void setUpDatabaseDetails(String databaseURL, String dbUser, String dbPass, String jdbcDriver) {
+        new SqlDatabase(databaseURL,dbUser,dbPass,jdbcDriver);
+    }
+
+
+
 
         /*table name,columns *string is varchar, int is int.
          users,String user_Name, String user_Pass, String email,String user_Bio.
@@ -67,7 +84,7 @@ class SqlDatabase {
      * @param userPass String pass to add
      * @param email String email address to add to table
      * */
-    public void addUser(String userName, String userPass, String email)
+    void addUser(String userName, String userPass, String email)
     {
 
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Attempting to Connect"));
@@ -77,13 +94,13 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
+            prepStatement = connection.prepareStatement("INSERT INTO users ( user_Name, user_Pass, user_Email) VALUES(?,?,?)");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,userPass);
             prepStatement.setString(3,email);
             prepStatement.executeUpdate();
 
-            prepStatement.close();
+
         } catch (SQLException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -94,6 +111,7 @@ class SqlDatabase {
             ce.getException();
         } finally {
             try {
+                    prepStatement.close();
                     connection.close();
             } catch (SQLException se) {
 
@@ -115,18 +133,18 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_friends ( user_Id, friend_Id) VALUES( ?, ?)");
+            prepStatement = connection.prepareStatement("INSERT INTO user_friends ( user_Id, friend_Id) VALUES( ?, ?)");
             prepStatement.setInt(1,userId);
             prepStatement.setInt(2,friendId);
 
             prepStatement.executeUpdate();
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
+                    prepStatement.close();
                     connection.close();
             } catch (SQLException se) {
 
@@ -149,7 +167,7 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
+            prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ? AND user_Pass = ?");
             prepStatement.setString(1,userName);
             prepStatement.setString(2,userPass);
 
@@ -157,14 +175,14 @@ class SqlDatabase {
             ResultSet res = prepStatement.executeQuery();
             if(res.isBeforeFirst())
                 canLogin = true;
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         }finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -186,17 +204,18 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Name FROM users WHERE user_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT user_Name FROM users WHERE user_Id = ?");
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
             playerName = res.getString("user_Name");
-            prepStatement.close();
+            return playerName;
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
+                prepStatement.close();
                 connection.close();
             } catch (SQLException se) {
 
@@ -218,18 +237,18 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id FROM users WHERE user_Name = ?");
+            prepStatement = connection.prepareStatement("SELECT user_Id FROM users WHERE user_Name = ?");
             prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
             userId = res.getInt("user_Id");
-            System.out.println(userId);
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
+                prepStatement.close();
                 connection.close();
             } catch (SQLException se) {
 
@@ -294,7 +313,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
             prepStatement.setInt(1, partyId);
 
             ResultSet res = prepStatement.executeQuery();
@@ -302,18 +321,20 @@ class SqlDatabase {
             while (res.next())
             {
                 int temp = res.getInt(toCheck);
-                if (res.wasNull()) {
+                if (temp == 0) {
                     toCheck++;
+                    return false;
                 }
+                toCheck++;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -335,7 +356,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
@@ -344,14 +365,14 @@ class SqlDatabase {
                 friendsList.add(res.getInt(iterator));
                 iterator++;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -373,25 +394,25 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             Integer [] userInvites = new Integer[100];
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
             prepStatement.setInt(1,playerId);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             while(res.next())
             {
                 userInvites[iterator] = res.getInt(iterator);
                 iterator++;
             }
             invitesList.add(userInvites);
-
+            return invitesList;
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -414,7 +435,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_parties (leader_Id) VALUES(?)");
+            prepStatement = connection.prepareStatement("INSERT INTO user_parties (leader_Id) VALUES(?)");
             prepStatement.setInt(1,leaderId);
             prepStatement.executeUpdate();
             prepStatement.close();
@@ -422,7 +443,7 @@ class SqlDatabase {
             prepStatement.setInt(1,leaderId);
             ResultSet res = prepStatement.executeQuery();
             partyId = res.getInt("party_Id");
-            prepStatement.close();
+
 
             return partyId;
         } catch (SQLException|ClassNotFoundException e) {
@@ -430,8 +451,8 @@ class SqlDatabase {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -467,19 +488,19 @@ class SqlDatabase {
                     break;
                 default:
             }
-            PreparedStatement prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties ?  WHERE party_Id = ?");
+            prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties ?  WHERE party_Id = ?");
             prepStatement.setInt(1,playerID);
             prepStatement.setString(2,sqlCol);
             prepStatement.setInt(3,partyID);
             prepStatement.executeUpdate();
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -497,11 +518,10 @@ class SqlDatabase {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_Id = ?");
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
             if (res.next()) {
                 return false;
             }
@@ -510,8 +530,8 @@ class SqlDatabase {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -563,7 +583,7 @@ class SqlDatabase {
      * @param partyId int partyId to check
      * @return int null for check
      * */
-    private int findNullFromParties(int partyId)
+    int findNullFromParties(int partyId)
     {
         int counter = 0;
         try {
@@ -571,10 +591,10 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             counter = 1;
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
                 while(res.next())
                 {
                     if(res.wasNull())
@@ -590,8 +610,8 @@ class SqlDatabase {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
     } finally {
         try {
-            if (statement != null)
-                connection.close();
+            prepStatement.close();
+            connection.close();
         } catch (SQLException se) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -611,11 +631,11 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
+            prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
             prepStatement.setInt(1, playerId);
             prepStatement.setInt(2, playerId);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             if (res.next())
             {
                 return true;
@@ -625,8 +645,8 @@ class SqlDatabase {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -647,7 +667,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,typeId,party_Id)  VALUES( ?, ?, ?, ?, ?)");
+            prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,typeId,party_Id)  VALUES( ?, ?, ?, ?, ?)");
             prepStatement.setInt(1,senderID);
             prepStatement.setString(2,"this is content");
             prepStatement.setInt(3,receiverID);
@@ -655,14 +675,14 @@ class SqlDatabase {
             prepStatement.setInt(5,partyId);
 
             prepStatement.executeQuery();
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -683,20 +703,20 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND party_Id = ?)");
+            prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND party_Id = ?)");
             prepStatement.setInt(1, senderID);
             prepStatement.setInt(2, receiverID);
             prepStatement.setInt(3, partyID);
 
             prepStatement.executeUpdate();
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -730,19 +750,19 @@ class SqlDatabase {
                     break;
                 default:
             }
-            PreparedStatement prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
+            prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
             prepStatement.setString(1,sqlCol);
             prepStatement.setInt(2,playerID);
             prepStatement.setInt(3,partyID);
             prepStatement.executeUpdate();
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -763,10 +783,10 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             counter = 0;
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-            prepStatement.close();
+
             while(res.next())
             {
                 counter++;
@@ -782,7 +802,7 @@ class SqlDatabase {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                if (statement != null)
+                prepStatement.close();
                     connection.close();
             } catch (SQLException se) {
 
@@ -801,26 +821,29 @@ class SqlDatabase {
         List<Integer> partyList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
-            int iterator = 0;
+            int iterator = 1;
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_Id = ?");
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
 
             while (res.next()) {
-                if(res.getInt(iterator)!= playerID){
-                partyList.add(res.getInt(iterator));
-                iterator++;}
+                if(res.getInt(iterator)!= playerID)
+                {
+                    partyList.add(res.getInt(iterator));
+                }
+                iterator++;
             }
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
-                    connection.close();
+                prepStatement.close();
+                connection.close();
             } catch (SQLException se) {
 
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
@@ -843,7 +866,7 @@ class SqlDatabase {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            PreparedStatement prepStatement = connection.prepareStatement("SELECT user_Id,user_Email,user_Bio FROM users WHERE user_Name = ?");
+            prepStatement = connection.prepareStatement("SELECT user_Id,user_Email,user_Bio FROM users WHERE user_Name = ?");
             prepStatement.setString(1, userName);
             ResultSet res = prepStatement.executeQuery();
 
@@ -857,12 +880,13 @@ class SqlDatabase {
 
             userdetails = id + "," + email + "," +bio;
 
-            prepStatement.close();
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
         } finally {
             try {
+                prepStatement.close();
                 connection.close();
             } catch (SQLException se) {
 
@@ -871,4 +895,5 @@ class SqlDatabase {
         }
         return userdetails;
     }
+
 }

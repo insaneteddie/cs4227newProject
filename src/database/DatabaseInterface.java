@@ -9,8 +9,8 @@
 package database;
 
 import java.util.List;
-/** classs that defines the interface for the database*/
-public interface DatabaseInterface {
+/** class that defines the interface for the database*/
+ interface DatabaseInterface {
 
     /**
      * @param username string username to check for login
