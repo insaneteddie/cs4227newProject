@@ -22,7 +22,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     //  Database credentials
     private final  String user;
     private final  String pass;
-    private final static String logCheck = "Checking player details";
+    private static final  String LOG_CHECK = "Checking player details";
     private Connection connection;
     private Statement statement;
 
@@ -199,7 +199,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     {
         String playerName = "";
 
-        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, logCheck));
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, LOG_CHECK));
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -268,7 +268,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     {
         int checker = 0;
 
-        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, logCheck));
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, LOG_CHECK));
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -473,21 +473,8 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
             int colId = findNullFromParties(partyID);
-            String sqlCol = "";
-            switch(colId)
-            {
-                case 1: sqlCol ="user_1_Id";
-                    break;
-                case 2: sqlCol = "user_2_Id";
-                    break;
-                case 3: sqlCol = "user_3_Id";
-                    break;
-                case 4: sqlCol = "user_4_Id";
-                    break;
-                case 5: sqlCol = "user_5_Id";
-                    break;
-                default:
-            }
+            String sqlCol = getColName(colId);
+
             prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties ?  WHERE party_Id = ?");
             prepStatement.setInt(1,playerID);
             prepStatement.setString(2,sqlCol);
@@ -548,7 +535,7 @@ class SqlDatabase implements SqlDatabaseInterface {
     {
         int checker = 0;
 
-        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, logCheck));
+        LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, LOG_CHECK));
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -735,21 +722,8 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
             int colId = findUserInParty(playerID,partyID);
-            String sqlCol = "";
-            switch(colId)
-            {
-                case 1: sqlCol ="user_1_Id";
-                    break;
-                case 2: sqlCol = "user_2_Id";
-                    break;
-                case 3: sqlCol = "user_3_Id";
-                    break;
-                case 4: sqlCol = "user_4_Id";
-                    break;
-                case 5: sqlCol = "user_5_Id";
-                    break;
-                default:
-            }
+            String sqlCol = getColName(colId);
+
             prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
             prepStatement.setString(1,sqlCol);
             prepStatement.setInt(2,playerID);
@@ -811,7 +785,26 @@ class SqlDatabase implements SqlDatabaseInterface {
         }
         return counter;
     }
-
+    String getColName(int colId)
+    {
+        String colName = "";
+        switch(colId)
+        {
+            case 1: colName ="user_1_Id";
+                break;
+            case 2: colName = "user_2_Id";
+                break;
+            case 3: colName = "user_3_Id";
+                break;
+            case 4: colName = "user_4_Id";
+                break;
+            case 5: colName = "user_5_Id";
+                break;
+            default:
+                break;
+        }
+        return colName;
+    }
     /**
      * @param partyID int for looking up table - use both to cut down on false positives
      * @param playerID int for table lookup - use both to cut down on false positives
