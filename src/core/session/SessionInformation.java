@@ -183,8 +183,8 @@ public class SessionInformation {
             List<Integer[]> invites = sqlDB.getPlayerInvites(player.getId());
             if (!invites.isEmpty()) {
                 for (int i = 0; i < invites.size(); i++) {
-
-                    Invite newInvite = abstractMessagingFactory.createInvite("PARTY_INVITE", player.getId(), invites.get(i)[1], invites.get(i)[2]);
+                    System.out.println(invites.get(i)[0] + " " + invites.get(i)[1] );
+                    Invite newInvite = abstractMessagingFactory.createInvite("PARTY_INVITE", player.getId(), invites.get(i)[0], invites.get(i)[1]);
                     player.addInvite(newInvite);
                 }
             }

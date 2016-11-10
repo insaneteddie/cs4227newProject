@@ -138,6 +138,11 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setInt(2,friendId);
 
             prepStatement.executeUpdate();
+            prepStatement.close();
+            prepStatement = connection.prepareStatement("INSERT INTO user_friends ( user_Id, friend_Id) VALUES( ?, ?)");
+            prepStatement.setInt(1,friendId);
+            prepStatement.setInt(2,userId);
+            prepStatement.executeUpdate();
 
         } catch (SQLException|ClassNotFoundException e) {
 
@@ -391,21 +396,24 @@ class SqlDatabase implements SqlDatabaseInterface {
         List<Integer []> invitesList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
-            int iterator = 1;
+
             connection = DriverManager.getConnection(dbUrl, user, pass);
             Integer [] userInvites = new Integer[100];
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT invite_Id FROM user_invites WHERE user_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT invite_Id,sender_Id FROM user_invites WHERE user_Id = ?");
             prepStatement.setInt(1,playerId);
 
             ResultSet res = prepStatement.executeQuery();
 
             while(res.next())
             {
-                userInvites[iterator] = res.getInt(iterator);
-                iterator++;
+                userInvites[0] = res.getInt("invite_Id");
+
+
+                userInvites[1] = res.getInt("sender_Id");
+                invitesList.add(userInvites);
             }
-            invitesList.add(userInvites);
+
             return invitesList;
         } catch (SQLException|ClassNotFoundException e) {
 
