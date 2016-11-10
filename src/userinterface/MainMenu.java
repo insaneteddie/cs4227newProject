@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainMenu extends Menu {
-
+    private static final String Comp = "Component Not Integrated yet";
     public MainMenu() {
         showMainMenu();
     }
@@ -40,7 +40,7 @@ public class MainMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                //sessionInfo.logPlayerOut();
+
                 SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
                 menuMgr.getMenuFromFactory(1);
         });
@@ -56,16 +56,16 @@ public class MainMenu extends Menu {
         GridLayout centerMenuButtonsLayout = new GridLayout(3, 3);
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton gameButton = new JButton("Games");
-        gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        gameButton.addActionListener(e -> JOptionPane.showMessageDialog(null, Comp));
         centerMenuButtonsPanel.add(gameButton);
         JButton profileButton = new JButton("Profile");
-        profileButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        profileButton.addActionListener(e -> JOptionPane.showMessageDialog(null, Comp));
         centerMenuButtonsPanel.add(profileButton);
         JButton friendsButton = new JButton("Friends List");
-        friendsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        friendsButton.addActionListener(e -> JOptionPane.showMessageDialog(null, Comp));
         centerMenuButtonsPanel.add(friendsButton);
         JButton communityButton = new JButton("Communities");
-        communityButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Component not integrated"));
+        communityButton.addActionListener(e -> JOptionPane.showMessageDialog(null,  Comp));
         centerMenuButtonsPanel.add(communityButton);
         JButton partyButton = new JButton("Party");
         partyButton.addActionListener(e -> {
