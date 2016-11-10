@@ -12,8 +12,6 @@ import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
 import core.interceptor.Log;
-import database.DatabaseAccess;
-import database.DatabaseInterface;
 import core.session.SessionInformation;
 /** class to launch gui */
 public class StartUpUI {
