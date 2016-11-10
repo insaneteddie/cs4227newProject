@@ -442,6 +442,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement = connection.prepareStatement("SELECT party_Id from user_parties where leader_Id = ?");
             prepStatement.setInt(1,leaderId);
             ResultSet res = prepStatement.executeQuery();
+            res.next();
             partyId = res.getInt("party_Id");
 
 
@@ -821,12 +822,11 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setInt(1, partyID);
 
             ResultSet res = prepStatement.executeQuery();
-
-            while (res.next()) {
-                if(res.getInt(iterator)!= playerID)
-                {
-                    partyList.add(res.getInt(iterator));
-                }
+            partyList.add(partyID);
+            while (res.next())
+            {
+                System.out.println("Check");
+                partyList.add(res.getInt(iterator));
                 iterator++;
             }
 
