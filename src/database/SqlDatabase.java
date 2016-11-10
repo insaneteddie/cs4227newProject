@@ -213,6 +213,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
+            res.next();
             playerName = res.getString("user_Name");
             return playerName;
         } catch (SQLException|ClassNotFoundException e) {
@@ -731,7 +732,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND party_Id = ?)");
+            prepStatement = connection.prepareStatement("DELETE FROM user_invites WHERE sender_Id = ? AND user_Id = ? AND party_Id = ?");
             prepStatement.setInt(1, senderID);
             prepStatement.setInt(2, receiverID);
             prepStatement.setInt(3, partyID);
