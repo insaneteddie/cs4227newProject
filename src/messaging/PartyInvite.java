@@ -42,12 +42,21 @@ class PartyInvite extends Invite {
      */
     @Override
     public String getMessage() {
+        String friend;
+        try{
+            friend = sqlDB.getUsername(senderID);
+            return "User " + friend + " has invited you to a party";
+        } catch (Exception ex) {
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
+        }
+
         return "User " + senderID + " has invited you to a party";
     }
 
     /**
      *  deletes the invite from the DB
      */
+    @Override
     public void deleteInvite()
     {
         try {

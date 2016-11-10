@@ -80,4 +80,16 @@ public class MessageCollection implements Collection<Message>
             }
         }
     }
+
+    @Override
+    public boolean contains(Message item) {
+        boolean contains = false;
+        for (Message m: messages) {
+            if(m.getMessage().equals(item.getMessage()) && (m.getSenderID() == item.getSenderID()))
+            {
+                contains = true;
+            }
+        }
+        return contains;
+    }
 }

@@ -66,6 +66,18 @@ public class InviteCollection implements Collection<Invite>
         }
     }
 
+    @Override
+    public boolean contains(Invite item) {
+        boolean contains = false;
+        for (Invite i: invites) {
+            if(i.partyID == item.partyID && i.senderID == item.senderID)
+            {
+                contains = true;
+            }
+        }
+        return contains;
+    }
+
     /**
      * @param senderID int senderID
      * @param partyID int partyID
@@ -80,6 +92,10 @@ public class InviteCollection implements Collection<Invite>
                 invites.remove(i);
                 //delete message from DB
                 i.deleteInvite();
+            }
+            if(invites.isEmpty())
+            {
+                break;
             }
         }
     }

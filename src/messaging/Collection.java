@@ -35,4 +35,10 @@ public interface Collection<E> {
      * @param partyID int
      * */
     void remove(int senderID, int partyID);
+
+    /**
+     * @param item E
+     * @return boolean
+     */
+    boolean contains(E item);
 }
