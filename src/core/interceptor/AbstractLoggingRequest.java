@@ -11,7 +11,7 @@ public abstract class AbstractLoggingRequest{
 
     protected AbstractLoggingRequest nextInChain;
 
-    protected static String fullMessage;
+    protected String fullMessage;
 
     /**
      * @param loggingRequest AbstractLoggingRequest
@@ -33,7 +33,7 @@ public abstract class AbstractLoggingRequest{
      * @param message String
      * @return String
      * */
-    public void getDetails(int type, Exception exception, String message){
+    public  void getDetails(int type, Exception exception, String message){
         if(this.type == type){
             fullMessage = messageCreation(exception, message);
         }
