@@ -400,14 +400,14 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
             Integer [] userInvites = new Integer[100];
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT invite_Id,sender_Id FROM user_invites WHERE user_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT party_Id,sender_Id FROM user_invites WHERE user_Id = ?");
             prepStatement.setInt(1,playerId);
 
             ResultSet res = prepStatement.executeQuery();
 
             while(res.next())
             {
-                userInvites[0] = res.getInt("invite_Id");
+                userInvites[0] = res.getInt("party_Id");
 
 
                 userInvites[1] = res.getInt("sender_Id");
@@ -687,6 +687,37 @@ class SqlDatabase implements SqlDatabaseInterface {
         }
     }
 
+    /**
+     *
+     * @param partyID
+     */
+
+    void deleteParty(int partyID)
+    {
+        try{
+            Class.forName(jdbcDriver);
+            connection = DriverManager.getConnection(dbUrl, user, pass);
+
+            statement = connection.createStatement();
+            prepStatement = connection.prepareStatement("DELETE FROM user_parties WHERE party_Id = ?");
+            prepStatement.setInt(1, partyID);
+
+            prepStatement.executeUpdate();
+
+        } catch (SQLException|ClassNotFoundException e) {
+
+            LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
+        } finally {
+            try {
+                prepStatement.close();
+                connection.close();
+            } catch (SQLException se) {
+
+                LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
+            }
+        }
+
+    }
 
     /**
      * @param senderID int sender_Id to remove invite from
@@ -733,13 +764,18 @@ class SqlDatabase implements SqlDatabaseInterface {
             statement = connection.createStatement();
             int colId = findUserInParty(playerID,partyID);
             String sqlCol = getColName(colId);
+            if(sqlCol.equalsIgnoreCase("leader_Id"))
+            {
+                deleteParty(partyID);
+            }
+            else {
+                prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = null WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
+                prepStatement.setString(1, sqlCol);
+                prepStatement.setInt(2, partyID);
+                prepStatement.setInt(3, playerID);
 
-            prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ? WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
-            prepStatement.setString(1,sqlCol);
-            prepStatement.setInt(2,playerID);
-            prepStatement.setInt(3,partyID);
-            prepStatement.executeUpdate();
-
+                prepStatement.executeUpdate();
+            }
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -761,11 +797,11 @@ class SqlDatabase implements SqlDatabaseInterface {
      * */
     int findUserInParty(int userId, int partyId)
     {
-        int counter = 0;
+        int counter = 1;
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            counter = 0;
+            counter = 1;
             statement = connection.createStatement();
             prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
@@ -773,14 +809,15 @@ class SqlDatabase implements SqlDatabaseInterface {
 
             while(res.next())
             {
-                counter++;
+
                 if(res.getInt(counter) == userId)
                 {
                     return counter;
                 }
+                counter++;
             }
 
-            counter = 0;
+            counter = 1;
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -800,15 +837,17 @@ class SqlDatabase implements SqlDatabaseInterface {
         String colName = "";
         switch(colId)
         {
-            case 1: colName ="user_1_Id";
+            case 1: colName = "leader_Id";
                 break;
-            case 2: colName = "user_2_Id";
+            case 2: colName ="user_1_Id";
                 break;
-            case 3: colName = "user_3_Id";
+            case 3: colName = "user_2_Id";
                 break;
-            case 4: colName = "user_4_Id";
+            case 4: colName = "user_3_Id";
                 break;
-            case 5: colName = "user_5_Id";
+            case 5: colName = "user_4_Id";
+                break;
+            case 6: colName = "user_5_Id";
                 break;
             default:
                 break;

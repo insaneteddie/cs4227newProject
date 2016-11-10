@@ -30,7 +30,7 @@ public abstract class Invite {
     }
 
     public int getPartyID(){
-        return getPartyID();
+        return partyID;
     }
 
     public abstract String getMessage();

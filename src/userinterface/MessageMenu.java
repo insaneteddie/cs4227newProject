@@ -89,7 +89,7 @@ public class MessageMenu extends Menu {
                     JOptionPane.showMessageDialog(null, "To join a new party please leave the party you\nare currently in.", null, JOptionPane.WARNING_MESSAGE);
                 } else {
                     try {//first check if already in a party
-                        String userName = JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
+                        String userName = JOptionPane.showInputDialog(null, "Enter the User Name of the friend whose"
                                 + "\ninvite you would like to accept.");
                         if (sessionInfo.isFriend(userName)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userName));
@@ -97,11 +97,12 @@ public class MessageMenu extends Menu {
                             // see user/Player.java line 118
                             SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                             menuMgr.getMenuFromFactory(4);
+
                         } else {
-                            JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Not a valid friend Name.", null, JOptionPane.WARNING_MESSAGE);
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Input invalid. Please enter the User Name of a friend.", null, JOptionPane.WARNING_MESSAGE);
                         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
 
                     }
@@ -120,10 +121,10 @@ public class MessageMenu extends Menu {
                         menuMgr.getMenuFromFactory(4);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Not a valid friend ID.", null, JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not a valid friend Name.", null, JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Input invalid. Please enter the User Name of a friend.", null, JOptionPane.WARNING_MESSAGE);
 
                     LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
                 }

@@ -124,7 +124,13 @@ public class DatabaseBridge implements DatabaseInterface {
     public void removePlayerFromParty(int partyID, int playerID) {
         sqlDB.removePlayerFromParty(partyID,playerID);
     }
-
+    /**
+     * @param partyID int party_Id to remove
+     * */
+    public void removeParty(int partyID)
+    {
+        sqlDB.deleteParty(partyID);
+    }
     /**
      * @param username String username to check
      * @param email string email to check
