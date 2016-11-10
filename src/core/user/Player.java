@@ -105,7 +105,10 @@ public class Player extends User implements SessionSubject {
      * @param invite Invite invite
      * */
     public void addInvite(Invite invite) {
-        inviteCollection.add(invite);
+        if(!inviteCollection.contains(invite))
+        {
+            inviteCollection.add(invite);
+        }
     }
 
     /**
