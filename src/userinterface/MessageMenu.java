@@ -31,12 +31,12 @@ import javax.swing.JTextArea;
  *  UI class for displaying messaging window
  * */
 public class MessageMenu extends Menu {
-    private Log logger;
+
 
     /** public constructor */
     public MessageMenu() {
         showMessageMenu();
-        logger = new Log(getClass().getName());
+        
     }
 
     /** Builds the UI components for the menu */
@@ -94,7 +94,7 @@ public class MessageMenu extends Menu {
                                 + "\ninvite you would like to accept."));
                         if (sessionInfo.isFriend(userid)) {
                             sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
-                            //sessionInfo.removeInvite(userid);
+
                             // see user/Player.java line 118
                             SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                             menuMgr.getMenuFromFactory(4);
@@ -103,7 +103,6 @@ public class MessageMenu extends Menu {
                         }
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                        //logger.logWarning(ex, "Input invalid.");
                         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
 
                     }
@@ -116,7 +115,7 @@ public class MessageMenu extends Menu {
                     int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
                             + "\ninvite you would like to decline."));
                     if (sessionInfo.isFriend(userid)) {
-                        //sessionInfo.removeInvite(userid);
+
                         // see user/Player.java line 118
                         SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                         menuMgr.getMenuFromFactory(4);
@@ -126,7 +125,7 @@ public class MessageMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                    //logger.logWarning(ex, "Input invalid.");
+
                     LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
                 }
         });
