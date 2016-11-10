@@ -241,8 +241,9 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setString(1,userName);
 
             ResultSet res = prepStatement.executeQuery();
-            userId = res.getInt("user_Id");
-
+            res.next();
+            userId = res.getInt(1);
+            System.out.println(userId);
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -352,11 +353,11 @@ class SqlDatabase implements SqlDatabaseInterface {
         List<Integer> friendsList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
-            int iterator = 0;
+            int iterator = 1;
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT * FROM user_friends WHERE user_Id = ?");
+            prepStatement = connection.prepareStatement("SELECT friend_Id FROM user_friends WHERE user_Id = ?");
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
@@ -365,7 +366,7 @@ class SqlDatabase implements SqlDatabaseInterface {
                 friendsList.add(res.getInt(iterator));
                 iterator++;
             }
-
+            return friendsList;
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -545,7 +546,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement = connection.prepareStatement("SELECT * FROM users WHERE user_Name = ?");
             prepStatement.setString(1,username);
             ResultSet res = prepStatement.executeQuery();
-
+            res.next();
             if(!res.next())
             {
                 checker = 1;
@@ -655,14 +656,14 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,typeId,party_Id)  VALUES( ?, ?, ?, ?, ?)");
+            prepStatement = connection.prepareStatement("INSERT INTO user_invites (sender_Id,invite_content,user_Id,party_Id)  VALUES( ?, ?, ?, ?)");
             prepStatement.setInt(1,senderID);
             prepStatement.setString(2,"this is content");
             prepStatement.setInt(3,receiverID);
-            prepStatement.setInt(4,4);
-            prepStatement.setInt(5,partyId);
+            
+            prepStatement.setInt(4,partyId);
 
-            prepStatement.executeQuery();
+            prepStatement.executeUpdate();
 
         } catch (SQLException|ClassNotFoundException e) {
 

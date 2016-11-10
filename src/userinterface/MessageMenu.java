@@ -89,10 +89,10 @@ public class MessageMenu extends Menu {
                     JOptionPane.showMessageDialog(null, "To join a new party please leave the party you\nare currently in.", null, JOptionPane.WARNING_MESSAGE);
                 } else {
                     try {//first check if already in a party
-                        int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
-                                + "\ninvite you would like to accept."));
-                        if (sessionInfo.isFriend(userid)) {
-                            sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userid));
+                        String userName = JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
+                                + "\ninvite you would like to accept.");
+                        if (sessionInfo.isFriend(userName)) {
+                            sessionInfo.addPlayerToParty(sessionInfo.getPartyIDFromSenderInvite(userName));
 
                             // see user/Player.java line 118
                             SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
@@ -111,9 +111,9 @@ public class MessageMenu extends Menu {
         JButton declineInviteButton = new JButton("Decline Invite");
         declineInviteButton.addActionListener(e ->{
                 try {
-                    int userid = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend whose"
-                            + "\ninvite you would like to decline."));
-                    if (sessionInfo.isFriend(userid)) {
+                    String userName = JOptionPane.showInputDialog(null, "Enter the User Name of the friend whose"
+                            + "\ninvite you would like to decline.");
+                    if (sessionInfo.isFriend(userName)) {
 
                         // see user/Player.java line 118
                         SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");

@@ -111,8 +111,8 @@ public class PartyMenu extends Menu {
         inviteButton.addActionListener(e -> {
 
                 try {
-                    int friendToInvite = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the friend you would"
-                            + "\nlike to invite to join the party"));
+                    String friendToInvite = JOptionPane.showInputDialog(null, "Enter the User Name of the friend you would"
+                            + "\nlike to invite to join the party");
                     if (sessionInfo.isFriend(friendToInvite)) {
                         sessionInfo.sendInvite(friendToInvite);
                     } else {
@@ -120,7 +120,7 @@ public class PartyMenu extends Menu {
                     }
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(null, "Input invalid. Please enter the ID of a friend.", null, JOptionPane.WARNING_MESSAGE);
-                    //logger.logWarning(ex, "Input invalid.");
+
                     LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, "Input invalid."));
                 }
 

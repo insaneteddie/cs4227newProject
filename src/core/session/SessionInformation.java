@@ -52,13 +52,11 @@ public class SessionInformation {
     /**
      * instantiate a SessionController object and add default commands */
     private void setUpController(){
-        SessionController.getInstance().addCommand(new FriendInviteSendCommand("FRIEND_INVITE_SEND"));
-        SessionController.getInstance().addCommand(new InviteRemoveCommand("INVITE_REMOVE"));
+
         SessionController.getInstance().addCommand(new PartyCreateCommand("PARTY_CREATE"));
         SessionController.getInstance().addCommand(new PartyDetailsRetrieveCommand("PARTY_DETAILS_RETRIEVE"));
         SessionController.getInstance().addCommand(new PartyInvitesRetrieveCommand("PARTY_INVITES_RETRIEVE"));
         SessionController.getInstance().addCommand(new PartyLeaveCommand("PARTY_LEAVE"));
-        SessionController.getInstance().addCommand(new PartyMemberAddCommand("PARTY_MEMBER_ADD"));
         SessionController.getInstance().addCommand(new PartyMemberRemoveCommand("PARTY_MEMBER_REMOVE"));
         SessionController.getInstance().addCommand(new PlayerCreateCommand("PLAYER_CREATE"));
         SessionController.getInstance().addCommand(new PlayerInvitesRetrieveCommand("PLAYER_INVITES_RETRIEVE"));
@@ -222,11 +220,19 @@ public class SessionInformation {
     }
 
     /**
-     * @param id
+     * @param userName of player to check
      * @return
      * */
-    public boolean isFriend(int id) {
-        return player.isFriend(id);
+    public boolean isFriend(String userName)
+    {
+        if(sqlDB.doesPlayerExist(userName) == 1)
+        {
+            int  id = sqlDB.getUserId(userName);
+            System.out.println(id);
+            return player.isFriend(id);
+        }
+        return false;
+
     }
 
     /**
@@ -337,20 +343,21 @@ public class SessionInformation {
     /**
      *  @param friendToInvite
      * */
-    public void sendInvite(int friendToInvite) {
+    public void sendInvite(String friendToInvite) {
         try {
-            sqlDB.addInvite(player.getId(), friendToInvite, party.getId() );
+            sqlDB.addInvite(player.getId(), sqlDB.getUserId(friendToInvite), party.getId() );
         } catch (Exception ex) {
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
         }
     }
 
     /**
-     *  @param playerID
+     *  @param playerName
      *  @return
      * */
-    public int getPartyIDFromSenderInvite(int playerID)
+    public int getPartyIDFromSenderInvite(String playerName)
     {
+        int playerID = sqlDB.getUserId(playerName);
         List<Invite> myInvites = player.getInvites();
         int partyID = 0;
         for (int i = 0; i < myInvites.size(); i++) {
@@ -364,10 +371,11 @@ public class SessionInformation {
         return partyID;
     }
     /**
-     *  @param playerID
+     *  @param playerName
      * */
-    public void removeInvite(int playerID) {
-        int partyID = getPartyIDFromSenderInvite(playerID);
+    public void removeInvite(String playerName) {
+        int playerID = sqlDB.getUserId(playerName);
+        int partyID = getPartyIDFromSenderInvite(playerName);
         player.removeInvite(playerID, partyID);
         try {
             sqlDB.removeInvite(playerID, player.getId(), partyID);
