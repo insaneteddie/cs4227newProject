@@ -36,7 +36,7 @@ public class MessageMenu extends Menu {
     /** public constructor */
     public MessageMenu() {
         showMessageMenu();
-        
+
     }
 
     /** Builds the UI components for the menu */
