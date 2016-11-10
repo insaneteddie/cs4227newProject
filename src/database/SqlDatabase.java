@@ -391,7 +391,7 @@ class SqlDatabase implements SqlDatabaseInterface {
         List<Integer []> invitesList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
-            int iterator = 0;
+            int iterator = 1;
             connection = DriverManager.getConnection(dbUrl, user, pass);
             Integer [] userInvites = new Integer[100];
             statement = connection.createStatement();
@@ -660,7 +660,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setInt(1,senderID);
             prepStatement.setString(2,"this is content");
             prepStatement.setInt(3,receiverID);
-            
+
             prepStatement.setInt(4,partyId);
 
             prepStatement.executeUpdate();
