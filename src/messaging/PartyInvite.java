@@ -3,21 +3,13 @@ package messaging;
 import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
-import core.interceptor.Log;
-import database.DatabaseBridge;
 
 import java.util.UUID;
 
 /**
  * Created by Christian on 03/11/2016.
  */
-class PartyInvite implements Invite {
-    private int senderID;
-    private int receiverID;
-    private int partyID;
-    private UUID messageID;
-    private final Log log = new Log(getClass().getName());
-    private DatabaseBridge sqlDb = new DatabaseBridge();
+class PartyInvite extends Invite {
 
     /**
      * @param senderId int senderID
@@ -25,18 +17,10 @@ class PartyInvite implements Invite {
      * @param partyID int partyID
      */
     PartyInvite(int senderId, int receiverID, int partyID) {
-        this.senderID = senderId;
-        this.receiverID = receiverID;
-        this.partyID = partyID;
+        super.senderID = senderId;
+        super.receiverID = receiverID;
+        super.partyID = partyID;
         messageID =  UUID.randomUUID();
-    }
-
-    /**
-     * @return messageID
-     */
-    @Override
-    public UUID getID() {
-        return messageID;
     }
 
     /**
@@ -45,38 +29,12 @@ class PartyInvite implements Invite {
     @Override
     public void sendInvite() {
         try {
-            sqlDb.addInvite(senderID, receiverID, partyID);
-            //log.logInfo("Party Invite Sent");
+            sqlDB.addInvite(senderID, receiverID, partyID);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Party Invite Sent"));
         } catch (Exception ex) {
-            //log.logWarning(ex);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
         }
 
-    }
-
-    /**
-     * @return senderID
-     */
-    @Override
-    public int getSenderID() {
-        return senderID;
-    }
-
-    /**
-     * @return receiverID
-     */
-    @Override
-    public int getReceiverID() {
-        return receiverID;
-    }
-
-    /**
-     * @return partyID
-     */
-    @Override
-    public int getPartyID() {
-        return partyID;
     }
 
     /**
@@ -93,11 +51,9 @@ class PartyInvite implements Invite {
     public void deleteInvite()
     {
         try {
-            sqlDb.removeInvite(senderID, receiverID, partyID);
-            //log.logInfo("Invite from " + senderID + " to " + receiverID + " for party " + partyID + " has been deleted");
+            sqlDB.removeInvite(senderID, receiverID, partyID);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Invite from " + senderID + " to " + receiverID + " for party " + partyID + " has been deleted"));
         } catch (Exception ex) {
-            //log.logWarning(ex);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, ex, ""));
         }
     }

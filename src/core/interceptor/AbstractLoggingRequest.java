@@ -21,6 +21,13 @@ public abstract class AbstractLoggingRequest{
     }
 
     /**
+     * @return AbstractLoggingRequest nextInChain
+     */
+    public AbstractLoggingRequest getNextInChain(){
+        return nextInChain;
+    }
+
+    /**
      * @param type int
      * @param exception Exception
      * @param message String

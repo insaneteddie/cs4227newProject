@@ -1,23 +1,39 @@
 package messaging;
 
+import database.DatabaseBridge;
+
 import java.util.UUID;
 
 /**
  * Created by Christian on 03/11/2016.
  */
-public interface Invite {
+public abstract class Invite {
 
-    void sendInvite();
+    protected int senderID;
+    protected int receiverID;
+    protected UUID messageID;
+    protected int partyID = 0;
+    protected DatabaseBridge sqlDB = new DatabaseBridge();
 
-    UUID getID();
+    public abstract void sendInvite();
 
-    int getSenderID();
+    public UUID getID(){
+        return messageID;
+    }
 
-    int getReceiverID();
+    public int getSenderID(){
+        return senderID;
+    }
 
-    int getPartyID();
+    public int getReceiverID(){
+        return receiverID;
+    }
 
-    String getMessage();
+    public int getPartyID(){
+        return getPartyID();
+    }
 
-    void deleteInvite();
+    public abstract String getMessage();
+
+    public abstract void deleteInvite();
 }
