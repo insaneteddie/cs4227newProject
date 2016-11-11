@@ -128,7 +128,6 @@ public class PartyMenu extends Menu {
         JButton removeMemberButton = new JButton("Remove Member");
         removeMemberButton.addActionListener(e -> {
                 if (sessionInfo.isPartyLeader() && sessionInfo.getPartySize() > 1) {
-                    System.out.println("We are inside");
                     // select member to remove
                     try {
                         String memberToRemove = JOptionPane.showInputDialog(null, "Enter the User Name of the member you would"

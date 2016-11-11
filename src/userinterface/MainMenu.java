@@ -70,16 +70,12 @@ public class MainMenu extends Menu {
         JButton partyButton = new JButton("Party");
         partyButton.addActionListener(e -> {
                 if (sessionInfo.isPlayerInParty()) {
-                    System.out.println("getting partyDetails");
-                    //sessionInfo.getPartyDetails();
                     SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
 
                     menuMgr.getMenuFromFactory(3);
                 } else {
                     int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
                     if (choice == JOptionPane.YES_OPTION) {
-                        System.out.println("clicked yes");
-                        //sessionInfo.createParty();
                         SessionController.getInstance().executeCommand("PARTY_CREATE");
                     }
                 }
@@ -88,7 +84,6 @@ public class MainMenu extends Menu {
         centerMenuButtonsPanel.add(communityButton);
         JButton messageButton = new JButton("Messages");
         messageButton.addActionListener(e ->{
-                //sessionInfo.getPlayerInvites();
                 SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
                 menuMgr.getMenuFromFactory(4);
         });

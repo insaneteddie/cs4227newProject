@@ -249,7 +249,6 @@ class SqlDatabase implements SqlDatabaseInterface {
             ResultSet res = prepStatement.executeQuery();
             res.next();
             userId = res.getInt(1);
-            System.out.println(userId);
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -454,9 +453,6 @@ class SqlDatabase implements SqlDatabaseInterface {
             ResultSet res = prepStatement.executeQuery();
             res.next();
             partyId = res.getInt("party_Id");
-            System.out.println("Created party, ID: " + partyId);
-
-
             return partyId;
         } catch (SQLException|ClassNotFoundException e) {
 
@@ -769,7 +765,6 @@ class SqlDatabase implements SqlDatabaseInterface {
     void removePlayerFromParty(int partyID, int playerID)
     {
         try {
-            System.out.println("remove method");
             Class.forName(jdbcDriver);
             int colId = findUserInParty(playerID,partyID);
             String sqlCol = getColName(colId);
@@ -886,7 +881,6 @@ class SqlDatabase implements SqlDatabaseInterface {
             res.next();
             while (iterator < 8)
             {
-                System.out.println("Check");
                 partyList.add(res.getInt(iterator));
                 iterator++;
             }

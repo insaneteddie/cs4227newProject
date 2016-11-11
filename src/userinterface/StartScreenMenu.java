@@ -85,7 +85,6 @@ public class StartScreenMenu extends Menu {
 
                     if (login) {
                         menuMgr.getMenuFromFactory(2);
-                        System.out.println("logged in");
                     } else {
                         JOptionPane.showMessageDialog(null, "Invalid login details");
                         getUsername.setText("");

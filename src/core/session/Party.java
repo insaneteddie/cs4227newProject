@@ -27,7 +27,7 @@ public class Party implements SessionObserver {
                 partyMembers.add(partyInfo.get(i));
             }
             leaderID = partyMembers.get(0);
-            System.out.println("Leader ID: " + leaderID);
+
         } else {
             id = 0;
             leaderID = 0;
@@ -40,7 +40,7 @@ public class Party implements SessionObserver {
      * @return
      * */
     public boolean isPartyLeader(int id) {
-        System.out.println(id + " "+leaderID);
+
         return leaderID == id;
     }
 

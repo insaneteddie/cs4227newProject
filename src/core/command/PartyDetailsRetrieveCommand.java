@@ -17,7 +17,7 @@ public class PartyDetailsRetrieveCommand implements ICommand {
 
     @Override
     public void execute() {
-        System.out.println("executing getPartyDetails from command");
+
         SessionInformation.getInstance().getPartyDetails();
     }
 

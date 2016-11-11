@@ -194,20 +194,13 @@ public class SessionInformation {
     }
 
     public void getPartyDetails() {
-        System.out.println("entering getPartyDetails()");
+
         try {
-            System.out.println("get party details from database");
+
             List<Integer> partyDetails = sqlDB.getPartyDetails(party.getId(), player.getId());
-            System.out.println("retrieved party details from database");
-            if(partyDetails.isEmpty()){
-                System.out.println("partyDetails is empty");
-            }
-            for(int i = 0; i < partyDetails.size(); i++){
-                System.out.println("Party Details: " + partyDetails.get(i).toString());
-            }
+
             player.clearPartyInformation();
             if(sqlDB.isPlayerInParty(player.getId())){
-                System.out.println("player in party !!");
                 player.updatePartyInformation(partyDetails);
             }
             player.update();
@@ -238,7 +231,6 @@ public class SessionInformation {
         if(sqlDB.doesPlayerExist(userName) == 1)
         {
             int  id = sqlDB.getUserId(userName);
-            System.out.println(id);
             return player.isFriend(id);
         }
         return false;
@@ -251,9 +243,8 @@ public class SessionInformation {
     public void createParty() {
         try {
             int partyID = sqlDB.createParty(player.getId());
-            System.out.println("Party Created, ID: " + partyID);
+
             player.addToPartyInformation(partyID);
-            System.out.println("Player ID: " + player.getId());
             player.addToPartyInformation(player.getId());
             player.update();
         } catch (Exception e) {
