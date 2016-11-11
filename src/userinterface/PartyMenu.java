@@ -181,10 +181,10 @@ public class PartyMenu extends Menu {
             sessionInfo.getPartyDetails();
             List<Integer> members = sessionInfo.getPartyMembers();
 
-            memberList.append("" + members.get(0) + " (host)\n");
+            memberList.append("" + sessionInfo.sqlDB.getUsername(members.get(0)) + " (host)\n");
             for (int i = 1; i < members.size(); i++) {
                 if(members.get(i) != 0)
-                memberList.append("" + members.get(i) + "\n");
+                memberList.append("" + sessionInfo.sqlDB.getUsername(members.get(i)) + "\n");
             }
         }
     }

@@ -765,8 +765,6 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             System.out.println("remove method");
             Class.forName(jdbcDriver);
-            connection = DriverManager.getConnection(dbUrl, user, pass);
-            statement = connection.createStatement();
             int colId = findUserInParty(playerID,partyID);
             String sqlCol = getColName(colId);
             if(sqlCol.equals("leader_Id"))
@@ -774,10 +772,12 @@ class SqlDatabase implements SqlDatabaseInterface {
                 deleteParty(partyID);
             }
             else {
-                prepStatement = connection.prepareStatement("Update user_parties SET ? = null WHERE party_Id = ? ");
-                prepStatement.setString(1, sqlCol);
-                prepStatement.setInt(2, partyID);
-                prepStatement.setInt(3, playerID);
+                connection = DriverManager.getConnection(dbUrl, user, pass);
+                statement = connection.createStatement();
+                String sqlQuery = "Update user_parties SET "+sqlCol+" = 0 where party_Id = ?";
+                prepStatement = connection.prepareStatement(sqlQuery);
+                prepStatement.setInt(1, partyID);
+
 
                 prepStatement.executeUpdate();
             }
@@ -811,8 +811,9 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
+            res.next();
             int tester;
-            while(res.next())
+            while(counter < 7)
             {
                 tester = res.getInt(counter);
                 if(tester == userId)

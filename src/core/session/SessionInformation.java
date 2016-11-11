@@ -31,7 +31,7 @@ public class SessionInformation {
     private AbstractMessagingFactory abstractMessagingFactory;
     private Player player = null;
     private Party party;
-    private DatabaseBridge sqlDB = new DatabaseBridge();
+    public DatabaseBridge sqlDB = new DatabaseBridge();
 
     private SessionInformation() {
         setUpController();
