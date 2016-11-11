@@ -314,7 +314,7 @@ class SqlDatabase implements SqlDatabaseInterface {
      * */
     boolean isPartyFull(int partyId)
     {
-        int toCheck = 0;
+        int toCheck = 3;
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -324,12 +324,11 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setInt(1, partyId);
 
             ResultSet res = prepStatement.executeQuery();
-
-            while (res.next())
-            {
+            res.next();
+            while(toCheck < 8) {
                 int temp = res.getInt(toCheck);
                 if (temp == 0) {
-                    toCheck++;
+
                     return false;
                 }
                 toCheck++;
@@ -588,13 +587,14 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            counter = 2;
+            counter = 3;
             statement = connection.createStatement();
             prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
             int tester;
-                while(res.next())
+            res.next();
+                while(counter < 8)
                 {
                     tester = res.getInt(counter);
                     if(tester == 0)
@@ -803,9 +803,9 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            counter = 2;//starting at the first user id to ignore party
+            counter = 1;//starting at the first user id to ignore party
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+            prepStatement = connection.prepareStatement("SELECT leader_Id,user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
             int tester;
@@ -839,17 +839,17 @@ class SqlDatabase implements SqlDatabaseInterface {
         String colName = "";
         switch(colId)
         {
-            case 1: colName = "leader_Id";
+            case 2: colName = "leader_Id";
                 break;
-            case 2: colName ="user_1_Id";
+            case 3: colName ="user_1_Id";
                 break;
-            case 3: colName = "user_2_Id";
+            case 4: colName = "user_2_Id";
                 break;
-            case 4: colName = "user_3_Id";
+            case 5: colName = "user_3_Id";
                 break;
-            case 5: colName = "user_4_Id";
+            case 6: colName = "user_4_Id";
                 break;
-            case 6: colName = "user_5_Id";
+            case 7: colName = "user_5_Id";
                 break;
             default:
                 break;
