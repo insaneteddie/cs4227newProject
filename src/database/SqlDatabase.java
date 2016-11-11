@@ -486,9 +486,10 @@ class SqlDatabase implements SqlDatabaseInterface {
             int colId = findNullFromParties(partyID);
             String sqlCol = getColName(colId);
 
-            prepStatement = connection.prepareStatement("UPDATE ? INTO user_parties ?  WHERE party_Id = ?");
-            prepStatement.setInt(1,playerID);
-            prepStatement.setString(2,sqlCol);
+            prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ?   WHERE party_Id = ?");
+
+            prepStatement.setString(1,sqlCol);
+            prepStatement.setInt(2,playerID);
             prepStatement.setInt(3,partyID);
             prepStatement.executeUpdate();
 
@@ -592,17 +593,17 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-
+            int tester;
                 while(res.next())
                 {
-                    if(res.wasNull())
-                    {
+                    tester = res.getInt(counter);
+                    if(tester == 0)
                         return counter;
-                    }else {
+                    else
                         counter++;
-                    }
+
                 }
-            counter = 0;
+
     } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -690,7 +691,7 @@ class SqlDatabase implements SqlDatabaseInterface {
 
     /**
      *
-     * @param partyID
+     * @param partyID int partyID of party to delete
      */
 
     void deleteParty(int partyID)
@@ -760,17 +761,18 @@ class SqlDatabase implements SqlDatabaseInterface {
     void removePlayerFromParty(int partyID, int playerID)
     {
         try {
+            System.out.println("remove method");
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
             int colId = findUserInParty(playerID,partyID);
             String sqlCol = getColName(colId);
-            if(sqlCol.equalsIgnoreCase("leader_Id"))
+            if(sqlCol.equals("leader_Id"))
             {
                 deleteParty(partyID);
             }
             else {
-                prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = null WHERE party_Id = ? AND (user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ? )");
+                prepStatement = connection.prepareStatement("Update user_parties SET ? = null WHERE party_Id = ? ");
                 prepStatement.setString(1, sqlCol);
                 prepStatement.setInt(2, partyID);
                 prepStatement.setInt(3, playerID);
@@ -798,7 +800,7 @@ class SqlDatabase implements SqlDatabaseInterface {
      * */
     int findUserInParty(int userId, int partyId)
     {
-        int counter = 1;
+        int counter;
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
@@ -807,18 +809,18 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
-
+            int tester;
             while(res.next())
             {
-
-                if(res.getInt(counter) == userId)
+                tester = res.getInt(counter);
+                if(tester == userId)
                 {
                     return counter;
                 }
                 counter++;
             }
 
-            counter = 1;
+
         } catch (SQLException|ClassNotFoundException e) {
 
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, e, ""));
@@ -831,7 +833,7 @@ class SqlDatabase implements SqlDatabaseInterface {
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
-        return counter;
+        return -1;
     }
     String getColName(int colId)
     {
