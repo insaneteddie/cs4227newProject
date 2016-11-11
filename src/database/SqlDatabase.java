@@ -633,9 +633,9 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT ? FROM user_parties where party_Id != ?");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_parties where (leader_Id = ? OR user_1_Id = ? OR user_2_Id = ? OR user_3_Id = ? OR user_4_Id = ? OR user_5_Id = ?)");
             prepStatement.setInt(1, playerId);
-            prepStatement.setInt(2, playerId);
+
             ResultSet res = prepStatement.executeQuery();
 
             if (res.next())
