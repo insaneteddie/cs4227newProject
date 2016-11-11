@@ -33,11 +33,10 @@ import javax.swing.JTextArea;
  * */
 public class PartyMenu extends Menu {
 
-    private Log logger;
+    ;
 
     /** public constructor */
     public PartyMenu() {
-        logger = new Log(getClass().getName());
         showPartyMenu();
     }
 

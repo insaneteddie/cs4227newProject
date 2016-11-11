@@ -15,11 +15,8 @@ import core.interceptor.Log;
 import core.session.SessionInformation;
 /** class to launch gui */
 public class StartUpUI {
-    private Log logger;
     /** public constructor */
-    public StartUpUI() {
-        logger = new Log(getClass().getName());
-    }
+    public StartUpUI() {}
 
     /** Handles initial set up*/
     public void run() {
@@ -28,17 +25,14 @@ public class StartUpUI {
             /* Observer to PanelManager */
             Screen screen = new Screen();
             /* Starts database connection */
-            //DatabaseInterface database = new DatabaseAccess();
             /* Will process input taken from client GUI */
             SessionInformation sessionInfo = SessionInformation.getInstance();
-            //sessionInfo.setDbConnection(database);
             /* Panel factory to display panels on window */
             MenuFactory menuFac = new MenuFactory(sessionInfo);
             /* Subject in observer pattern */
             MenuManager menuMgr = new MenuManager(menuFac);
             menuMgr.registerObserver(screen);
         } catch (Exception e) {
-            //logger.logSevere(e);
             LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.SEVERE, e, ""));
         }
     }
