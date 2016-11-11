@@ -453,6 +453,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             ResultSet res = prepStatement.executeQuery();
             res.next();
             partyId = res.getInt("party_Id");
+            System.out.println("Created party, ID: " + partyId);
 
 
             return partyId;

@@ -27,6 +27,7 @@ public class Party implements SessionObserver {
                 partyMembers.add(partyInfo.get(i));
             }
             leaderID = partyMembers.get(0);
+            System.out.println("Leader ID: " + leaderID);
         } else {
             id = 0;
             leaderID = 0;
