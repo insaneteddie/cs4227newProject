@@ -358,7 +358,7 @@ class SqlDatabase implements SqlDatabaseInterface {
         List<Integer> friendsList = new ArrayList<>();
         try {
             Class.forName(jdbcDriver);
-            int iterator = 1;
+
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
@@ -366,10 +366,11 @@ class SqlDatabase implements SqlDatabaseInterface {
             prepStatement.setInt(1,userId);
 
             ResultSet res = prepStatement.executeQuery();
+            res.beforeFirst();
             while(res.next())
             {
-                friendsList.add(res.getInt(iterator));
-                iterator++;
+                friendsList.add(res.getInt("friend_Id"));
+
             }
             return friendsList;
         } catch (SQLException|ClassNotFoundException e) {

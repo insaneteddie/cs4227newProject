@@ -285,7 +285,8 @@ public class SessionInformation {
      *  log off the player
      * */
     public void logPlayerOut() {
-        if (party.doesPartyExist()) {
+        if (sessionInfo.isPlayerInParty())
+        {
             leaveParty();
         }
         LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.INFO, null, "Logged out"));
