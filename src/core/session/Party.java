@@ -39,6 +39,7 @@ public class Party implements SessionObserver {
      * @return
      * */
     public boolean isPartyLeader(int id) {
+        System.out.println(id + " "+leaderID);
         return leaderID == id;
     }
 
@@ -57,7 +58,7 @@ public class Party implements SessionObserver {
     }
 
     public int getPartySize() {
-        return partyMembers.isEmpty() ? partyMembers.size() : 0;
+        return partyMembers.isEmpty() ? 0 : partyMembers.size() ;
     }
     public List<Integer> getPartyMembers()
     {

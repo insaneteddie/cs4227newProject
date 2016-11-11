@@ -129,18 +129,19 @@ public class PartyMenu extends Menu {
         JButton removeMemberButton = new JButton("Remove Member");
         removeMemberButton.addActionListener(e -> {
                 if (sessionInfo.isPartyLeader() && sessionInfo.getPartySize() > 1) {
-
+                    System.out.println("We are inside");
                     // select member to remove
                     try {
-                        int memberToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter the ID of the member you would"
-                                + "\nlike to remove from the party"));
-                        if(memberToRemove == sessionInfo.getPlayerId())
+                        String memberToRemove = JOptionPane.showInputDialog(null, "Enter the User Name of the member you would"
+                                + "\nlike to remove from the party");
+                        int idToRemove = sessionInfo.sqlDB.getUserId(memberToRemove);
+                        if( idToRemove == sessionInfo.getPlayerId())
                         {
                             JOptionPane.showMessageDialog(null, "To leave party, please select the 'Leave Party' button\nor log out.", null, JOptionPane.WARNING_MESSAGE);
                         }
-                        else if (sessionInfo.isMemberOfParty(memberToRemove)) {
+                        else if (sessionInfo.isMemberOfParty(idToRemove)) {
 
-                            sessionInfo.removePlayerFromParty(memberToRemove);
+                            sessionInfo.removePlayerFromParty(idToRemove);
                             SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
                             menuMgr.getMenuFromFactory(3);
                         }
