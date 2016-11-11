@@ -320,7 +320,7 @@ class SqlDatabase implements SqlDatabaseInterface {
             connection = DriverManager.getConnection(dbUrl, user, pass);
 
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? AND (user_1_Id = null OR user_2_Id = null OR user_3_Id = null OR user_4_Id = null OR user_5_Id = null)");
+            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ?");
             prepStatement.setInt(1, partyId);
 
             ResultSet res = prepStatement.executeQuery();
@@ -347,7 +347,7 @@ class SqlDatabase implements SqlDatabaseInterface {
                 LogDispatcher.getInstance().onLogRequestReceived(new ConcreteSimpleLoggingRequest(LoggingRequest.Severity.WARNING, se, ""));
             }
         }
-        return toCheck <= 0;
+        return true;
     }
 
     /**
@@ -588,7 +588,7 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            counter = 1;
+            counter = 2;
             statement = connection.createStatement();
             prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
@@ -601,7 +601,6 @@ class SqlDatabase implements SqlDatabaseInterface {
                         return counter;
                     else
                         counter++;
-
                 }
 
     } catch (SQLException|ClassNotFoundException e) {
@@ -804,7 +803,7 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            counter = 1;
+            counter = 2;//starting at the first user id to ignore party
             statement = connection.createStatement();
             prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);

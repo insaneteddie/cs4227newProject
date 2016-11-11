@@ -289,7 +289,7 @@ public class SessionInformation {
     }
 
     /**
-     *  @param partyID
+     *  @param partyID int partyID to add player to
      * */
     public void addPlayerToParty(int partyID) {
         try {
