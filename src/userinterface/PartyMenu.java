@@ -178,10 +178,12 @@ public class PartyMenu extends Menu {
         memberList.setText("");
         memberList.append("Members:\n");
         if (sessionInfo != null) {
+            sessionInfo.getPartyDetails();
             List<Integer> members = sessionInfo.getPartyMembers();
 
             memberList.append("" + members.get(0) + " (host)\n");
             for (int i = 1; i < members.size(); i++) {
+                if(members.get(i) != 0)
                 memberList.append("" + members.get(i) + "\n");
             }
         }

@@ -480,16 +480,19 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             Class.forName(jdbcDriver);
 
+            int colId = findNullFromParties(partyID);
+
+            String sqlCol = getColName(colId + 1);
+
             connection = DriverManager.getConnection(dbUrl, user, pass);
             statement = connection.createStatement();
-            int colId = findNullFromParties(partyID);
-            String sqlCol = getColName(colId);
+            String query = "update user_parties set " + sqlCol + " = ? where party_Id = ?";
+            // have to assign the column name like this because it was putting it into the prep
+            // statement with single quotes around it which breaks the syntax
+            prepStatement = connection.prepareStatement(query);
 
-            prepStatement = connection.prepareStatement("UPDATE user_parties SET ? = ?   WHERE party_Id = ?");
-
-            prepStatement.setString(1,sqlCol);
-            prepStatement.setInt(2,playerID);
-            prepStatement.setInt(3,partyID);
+            prepStatement.setInt(1,playerID);
+            prepStatement.setInt(2,partyID);
             prepStatement.executeUpdate();
 
         } catch (SQLException|ClassNotFoundException e) {
@@ -587,14 +590,14 @@ class SqlDatabase implements SqlDatabaseInterface {
         try {
             Class.forName(jdbcDriver);
             connection = DriverManager.getConnection(dbUrl, user, pass);
-            counter = 3;
+            counter = 1;
             statement = connection.createStatement();
-            prepStatement = connection.prepareStatement("SELECT * FROM user_parties WHERE party_ID = ? ");
+            prepStatement = connection.prepareStatement("SELECT user_1_Id,user_2_Id,user_3_Id,user_4_Id,user_5_Id FROM user_parties WHERE party_ID = ? ");
             prepStatement.setInt(1,partyId);
             ResultSet res = prepStatement.executeQuery();
             int tester;
             res.next();
-                while(counter < 8)
+                while(counter < 6)
                 {
                     tester = res.getInt(counter);
                     if(tester == 0)
@@ -839,17 +842,17 @@ class SqlDatabase implements SqlDatabaseInterface {
         String colName = "";
         switch(colId)
         {
-            case 2: colName = "leader_Id";
+            case 1: colName = "leader_Id";
                 break;
-            case 3: colName ="user_1_Id";
+            case 2: colName ="user_1_Id";
                 break;
-            case 4: colName = "user_2_Id";
+            case 3: colName = "user_2_Id";
                 break;
-            case 5: colName = "user_3_Id";
+            case 4: colName = "user_3_Id";
                 break;
-            case 6: colName = "user_4_Id";
+            case 5: colName = "user_4_Id";
                 break;
-            case 7: colName = "user_5_Id";
+            case 6: colName = "user_5_Id";
                 break;
             default:
                 break;
@@ -873,7 +876,8 @@ class SqlDatabase implements SqlDatabaseInterface {
 
             ResultSet res = prepStatement.executeQuery();
             partyList.add(partyID);
-            while (res.next())
+            res.next();
+            while (iterator < 8)
             {
                 System.out.println("Check");
                 partyList.add(res.getInt(iterator));

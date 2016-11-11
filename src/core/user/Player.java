@@ -125,6 +125,7 @@ public class Player extends User implements SessionSubject {
     }
     @Override
     public List<Integer> getState() {
+
         return partyInformation;
     }
 
