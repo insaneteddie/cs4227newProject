@@ -17,22 +17,37 @@ public abstract class Invite {
 
     public abstract void sendInvite();
 
+    /**
+     * @return UUID
+     * */
     public UUID getID(){
         return messageID;
     }
 
+    /**
+     * @return int
+     * */
     public int getSenderID(){
         return senderID;
     }
 
+    /**
+     * @return int
+     * */
     public int getReceiverID(){
         return receiverID;
     }
 
+    /**
+     * @return int
+     * */
     public int getPartyID(){
         return partyID;
     }
 
+    /**
+     * @return String
+     * */
     public abstract String getMessage();
 
     public abstract void deleteInvite();

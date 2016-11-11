@@ -66,6 +66,10 @@ public class InviteCollection implements Collection<Invite>
         }
     }
 
+    /**
+     * @param item
+     * @return boolean
+     * */
     @Override
     public boolean contains(Invite item) {
         boolean contains = false;

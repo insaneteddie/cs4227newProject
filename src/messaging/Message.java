@@ -8,13 +8,28 @@ import java.util.UUID;
 public interface Message {
     void sendMessage();
 
+    /**
+     * @return UUID
+     * */
     UUID getID();
 
+    /**
+     * @return int
+     * */
     int getSenderID();
 
+    /**
+     * @return int
+     * */
     int getReceiverID();
 
+    /**
+     * @return int
+     * */
     int getPartyID();
 
+    /**
+     * @return String
+     * */
     String getMessage();
 }
