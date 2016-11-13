@@ -4,7 +4,6 @@
 * available: http://www.csis.ul.ie/coursemodule/CS4125 [accessed 20 Oct 2015]
 *
 *   Adapted file: Serenity_Gaming/ProcessInput.java
-*   Approximate use: 40%
 **/
 package core.session;
 

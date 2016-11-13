@@ -4,7 +4,6 @@
 * available: http://www.csis.ul.ie/coursemodule/CS4125 [accessed 20 Oct 2015]
 *
 *   Adapted file: Serenity_Gaming/MenuUI.java
-*   Approximate use: 30%
 **/
 package userinterface;
 
@@ -54,7 +53,7 @@ public class MessageMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-            SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
+            SessionController.getInstance().executeCommand(SessionController.PLAYER_LOG_OUT);
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
@@ -117,7 +116,7 @@ public class MessageMenu extends Menu {
                     if (sessionInfo.isFriend(userName))
                     {
                         sessionInfo.removeInvite(userName);
-                        SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
+                        SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                         menuMgr.getMenuFromFactory(4);
                     }
                     else{
@@ -132,7 +131,7 @@ public class MessageMenu extends Menu {
         inviteOptionPanel.add(declineInviteButton);
          JButton refreshInviteButton = new JButton("Refresh Invites");
         refreshInviteButton.addActionListener(e -> {
-                SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
+                SessionController.getInstance().executeCommand(SessionController.PLAYER_INVITES_RETRIEVE);
                 populateInviteList(inviteList);
         });
         

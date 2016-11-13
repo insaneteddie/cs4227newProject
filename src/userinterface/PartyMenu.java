@@ -53,7 +53,7 @@ public class PartyMenu extends Menu {
         topBarPanel.add(spacer);
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
-                SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
+                SessionController.getInstance().executeCommand(SessionController.PLAYER_LOG_OUT);
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
@@ -81,7 +81,7 @@ public class PartyMenu extends Menu {
         JButton leavePartyButton = new JButton("Leave Party");
         leavePartyButton.addActionListener(e -> {
                 JOptionPane.showMessageDialog(null, "You have left the party");
-                SessionController.getInstance().executeCommand("PARTY_LEAVE");
+                SessionController.getInstance().executeCommand(SessionController.PARTY_LEAVE);
                 menuMgr.getMenuFromFactory(2);
         });
         topCenterMenuPanel.add(leavePartyButton);
@@ -92,7 +92,7 @@ public class PartyMenu extends Menu {
         centerMenuButtonsPanel.setLayout(centerMenuButtonsLayout);
         JButton refreshButton = new JButton("Refresh Members List");
         refreshButton.addActionListener(e -> {
-                SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
+                SessionController.getInstance().executeCommand(SessionController.PARTY_DETAILS_RETRIEVE);
                 if (sessionInfo.isPlayerInParty()) {
                     populateMembersList(memberList);
                 }
@@ -136,7 +136,7 @@ public class PartyMenu extends Menu {
                         }
                         else if (sessionInfo.isMemberOfParty(idToRemove)) {
                             sessionInfo.removePlayerFromParty(idToRemove);
-                            SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
+                            SessionController.getInstance().executeCommand(SessionController.PARTY_DETAILS_RETRIEVE);
                             menuMgr.getMenuFromFactory(3);
                         }
                     } catch (Exception ex) {

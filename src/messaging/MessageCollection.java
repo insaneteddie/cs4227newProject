@@ -81,6 +81,10 @@ public class MessageCollection implements Collection<Message>
         }
     }
 
+    /**
+     * @param item
+     * @return boolean
+     * */
     @Override
     public boolean contains(Message item) {
         boolean contains = false;

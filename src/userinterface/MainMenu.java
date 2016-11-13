@@ -4,7 +4,6 @@
 * available: http://www.csis.ul.ie/coursemodule/CS4125 [accessed 20 Oct 2015]
 *
 *   Adapted file: Serenity_Gaming/MenuUI.java
-*   Approximate use: 70%
 **/
 package userinterface;
 
@@ -41,11 +40,11 @@ public class MainMenu extends Menu {
         JButton logoutButton = new JButton("Logout");
         logoutButton.addActionListener(e -> {
 
-                SessionController.getInstance().executeCommand("PLAYER_LOG_OUT");
+                SessionController.getInstance().executeCommand(SessionController.PLAYER_LOG_OUT);
                 menuMgr.getMenuFromFactory(1);
         });
         topBarPanel.add(logoutButton);
-        mainMenuPanel.add(topBarPanel, mainMenuLayout.NORTH);
+        mainMenuPanel.add(topBarPanel, BorderLayout.NORTH);
 
         JPanel centerMenuPanel = new JPanel();
         BorderLayout centerMenuLayout = new BorderLayout();
@@ -70,13 +69,12 @@ public class MainMenu extends Menu {
         JButton partyButton = new JButton("Party");
         partyButton.addActionListener(e -> {
                 if (sessionInfo.isPlayerInParty()) {
-                    SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
-
+                    SessionController.getInstance().executeCommand(SessionController.PARTY_DETAILS_RETRIEVE);
                     menuMgr.getMenuFromFactory(3);
                 } else {
                     int choice = JOptionPane.showConfirmDialog(null, "You are Currently not a member of a party.\nWould you like to create a new party?", "Create a Party", JOptionPane.YES_NO_OPTION);
                     if (choice == JOptionPane.YES_OPTION) {
-                        SessionController.getInstance().executeCommand("PARTY_CREATE");
+                        SessionController.getInstance().executeCommand(SessionController.PARTY_CREATE);
                     }
                 }
         });
@@ -84,14 +82,14 @@ public class MainMenu extends Menu {
         centerMenuButtonsPanel.add(communityButton);
         JButton messageButton = new JButton("Messages");
         messageButton.addActionListener(e ->{
-                SessionController.getInstance().executeCommand("PLAYER_INVITES_RETRIEVE");
+                SessionController.getInstance().executeCommand(SessionController.PARTY_INVITES_RETRIEVE);
                 menuMgr.getMenuFromFactory(4);
         });
         centerMenuButtonsPanel.add(messageButton);
-        centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);
-        centerMenuPanel.add(centerMenuButtonsPanel, centerMenuLayout.CENTER);
+        centerMenuPanel.add(centerMenuButtonsPanel, BorderLayout.CENTER);
+        centerMenuPanel.add(centerMenuButtonsPanel, BorderLayout.CENTER);
 
-        mainMenuPanel.add(centerMenuPanel, mainMenuLayout.CENTER);
+        mainMenuPanel.add(centerMenuPanel, BorderLayout.CENTER);
         panel = mainMenuPanel;
     }
 
