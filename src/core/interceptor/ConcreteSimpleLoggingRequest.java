@@ -7,7 +7,7 @@ public class ConcreteSimpleLoggingRequest implements LoggingRequest {
     private Severity level;
     private Exception exception;
     private String message;
-    private static final int type = SimpleLog.SIMPLELOG;
+    private static final int TYPE = SimpleLog.SIMPLELOG;
 
     private String finalMessage = "";
 
@@ -39,7 +39,7 @@ public class ConcreteSimpleLoggingRequest implements LoggingRequest {
 
     @Override
     public int getType() {
-        return type;
+        return TYPE;
     }
 
     @Override

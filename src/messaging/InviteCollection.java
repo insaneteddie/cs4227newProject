@@ -12,6 +12,7 @@ public class InviteCollection implements Collection<Invite>
     private ArrayList<Invite> invites;
 
     /**
+     * Constructor for invite Collection
      */
     public InviteCollection() {
         invites = new ArrayList<>();

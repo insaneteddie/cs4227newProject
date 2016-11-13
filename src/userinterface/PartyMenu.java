@@ -11,7 +11,6 @@ package userinterface;
 import core.interceptor.ConcreteSimpleLoggingRequest;
 import core.interceptor.LogDispatcher;
 import core.interceptor.LoggingRequest;
-import core.interceptor.Log;
 import core.command.SessionController;
 
 import java.awt.BorderLayout;
@@ -32,8 +31,6 @@ import javax.swing.JTextArea;
  *  UI class for party menu
  * */
 public class PartyMenu extends Menu {
-
-    ;
 
     /** public constructor */
     public PartyMenu() {
@@ -138,7 +135,6 @@ public class PartyMenu extends Menu {
                             JOptionPane.showMessageDialog(null, "To leave party, please select the 'Leave Party' button\nor log out.", null, JOptionPane.WARNING_MESSAGE);
                         }
                         else if (sessionInfo.isMemberOfParty(idToRemove)) {
-
                             sessionInfo.removePlayerFromParty(idToRemove);
                             SessionController.getInstance().executeCommand("PARTY_DETAILS_RETRIEVE");
                             menuMgr.getMenuFromFactory(3);

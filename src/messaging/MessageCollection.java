@@ -12,7 +12,7 @@ public class MessageCollection implements Collection<Message>
     private ArrayList<Message> messages;
 
     /**
-     *
+     *Constructor for  Message Collection
      */
     public MessageCollection() {
         messages = new ArrayList<>();

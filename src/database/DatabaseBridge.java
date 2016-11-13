@@ -94,7 +94,7 @@ public class DatabaseBridge implements DatabaseInterface {
      * */
     @Override
     public List<Integer> getPartyDetails(int partyID, int playerID) {
-        return sqlDB.getPartyDetails(partyID,playerID);
+        return sqlDB.getPartyDetails(partyID);
     }
 
     /**
@@ -112,7 +112,7 @@ public class DatabaseBridge implements DatabaseInterface {
      * */
     @Override
     public void addPlayerToParty(int playerID, int partyID) {
-        if(!isPartyFull(partyID))
+        if(!sqlDB.isPartyFull(partyID))
             sqlDB.addPlayerToParty(playerID,partyID);
     }
 
@@ -124,13 +124,7 @@ public class DatabaseBridge implements DatabaseInterface {
     public void removePlayerFromParty(int partyID, int playerID) {
         sqlDB.removePlayerFromParty(partyID,playerID);
     }
-    /**
-     * @param partyID int party_Id to remove
-     * */
-    public void removeParty(int partyID)
-    {
-        sqlDB.deleteParty(partyID);
-    }
+
     /**
      * @param username String username to check
      * @param email string email to check
