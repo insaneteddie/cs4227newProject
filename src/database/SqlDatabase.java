@@ -584,7 +584,7 @@ import java.util.List;
      *
      * @param partyID int partyID of party to delete
      */
-    void deleteParty(int partyID)
+    private void deleteParty(int partyID)
     {
         Connection connection = openConnection();
         try{
@@ -729,7 +729,6 @@ import java.util.List;
     }
     /**
      * @param partyID int for looking up table - use both to cut down on false positives
-     * @param playerID int for table lookup - use both to cut down on false positives
      * @return integer list of user_Ids in party
      * */
     List<Integer> getPartyDetails(int partyID) {
