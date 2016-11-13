@@ -11,7 +11,7 @@ public class DatabaseBridge implements DatabaseInterface {
 
     private final SqlDatabase sqlDB;
 
-    /** k im not sure about this....*/
+    /** constructor for bridge, calls the SqlDatabase constructor to create link */
     public DatabaseBridge()
     {
         sqlDB = new SqlDatabase();
